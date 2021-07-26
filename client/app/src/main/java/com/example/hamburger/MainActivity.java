@@ -18,7 +18,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
-
     // Menu related
     private String[] mToolbarItemTitles;
     private DrawerLayout mDrawerLayout;
@@ -40,10 +39,9 @@ public class MainActivity extends AppCompatActivity {
         initMenu();
 
         // Create menu content
-        String[] menuItem = new String[3];
-        menuItem[0] = "Test";
-        menuItem[1] = "Test";
-        menuItem[2] = "Test";
+        String[] menuItem = new String[mToolbarItemTitles.length];
+        System.arraycopy(mToolbarItemTitles, 0, menuItem, 0, mToolbarItemTitles.length);
+
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setHomeButtonEnabled(true);
 
@@ -56,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private class MenuItemClickListener implements ListView.OnItemClickListener {
-
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             selectItem(position);
