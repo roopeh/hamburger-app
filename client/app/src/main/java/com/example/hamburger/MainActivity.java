@@ -34,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
         // Initialise menu
         mTitle = getTitle();
         mToolbarItemTitles = getResources().getStringArray(R.array.menu_items_array);
-        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer);
-        mDrawerList = (ListView)findViewById(R.id.left_list);
+        mDrawerLayout = findViewById(R.id.drawer);
+        mDrawerList = findViewById(R.id.left_list);
         initMenu();
 
         // Create menu content
@@ -44,11 +44,12 @@ public class MainActivity extends AppCompatActivity {
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         MenuAdapter adapter = new MenuAdapter(this, R.layout.menu_item_row, menuItem);
         mDrawerList.setAdapter(adapter);
         mDrawerList.setOnItemClickListener(new MenuItemClickListener());
-        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer);
+        mDrawerLayout = findViewById(R.id.drawer);
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         initMenuToggle();
     }
@@ -84,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void initMenu() {
-        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }

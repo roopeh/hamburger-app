@@ -26,7 +26,7 @@ public class MenuAdapter extends ArrayAdapter<String> {
         LayoutInflater inflater = ((Activity) _context).getLayoutInflater();
         listItem = inflater.inflate(_resourceId, parent, false);
 
-        TextView text = (TextView)listItem.findViewById(R.id.menuItemText);
+        TextView text = listItem.findViewById(R.id.menuItemText);
         text.setText(_data[pos]);
 
         return listItem;

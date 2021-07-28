@@ -7,4 +7,14 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <!-- Custom values -->
+    <!-- Background -->
+    <color name="backgroundOuter">#FFFFFF</color>
+    <color name="backgroundInner">#AAAAAA</color>
+    <color name="backgroundDoubleInner">#D7D7D7</color>
+    <!-- Widgets -->
+    <color name="backButton">#333333</color>
+    <color name="defaultButtonBackground">#F2F2F2</color>
+    <color name="defaultButtonFont">#7F7F7F</color>
+    <color name="specialButton">#333333</color>
 </resources>
