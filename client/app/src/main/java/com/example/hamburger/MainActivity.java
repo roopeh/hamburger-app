@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import org.jetbrains.annotations.NotNull;
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     private CharSequence mTitle;
     androidx.appcompat.app.ActionBarDrawerToggle mDrawerToggle;
+    private ImageButton menuCloseButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         mToolbarItemTitles = getResources().getStringArray(R.array.menu_items_array);
         mDrawerLayout = findViewById(R.id.drawer);
         mDrawerList = findViewById(R.id.menuContent);
+        menuCloseButton = findViewById(R.id.menuCloseButton);
         initMenu();
 
         // Create menu content
@@ -51,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         mDrawerList.setOnItemClickListener(new MenuItemClickListener());
         mDrawerLayout = findViewById(R.id.drawer);
         mDrawerLayout.addDrawerListener(mDrawerToggle);
+        menuCloseButton.setOnClickListener(v -> mDrawerLayout.closeDrawers());
         initMenuToggle();
     }
 

@@ -2,8 +2,11 @@
     <string name="app_name">Hamburger</string>
 
     <string-array name="menu_items_array">
-        <item>Test 1</item>
-        <item>Test 2</item>
-        <item>Test 3</item>
+        <item>Koti</item>
+        <item>Tuotteet</item>
+        <item>Ravintolat</item>
+        <item>Alennuskupongit</item>
+        <item>Tilaushistoria</item>
+        <item>Käyttäjätili</item>
     </string-array>
 </resources>
