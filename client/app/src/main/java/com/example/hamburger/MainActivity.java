@@ -1,11 +1,5 @@
 package com.example.hamburger;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -16,6 +10,12 @@ import android.widget.ListView;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 public class MainActivity extends AppCompatActivity {
     // Menu related
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         mTitle = getTitle();
         mToolbarItemTitles = getResources().getStringArray(R.array.menu_items_array);
         mDrawerLayout = findViewById(R.id.drawer);
-        mDrawerList = findViewById(R.id.left_list);
+        mDrawerList = findViewById(R.id.menuContent);
         initMenu();
 
         // Create menu content

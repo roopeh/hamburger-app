@@ -31,27 +31,51 @@
 
     <!-- Menu content -->
     <RelativeLayout
-        android:layout_width="240dp"
-        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="start"
-        android:orientation="vertical">
+        android:paddingBottom="50dp"
+        android:background="@color/backgroundDoubleInner"
+        android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/menuCloseButton"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/menuCloseButtonLayout"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="TEST" />
+            android:layout_alignParentTop="true"
+            android:padding="15dp" >
+
+            <ImageButton
+                android:id="@+id/menuCloseButton"
+                android:background="@android:color/transparent"
+                android:src="@drawable/menu_close_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="40dp"
+                android:maxHeight="40dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:contentDescription="Close menu" />
+        </LinearLayout>
 
         <ListView
-            android:id="@+id/left_list"
+            android:id="@+id/menuContent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/menuCloseButton"
-            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/menuCloseButtonLayout"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
             android:choiceMode="singleChoice"
-            android:divider="@color/black"
-            android:dividerHeight="2dp" />
-    </RelativeLayout>
+            android:divider="@color/backgroundInner"
+            android:dividerHeight="1dp" />
 
+        <!-- Hackfix for adding the missing last divider -->
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_below="@+id/menuContent"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:background="@color/backgroundInner" />
+    </RelativeLayout>
 </androidx.drawerlayout.widget.DrawerLayout>
