@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:id="http://schemas.android.com/apk/res-auto">
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/menuHome"
+            android:title="@string/stringHome" />
+        <item android:id="@+id/menuProducts"
+            android:title="@string/stringProducts" />
+        <item android:id="@+id/menuRestaurants"
+            android:title="@string/stringRestaurants" />
+        <item android:id="@+id/menuCoupons"
+            android:title="@string/stringCoupons" />
+        <item android:id="@+id/menuHistory"
+            android:title="@string/stringHistory" />
+        <item android:id="@+id/menuAccount"
+            android:title="@string/stringAccount" />
+    </group>
+</menu>

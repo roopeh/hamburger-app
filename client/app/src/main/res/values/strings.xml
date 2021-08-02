@@ -1,12 +1,11 @@
 <resources>
     <string name="app_name">Hamburger</string>
 
-    <string-array name="menu_items_array">
-        <item>Koti</item>
-        <item>Tuotteet</item>
-        <item>Ravintolat</item>
-        <item>Alennuskupongit</item>
-        <item>Tilaushistoria</item>
-        <item>Käyttäjätili</item>
-    </string-array>
+    <!-- Menu content -->
+    <string name="stringHome">Koti</string>
+    <string name="stringProducts">Tuotteet</string>
+    <string name="stringRestaurants">Ravintolat</string>
+    <string name="stringCoupons">Alennuskupongit</string>
+    <string name="stringHistory">Tilaushistoria</string>
+    <string name="stringAccount">Käyttäjätili</string>
 </resources>
