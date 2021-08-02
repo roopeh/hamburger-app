@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
@@ -27,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     private CharSequence mTitle;
     androidx.appcompat.app.ActionBarDrawerToggle mDrawerToggle;
-    private ImageButton menuCloseButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         mToolbarItemTitles = getResources().getStringArray(R.array.menu_items_array);
         mDrawerLayout = findViewById(R.id.drawer);
         mDrawerList = findViewById(R.id.menuContent);
-        menuCloseButton = findViewById(R.id.menuCloseButton);
+        ImageButton menuCloseButton = findViewById(R.id.menuCloseButton);
         initMenu();
 
         // Create menu content
@@ -57,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         menuCloseButton.setOnClickListener(v -> mDrawerLayout.closeDrawers());
         initMenuToggle();
+
+        // Load home fragment on startup
+        loadFragment(new HomeFragment(), 0);
     }
 
     private class MenuItemClickListener implements ListView.OnItemClickListener {
@@ -97,6 +98,21 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
+        loadFragment(fragment, pos);
+    }
+
+    void initMenu() {
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+    }
+
+    void initMenuToggle() {
+        mDrawerToggle = new androidx.appcompat.app.ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name, R.string.app_name);
+        mDrawerToggle.syncState();
+    }
+
+    void loadFragment(Fragment fragment, int pos) {
         // TODO: handle fragment transition in background thread
         if (fragment != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
@@ -109,17 +125,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Log.d("DEBUG_TAG", "Error while creating a fragment");
         }
-    }
-
-    void initMenu() {
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-    }
-
-    void initMenuToggle() {
-        mDrawerToggle = new androidx.appcompat.app.ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name, R.string.app_name);
-        mDrawerToggle.syncState();
     }
 
     @Override
