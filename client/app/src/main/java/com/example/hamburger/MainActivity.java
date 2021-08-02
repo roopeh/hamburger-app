@@ -69,13 +69,35 @@ public class MainActivity extends AppCompatActivity {
     private void selectItem(int pos) {
         Fragment fragment = null;
         switch (pos) {
+            // Home
             case 0:
+                fragment = new HomeFragment();
+                break;
+            // Products
+            case 1:
+                fragment = new ProductsFragment();
+                break;
+            // Restaurants
+            case 2:
+                fragment = new RestaurantFragment();
+                break;
+            // Coupons
+            case 3:
+                fragment = new CouponFragment();
+                break;
+            // History
+            case 4:
+                fragment = new HistoryFragment();
+                break;
+            // Account
+            case 5:
                 // TODO
                 break;
             default:
                 break;
         }
 
+        // TODO: handle fragment transition in background thread
         if (fragment != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.toolbar_content_frame, fragment).commit();
@@ -83,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
             mDrawerList.setItemChecked(pos, true);
             mDrawerList.setSelection(pos);
             setTitle(mToolbarItemTitles[pos]);
-            mDrawerLayout.closeDrawer(mDrawerList);
+            mDrawerLayout.closeDrawers();
         } else {
             Log.d("DEBUG_TAG", "Error while creating a fragment");
         }
