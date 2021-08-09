@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageButton;
-import android.widget.ListView;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -23,7 +22,6 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     // Menu related
     private DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
     Toolbar toolbar;
     private CharSequence mTitle;
     androidx.appcompat.app.ActionBarDrawerToggle mDrawerToggle;
@@ -34,21 +32,20 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         // Initialise menu
+        NavigationView mDrawerList = findViewById(R.id.navigationView);
         mTitle = getTitle();
         mDrawerLayout = findViewById(R.id.drawer);
-        ImageButton menuCloseButton = findViewById(R.id.menuCloseButton);
+        ImageButton menuCloseButton = mDrawerList.getHeaderView(0).findViewById(R.id.menuCloseButton);
         initMenu();
-
-        NavigationView mDrawerList = findViewById(R.id.navigationView);
-        mDrawerList.setNavigationItemSelectedListener(this);
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        // Set menu listeners
         mDrawerLayout.addDrawerListener(mDrawerToggle);
-        // TODO: fix this
-        //menuCloseButton.setOnClickListener(v -> mDrawerLayout.closeDrawers());
+        menuCloseButton.setOnClickListener(v -> mDrawerLayout.closeDrawers());
+        mDrawerList.setNavigationItemSelectedListener(this);
         initMenuToggle();
 
         // Load home fragment on startup
