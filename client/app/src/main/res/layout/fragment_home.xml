@@ -5,10 +5,30 @@
     android:layout_height="match_parent"
     >
 
+    <LinearLayout
+        android:id="@+id/testButtons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/testLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Log In" />
+        <Button
+            android:id="@+id/testLogout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Log Out" />
+    </LinearLayout>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_below="@+id/testButtons"
         android:textAlignment="center"
         android:text="Home"
         android:textSize="20sp" />

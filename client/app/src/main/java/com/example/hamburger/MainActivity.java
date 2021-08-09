@@ -20,11 +20,23 @@ import androidx.fragment.app.FragmentManager;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private User _user = null;
     // Menu related
     private DrawerLayout mDrawerLayout;
     Toolbar toolbar;
     private CharSequence mTitle;
     androidx.appcompat.app.ActionBarDrawerToggle mDrawerToggle;
+
+    public void setUser(String name, String pass) {
+        _user = new User(name, pass);
+    }
+
+    public void logoutUser() {
+        if (_user == null)
+            return;
+
+        _user = null;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,10 +121,16 @@ public class MainActivity extends AppCompatActivity
                 fragment = new RestaurantFragment();
                 break;
             case R.id.menuCoupons:
-                fragment = new CouponFragment();
+                if (_user == null)
+                    fragment = new PrivilegedFragment();
+                else
+                    fragment = new CouponFragment();
                 break;
             case R.id.menuHistory:
-                fragment = new HistoryFragment();
+                if (_user == null)
+                    fragment = new PrivilegedFragment();
+                else
+                    fragment = new HistoryFragment();
                 break;
             case R.id.menuAccount:
                 // TODO
