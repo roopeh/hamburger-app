@@ -3,7 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:layout_marginStart="@dimen/background_padding_left"
+    android:layout_marginEnd="@dimen/background_padding_right"
+    android:layout_marginBottom="@dimen/background_padding_bottom"
+    android:background="@drawable/rounded_main">
+
 
     <TextView
         android:layout_width="match_parent"
