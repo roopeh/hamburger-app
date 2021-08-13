@@ -5,7 +5,7 @@
     android:layout_marginStart="@dimen/background_padding_left"
     android:layout_marginEnd="@dimen/background_padding_right"
     android:layout_marginBottom="@dimen/background_padding_bottom"
-    android:background="@drawable/rounded_main">
+    android:theme="@style/DefaultContentStyle">
 
     <LinearLayout
         android:id="@+id/testButtons"
