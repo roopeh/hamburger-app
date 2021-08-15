@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <style name="DefaultContentStyle">
-        <item name="android:paddingStart">@dimen/content_padding_left</item>
-        <item name="android:paddingEnd">@dimen/content_padding_right</item>
-        <item name="android:paddingBottom">@dimen/content_padding_bottom</item>
-        <item name="android:background">@drawable/rounded_main</item>
-    </style>
-</resources>
