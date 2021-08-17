@@ -2,7 +2,6 @@ package com.example.hamburger;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import androidx.fragment.app.Fragment;
 
@@ -22,21 +22,37 @@ public class RestaurantFragment extends Fragment {
         ListView restaurantList = rootView.findViewById(R.id.restaurantList);
 
         // Dummy content
-        List<String> tests = new ArrayList<>();
-        for (int i = 1; i < 20; ++i)
-            tests.add("Restaurant " + i +"\nOsoite, Kaupunki");
+        List<Restaurant> tests = new ArrayList<>();
+        for (int i = 1; i < 20; ++i) {
+            Restaurant res = new Restaurant("Restaurant " + i);
+            res.setLocation("Testikatu " + (i * 12), "Oulu");
+
+            res.setHours(0, "08", "10");
+            res.setHours(1, "11", "13");
+            res.setHours(2, "14", "16");
+            res.setHours(3, "16", "18");
+            res.setHours(4, "20", "23");
+            res.setHours(6, "10", "14");
+
+            tests.add(res);
+        }
 
         RestaurantListAdapter test = new RestaurantListAdapter(getContext(), tests);
         restaurantList.setAdapter(test);
+
+        restaurantList.setOnItemClickListener((parent, view, position, id) -> {
+            Restaurant res = (Restaurant)parent.getItemAtPosition(position);
+            Objects.requireNonNull(((MainActivity)getActivity())).loadFragment(new RestaurantInfoFragment(res));
+        });
         return rootView;
     }
 }
 
 class RestaurantListAdapter extends BaseAdapter {
     Context _context;
-    List<String> _list;
+    List<Restaurant> _list;
 
-    public RestaurantListAdapter(Context cont, List<String> list) {
+    public RestaurantListAdapter(Context cont, List<Restaurant> list) {
         _context = cont;
         _list = list;
     }
@@ -59,8 +75,24 @@ class RestaurantListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = View.inflate(_context, R.layout.restaurant_list_item, null);
-        TextView content = view.findViewById(R.id.restaurantListItemText);
-        content.setText(_list.get(position));
+        Restaurant res = _list.get(position);
+
+        TextView name = view.findViewById(R.id.restaurantListItemName);
+        name.setText(res.getName());
+
+        TextView location = view.findViewById(R.id.restaurantListItemLocation);
+        location.setText(res.getLocationString());
+
+        // TODO
+        //TextView dist = view.findViewById(R.id.restaurantListItemDistance);
+        //dist.setText();
+
+        TextView status = view.findViewById(R.id.restaurantListItemStatus);
+        if (res.isRestaurantOpen())
+            status.setText("Open");
+        else
+            status.setText("Closed");
+
         return view;
     }
 }

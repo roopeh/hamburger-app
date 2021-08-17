@@ -7,11 +7,45 @@
     android:background="@drawable/rounded_restaurant_item">
 
     <TextView
-        android:id="@+id/restaurantListItemText"
-        android:layout_width="match_parent"
+        android:id="@+id/restaurantListItemName"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:text="Item"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:text="Name"
+        />
 
+    <TextView
+        android:id="@+id/restaurantListItemLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/restaurantListItemName"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:text="Location"
+        />
+
+    <TextView
+        android:id="@+id/restaurantListItemDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/restaurantListItemName"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:text="Distance"
+        />
+
+    <TextView
+        android:id="@+id/restaurantListItemStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/restaurantListItemLocation"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:text="Status"
+        />
 </RelativeLayout>

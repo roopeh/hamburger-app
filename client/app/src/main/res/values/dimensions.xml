@@ -8,5 +8,8 @@
     <!-- Content -->
     <dimen name="content_padding_left">17dp</dimen>
     <dimen name="content_padding_right">17dp</dimen>
+    <dimen name="content_padding_top">17dp</dimen>
     <dimen name="content_padding_bottom">17dp</dimen>
+    <dimen name="line_padding_top">10dp</dimen>
+    <dimen name="line_padding_bottom">10dp</dimen>
 </resources>
