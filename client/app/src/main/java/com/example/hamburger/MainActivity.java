@@ -121,15 +121,15 @@ public class MainActivity extends AppCompatActivity
                 fragment = new RestaurantFragment();
                 break;
             case R.id.menuCoupons:
-                if (_user == null)
+                /*if (_user == null)
                     fragment = new PrivilegedFragment();
-                else
+                else*/
                     fragment = new CouponFragment();
                 break;
             case R.id.menuHistory:
-                if (_user == null)
+                /*if (_user == null)
                     fragment = new PrivilegedFragment();
-                else
+                else*/
                     fragment = new HistoryFragment();
                 break;
             case R.id.menuAccount:

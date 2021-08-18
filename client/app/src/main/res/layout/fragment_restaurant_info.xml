@@ -18,8 +18,7 @@
         android:paddingEnd="@dimen/content_padding_right"
         android:paddingTop="@dimen/content_padding_top"
         android:paddingBottom="@dimen/content_padding_bottom"
-        android:background="@drawable/rounded_inner_main"
-        >
+        android:background="@drawable/rounded_inner_main">
 
         <ImageButton
             android:id="@+id/restaurantInfoBackButton"
@@ -41,8 +40,7 @@
             android:layout_centerHorizontal="true"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:textStyle="bold"
-            />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/restaurantInfoStatus"
@@ -51,8 +49,7 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@id/restaurantInfoName"
             android:textSize="15sp"
-            android:textColor="@color/black"
-            />
+            android:textColor="@color/black" />
 
         <View
             android:id="@+id/restaurantInfoFirstLine"
@@ -76,8 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textSize="15sp"
-                android:textColor="@color/black"
-                />
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/restaurantInfoMiddleHours"
@@ -86,8 +82,7 @@
                 android:layout_weight="1"
                 android:textSize="15sp"
                 android:textColor="@color/black"
-                android:textAlignment="center"
-                />
+                android:textAlignment="center" />
 
             <TextView
                 android:id="@+id/restaurantInfoRightHours"
@@ -96,8 +91,7 @@
                 android:layout_weight="1"
                 android:textSize="15sp"
                 android:textColor="@color/black"
-                android:textAlignment="textEnd"
-                />
+                android:textAlignment="textEnd" />
         </LinearLayout>
 
         <View
@@ -116,8 +110,6 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@id/restaurantInfoSecondLine"
             android:textSize="15sp"
-            android:textColor="@color/black"
-            />
-
+            android:textColor="@color/black" />
     </RelativeLayout>
 </RelativeLayout>
