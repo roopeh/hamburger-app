@@ -21,6 +21,19 @@
         android:background="@drawable/rounded_inner_main"
         >
 
+        <ImageButton
+            android:id="@+id/restaurantInfoBackButton"
+            android:background="@android:color/transparent"
+            android:src="@drawable/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:maxWidth="40dp"
+            android:maxHeight="40dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:contentDescription="Return" />
+
         <TextView
             android:id="@+id/restaurantInfoName"
             android:layout_width="wrap_content"
