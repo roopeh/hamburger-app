@@ -12,19 +12,10 @@
     android:background="@drawable/rounded_main">
 
     <TextView
-        android:id="@+id/productsHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:theme="@style/DefaultHeaderStyle"
-        android:text="Choose category" />
-
-    <GridView
-        android:id="@+id/productsMainGrid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/productsHeader"
-        android:layout_marginTop="@dimen/content_padding_left"
-        android:numColumns="2"
-        />
-
+        android:layout_centerInParent="true"
+        android:textAlignment="center"
+        android:text="Products"
+        android:textSize="20sp" />
 </RelativeLayout>
