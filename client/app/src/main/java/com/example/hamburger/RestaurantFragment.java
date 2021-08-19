@@ -27,12 +27,12 @@ public class RestaurantFragment extends Fragment {
             Restaurant res = new Restaurant("Restaurant " + i);
             res.setLocation("Testikatu " + (i * 12), "Oulu");
 
-            res.setHours(0, "08", "10");
-            res.setHours(1, "11", "13");
-            res.setHours(2, "14", "16");
-            res.setHours(3, "16", "18");
-            res.setHours(4, "20", "23");
-            res.setHours(6, "10", "14");
+            res.setHours(1, "08", "10");
+            res.setHours(2, "11", "13");
+            res.setHours(3, "14", "16");
+            res.setHours(4, "16", "18");
+            res.setHours(5, "20", "23");
+            res.setHours(7, "10", "14");
 
             tests.add(res);
         }

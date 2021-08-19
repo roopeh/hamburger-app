@@ -51,7 +51,7 @@ public class Restaurant {
     }
 
     public void setHours(int weekday, String start, String end) {
-        if (weekday > 6)
+        if (weekday > Calendar.SATURDAY)
             return;
 
         dates.setHours(weekday, start + end);
@@ -75,23 +75,23 @@ class RestaurantDates {
         if (weekday > Calendar.SATURDAY)
             return -1;
 
-        if (dates[weekday].isEmpty())
+        if (dates[weekday - 1].isEmpty())
             return -1;
 
-        return Integer.parseInt(dates[weekday].substring(0, 2));
+        return Integer.parseInt(dates[weekday - 1].substring(0, 2));
     }
 
     final public int getEndHoursForDay(int weekday) {
         if (weekday > Calendar.SATURDAY)
             return -1;
 
-        if (dates[weekday].isEmpty())
+        if (dates[weekday - 1].isEmpty())
             return -1;
 
-        return Integer.parseInt(dates[weekday].substring(2, 4));
+        return Integer.parseInt(dates[weekday - 1].substring(2, 4));
     }
 
     public void setHours(int weekday, String hours) {
-        dates[weekday] = hours;
+        dates[weekday - 1] = hours;
     }
 }

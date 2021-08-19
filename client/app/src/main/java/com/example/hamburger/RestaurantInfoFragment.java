@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.util.Calendar;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -34,21 +35,21 @@ public class RestaurantInfoFragment extends Fragment {
 
         TextView hours = rootView.findViewById(R.id.restaurantInfoLeftHours);
         String hourStr =
-                "Ma " + generateHourStringForDay(1) + "\n" +
-                "To " + generateHourStringForDay(4) + "\n" +
-                "Su " + generateHourStringForDay(0);
+                "Ma " + generateHourStringForDay(Calendar.MONDAY) + "\n" +
+                "To " + generateHourStringForDay(Calendar.THURSDAY) + "\n" +
+                "Su " + generateHourStringForDay(Calendar.SUNDAY);
         hours.setText(hourStr);
 
         hours = rootView.findViewById(R.id.restaurantInfoMiddleHours);
         hourStr =
-                "Ti " + generateHourStringForDay(2) + "\n" +
-                "Pe " + generateHourStringForDay(5);
+                "Ti " + generateHourStringForDay(Calendar.TUESDAY) + "\n" +
+                "Pe " + generateHourStringForDay(Calendar.FRIDAY);
         hours.setText(hourStr);
 
         hours = rootView.findViewById(R.id.restaurantInfoRightHours);
         hourStr =
-                "Ke " + generateHourStringForDay(3) + "\n" +
-                "La " + generateHourStringForDay(6);
+                "Ke " + generateHourStringForDay(Calendar.WEDNESDAY) + "\n" +
+                "La " + generateHourStringForDay(Calendar.SATURDAY);
         hours.setText(hourStr);
 
         TextView address = rootView.findViewById(R.id.restaurantInfoAddress);
