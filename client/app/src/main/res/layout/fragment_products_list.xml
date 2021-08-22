@@ -3,19 +3,28 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginStart="@dimen/background_padding_left"
-    android:layout_marginEnd="@dimen/background_padding_right"
+    android:layout_marginStart="@dimen/background_padding_side"
+    android:layout_marginEnd="@dimen/background_padding_side"
     android:layout_marginBottom="@dimen/background_padding_bottom"
-    android:paddingStart="@dimen/content_padding_left"
-    android:paddingEnd="@dimen/content_padding_right"
+    android:paddingStart="@dimen/content_padding_side"
+    android:paddingEnd="@dimen/content_padding_side"
     android:paddingBottom="@dimen/content_padding_bottom"
     android:background="@drawable/rounded_main">
 
     <TextView
+        android:id="@+id/productsListHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:theme="@style/DefaultHeaderStyle"
+        android:text="" />
+
+    <GridView
+        android:id="@+id/productsListGrid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textAlignment="center"
-        android:text="Products"
-        android:textSize="20sp" />
+        android:layout_below="@id/productsListHeader"
+        android:layout_marginTop="@dimen/content_padding_side"
+        android:numColumns="2"
+        android:horizontalSpacing="@dimen/content_padding_side"
+        android:verticalSpacing="@dimen/content_padding_side"/>
 </RelativeLayout>

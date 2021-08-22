@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import androidx.fragment.app.Fragment;
 
@@ -26,6 +27,11 @@ public class ProductsFragment extends Fragment {
         GridView grid = rootView.findViewById(R.id.productsMainGrid);
         ProductsMainGridAdapter adapter = new ProductsMainGridAdapter(getContext(), content);
         grid.setAdapter(adapter);
+        grid.setOnItemClickListener(((parent, view, position, id) -> {
+            final String item = (String)parent.getItemAtPosition(position);
+            final int category = item.equals("Ateriat") ? ProductsListFragment.CATEGORY_MEAL : ProductsListFragment.CATEGORY_HAMBURGER;
+            Objects.requireNonNull((MainActivity)getActivity()).loadFragment(new ProductsListFragment(category));
+        }));
 
         return rootView;
     }
