@@ -23,9 +23,9 @@ public class MainActivity extends AppCompatActivity
     private User _user = null;
     // Menu related
     private DrawerLayout mDrawerLayout;
-    Toolbar toolbar;
+    private Toolbar toolbar;
     private CharSequence mTitle;
-    androidx.appcompat.app.ActionBarDrawerToggle mDrawerToggle;
+    private androidx.appcompat.app.ActionBarDrawerToggle mDrawerToggle;
 
     public void setUser(String name, String pass) {
         _user = new User(name, pass);

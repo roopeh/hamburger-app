@@ -8,4 +8,19 @@
     <string name="stringCoupons">Alennuskupongit</string>
     <string name="stringHistory">Tilaushistoria</string>
     <string name="stringAccount">Käyttäjätili</string>
+
+    <!-- Products -->
+    <!-- Meal drinks -->
+    <string-array name="stringMealDrinks">
+        <item>Ei valittu</item>
+        <item>Cola</item>
+        <item>Jaffa</item>
+        <item>Vesi</item>
+    </string-array>
+    <!-- Meal extras -->
+    <string-array name="stringMealExtras">
+        <item>Ei valittu</item>
+        <item>Ranskalaiset perunat</item>
+        <item>Bataattiranskalaiset</item>
+    </string-array>
 </resources>

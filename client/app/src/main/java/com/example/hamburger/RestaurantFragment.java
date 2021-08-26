@@ -41,7 +41,7 @@ public class RestaurantFragment extends Fragment {
         restaurantList.setAdapter(test);
 
         restaurantList.setOnItemClickListener((parent, view, position, id) -> {
-            Restaurant res = (Restaurant)parent.getItemAtPosition(position);
+            final Restaurant res = (Restaurant)parent.getItemAtPosition(position);
             Objects.requireNonNull(((MainActivity)getActivity())).loadFragment(new RestaurantInfoFragment(res));
         });
         return rootView;
@@ -49,8 +49,8 @@ public class RestaurantFragment extends Fragment {
 }
 
 class RestaurantListAdapter extends BaseAdapter {
-    Context _context;
-    List<Restaurant> _list;
+    final private Context _context;
+    final private List<Restaurant> _list;
 
     public RestaurantListAdapter(Context cont, List<Restaurant> list) {
         _context = cont;

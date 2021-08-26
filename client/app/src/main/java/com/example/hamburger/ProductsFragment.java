@@ -38,8 +38,8 @@ public class ProductsFragment extends Fragment {
 }
 
 class ProductsMainGridAdapter extends BaseAdapter {
-    Context _context;
-    List<String> _content;
+    final private Context _context;
+    final private List<String> _content;
 
     public ProductsMainGridAdapter(Context context, List<String> content) {
         _context = context;

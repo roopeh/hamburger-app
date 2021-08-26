@@ -11,10 +11,27 @@
     android:paddingBottom="@dimen/content_padding_bottom"
     android:background="@drawable/rounded_main">
 
+    <ImageButton
+        android:id="@+id/productsListBackButton"
+        android:background="@android:color/transparent"
+        android:src="@drawable/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="5dp"
+        android:maxWidth="40dp"
+        android:maxHeight="40dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:contentDescription="Return" />
+
     <TextView
         android:id="@+id/productsListHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/background_padding_side"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@id/productsListBackButton"
         android:theme="@style/DefaultHeaderStyle"
         android:text="" />
 
