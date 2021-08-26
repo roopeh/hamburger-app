@@ -1,4 +1,4 @@
-package com.example.hamburger;
+package com.roopeh.app.hamburger;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

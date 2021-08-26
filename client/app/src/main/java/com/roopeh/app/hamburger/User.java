@@ -1,4 +1,4 @@
-package com.example.hamburger;
+package com.roopeh.app.hamburger;
 
 public class User {
     private String _user = "";

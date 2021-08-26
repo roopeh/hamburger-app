@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.example.hamburger.SquareGridview xmlns:android="http://schemas.android.com/apk/res/android"
+<com.roopeh.app.hamburger.SquareGridview xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/rounded_inner_main"
@@ -21,4 +21,4 @@
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="17sp" />
-</com.example.hamburger.SquareGridview>
+</com.roopeh.app.hamburger.SquareGridview>

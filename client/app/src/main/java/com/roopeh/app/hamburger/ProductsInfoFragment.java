@@ -1,4 +1,4 @@
-package com.example.hamburger;
+package com.roopeh.app.hamburger;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,8 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.Objects;
 

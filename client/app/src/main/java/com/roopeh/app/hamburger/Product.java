@@ -1,4 +1,4 @@
-package com.example.hamburger;
+package com.roopeh.app.hamburger;
 
 public class Product {
     final private String _name;

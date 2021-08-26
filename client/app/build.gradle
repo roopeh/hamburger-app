@@ -6,7 +6,7 @@ android {
     compileSdkVersion 29
 
     defaultConfig {
-        applicationId "com.example.hamburger"
+        applicationId "com.roopeh.app.hamburger"
         minSdkVersion 29
         targetSdkVersion 29
         versionCode 1
