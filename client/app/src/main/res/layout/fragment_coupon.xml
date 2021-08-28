@@ -11,13 +11,20 @@
     android:paddingBottom="@dimen/content_padding_bottom"
     android:background="@drawable/rounded_main">
 
-
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/couponsHeader"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textAlignment="center"
-        android:text="Coupons"
-        android:textSize="20sp" />
+        android:text="Alennuskupongit"
+        android:theme="@style/DefaultHeaderStyle" />
 
+    <ListView
+        android:id="@+id/couponsList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/content_padding_side"
+        android:layout_below="@id/couponsHeader"
+        android:listSelector="@android:color/transparent"
+        android:divider="@color/backgroundInner"
+        android:dividerHeight="15dp" />
 </RelativeLayout>
