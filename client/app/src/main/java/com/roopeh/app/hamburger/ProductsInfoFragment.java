@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 
 public class ProductsInfoFragment extends Fragment {
     final private Product _product;
+    private int _quantity;
 
     public ProductsInfoFragment(Product product) {
         _product = product;
@@ -67,6 +68,22 @@ public class ProductsInfoFragment extends Fragment {
             layout.setLayoutParams(params);
         }
 
+        ImageButton amountIncr = rootView.findViewById(R.id.productsInfoAmountIncrease);
+        ImageButton amountDecr = rootView.findViewById(R.id.productsInfoAmountDecrease);
+
+        amountIncr.setOnClickListener(v -> updateQuantity(rootView, 1));
+        amountDecr.setOnClickListener(v -> updateQuantity(rootView, -1));
+
+        updateQuantity(rootView, 1);
         return rootView;
+    }
+
+    private void updateQuantity(View rootView, int amount) {
+        _quantity += amount;
+        if (_quantity <= 1)
+            _quantity = 1;
+
+        TextView amountText = rootView.findViewById(R.id.productsInfoAmountText);
+        amountText.setText(_quantity + "x");
     }
 }
