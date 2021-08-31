@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="@dimen/background_padding_side"
+    android:layout_marginEnd="@dimen/background_padding_side"
+    android:layout_marginBottom="@dimen/background_padding_bottom"
+    android:paddingStart="@dimen/content_padding_side"
+    android:paddingEnd="@dimen/content_padding_side"
+    android:paddingBottom="@dimen/content_padding_bottom"
+    android:background="@drawable/rounded_main">
+
+    <TextView
+        android:id="@+id/loginHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:theme="@style/DefaultHeaderStyle" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/content_padding_side"
+        android:layout_below="@id/loginHeader"
+        android:paddingStart="@dimen/content_padding_side"
+        android:paddingEnd="@dimen/content_padding_side"
+        android:paddingTop="@dimen/content_padding_top"
+        android:paddingBottom="@dimen/content_padding_bottom"
+        android:background="@drawable/rounded_inner_main">
+
+        <TextView
+            android:id="@+id/loginUsernameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/background_padding_side"
+            android:textColor="@color/black"
+            android:text="Käyttäjätunnus" />
+
+        <EditText
+            android:id="@+id/loginUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/loginUsernameText"
+            android:layout_marginTop="5dp"
+            android:background="@color/white" />
+
+        <TextView
+            android:id="@+id/loginPasswordText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/loginUsername"
+            android:layout_marginTop="@dimen/content_padding_side"
+            android:layout_marginStart="@dimen/background_padding_side"
+            android:textColor="@color/black"
+            android:text="Salasana" />
+
+        <EditText
+            android:id="@+id/loginPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/loginPasswordText"
+            android:layout_marginTop="5dp"
+            android:background="@color/white" />
+
+        <TextView
+            android:id="@+id/loginRegisterLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:layout_marginStart="@dimen/background_padding_side"
+            android:layout_below="@id/loginPassword"
+            android:textColor="@color/black"
+            android:text="Ei tiliä?\nRekisteröidy!" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/loginPassword"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="@dimen/content_padding_side"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/loginButton"
+                android:src="@drawable/menu_close_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:maxWidth="40dp"
+                android:maxHeight="40dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:background="@android:color/transparent"
+                android:contentDescription="Login" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:text="Kirjaudu" />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

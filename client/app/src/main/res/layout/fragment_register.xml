@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/background_padding_side"
+        android:layout_marginEnd="@dimen/background_padding_side"
+        android:layout_marginBottom="@dimen/background_padding_bottom"
+        android:paddingStart="@dimen/content_padding_side"
+        android:paddingEnd="@dimen/content_padding_side"
+        android:paddingBottom="@dimen/content_padding_bottom"
+        android:background="@drawable/rounded_main">
+
+        <TextView
+            android:id="@+id/registerHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rekisteröidy"
+            android:theme="@style/DefaultHeaderStyle" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/content_padding_side"
+            android:layout_below="@id/registerHeader"
+            android:paddingStart="@dimen/content_padding_side"
+            android:paddingEnd="@dimen/content_padding_side"
+            android:paddingTop="@dimen/content_padding_top"
+            android:paddingBottom="@dimen/content_padding_bottom"
+            android:background="@drawable/rounded_inner_main">
+
+            <TextView
+                android:id="@+id/registerUsernameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/background_padding_side"
+                android:textColor="@color/black"
+                android:text="Käyttäjätunnus" />
+
+            <EditText
+                android:id="@+id/registerUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/registerUsernameText"
+                android:layout_marginTop="5dp"
+                android:background="@color/white" />
+
+            <TextView
+                android:id="@+id/registerFirstnameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/content_padding_side"
+                android:layout_marginStart="@dimen/background_padding_side"
+                android:layout_below="@id/registerUsername"
+                android:textColor="@color/black"
+                android:text="Etunimi" />
+
+            <EditText
+                android:id="@+id/registerFirstname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/registerFirstnameText"
+                android:layout_marginTop="5dp"
+                android:background="@color/white" />
+
+            <TextView
+                android:id="@+id/registerLastnameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/content_padding_side"
+                android:layout_marginStart="@dimen/background_padding_side"
+                android:layout_below="@id/registerFirstname"
+                android:textColor="@color/black"
+                android:text="Sukunimi" />
+
+            <EditText
+                android:id="@+id/registerLastname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/registerLastnameText"
+                android:layout_marginTop="5dp"
+                android:background="@color/white" />
+
+            <TextView
+                android:id="@+id/registerEmailText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/content_padding_side"
+                android:layout_marginStart="@dimen/background_padding_side"
+                android:layout_below="@id/registerLastname"
+                android:textColor="@color/black"
+                android:text="Sähköposti" />
+
+            <EditText
+                android:id="@+id/registerEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/registerEmailText"
+                android:layout_marginTop="5dp"
+                android:background="@color/white" />
+
+            <TextView
+                android:id="@+id/registerNumberText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/content_padding_side"
+                android:layout_marginStart="@dimen/background_padding_side"
+                android:layout_below="@id/registerEmail"
+                android:textColor="@color/black"
+                android:text="Puhelinnumero" />
+
+            <EditText
+                android:id="@+id/registerNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/registerNumberText"
+                android:layout_marginTop="5dp"
+                android:background="@color/white" />
+
+            <TextView
+                android:id="@+id/registerPass1Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/content_padding_side"
+                android:layout_marginStart="@dimen/background_padding_side"
+                android:layout_below="@id/registerNumber"
+                android:textColor="@color/black"
+                android:text="Salasana" />
+
+            <EditText
+                android:id="@+id/registerPass1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/registerPass1Text"
+                android:layout_marginTop="5dp"
+                android:inputType="textPassword"
+                android:background="@color/white" />
+
+            <TextView
+                android:id="@+id/registerPass2Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/content_padding_side"
+                android:layout_marginStart="@dimen/background_padding_side"
+                android:layout_below="@id/registerPass1"
+                android:textColor="@color/black"
+                android:text="Vahvista salasana" />
+
+            <EditText
+                android:id="@+id/registerPass2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/registerPass2Text"
+                android:layout_marginTop="5dp"
+                android:inputType="textPassword"
+                android:background="@color/white" />
+
+            <CheckBox
+                android:id="@+id/registerShowPass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/registerPass2"
+                android:layout_marginStart="5dp"
+                android:buttonTint="@color/white"
+                android:text="Näytä salasanat"
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/registerShowPass"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/registerButton"
+                    android:src="@drawable/menu_close_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:maxWidth="40dp"
+                    android:maxHeight="40dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Register" />
+
+                <TextView
+                    android:id="@+id/registerButtonText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:text="Rekisteröidy" />
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

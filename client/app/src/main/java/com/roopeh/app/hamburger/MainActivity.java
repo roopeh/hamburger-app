@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -121,19 +122,23 @@ public class MainActivity extends AppCompatActivity
                 fragment = new RestaurantFragment();
                 break;
             case R.id.menuCoupons:
-                /*if (_user == null)
-                    fragment = new PrivilegedFragment();
-                else*/
+                if (_user == null) {
+                    Toast.makeText(this, "Sinun täytyy olla kirjautunut sisään", Toast.LENGTH_LONG).show();
+                    fragment = new LoginFragment();
+                } else {
                     fragment = new CouponFragment();
+                }
                 break;
             case R.id.menuHistory:
-                /*if (_user == null)
-                    fragment = new PrivilegedFragment();
-                else*/
+                if (_user == null) {
+                    Toast.makeText(this, "Sinun täytyy olla kirjautunut sisään", Toast.LENGTH_LONG).show();
+                    fragment = new LoginFragment();
+                } else {
                     fragment = new HistoryFragment();
+                }
                 break;
             case R.id.menuAccount:
-                // TODO
+                fragment = new LoginFragment();
                 break;
             default:
                 break;
