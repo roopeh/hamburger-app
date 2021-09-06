@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="@dimen/background_padding_side"
+    android:layout_marginEnd="@dimen/background_padding_side"
+    android:layout_marginBottom="@dimen/background_padding_bottom"
+    android:paddingStart="@dimen/content_padding_side"
+    android:paddingEnd="@dimen/content_padding_side"
+    android:paddingBottom="@dimen/content_padding_bottom"
+    android:background="@drawable/rounded_main">
+
+    <ImageButton
+        android:id="@+id/shopCartBackButton"
+        android:background="@android:color/transparent"
+        android:src="@drawable/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="-4dp"
+        android:maxWidth="40dp"
+        android:maxHeight="40dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:contentDescription="Return" />
+
+    <TextView
+        android:id="@+id/shopCartHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/background_padding_side"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@id/shopCartBackButton"
+        android:theme="@style/DefaultHeaderStyle"
+        android:text="Shopping Cart" />
+
+    <!-- "Empty shopping cart" view -->
+    <ScrollView
+        android:id="@+id/shopCartEmptyView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/background_padding_top"
+        android:layout_below="@id/shopCartHeader"
+        android:visibility="invisible">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/background_padding_side"
+            android:background="@drawable/rounded_inner_main">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TEST" />
+        </RelativeLayout>
+    </ScrollView>
+
+    <!-- "Shopping cart with items" view -->
+    <ScrollView
+        android:id="@+id/shopCartDefaultView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/background_padding_top"
+        android:layout_below="@id/shopCartHeader"
+        android:visibility="invisible">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/background_padding_side"
+            android:background="@drawable/rounded_inner_main">
+
+            <View
+                android:id="@+id/shopCartFirstLine"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/background_padding_side"
+                android:layout_marginBottom="@dimen/line_padding_bottom"
+                android:background="@color/defaultButtonBackground" />
+
+            <TextView
+                android:id="@+id/shopCartProductsHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/shopCartFirstLine"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:text="Tuotteet" />
+
+            <ListView
+                android:id="@+id/shopCartProducts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/content_padding_side"
+                android:layout_marginTop="@dimen/background_padding_top"
+                android:layout_below="@id/shopCartProductsHeader" />
+
+            <View
+                android:id="@+id/shopCartSecondLine"
+                android:layout_width="match_parent"
+                android:layout_below="@id/shopCartProducts"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/background_padding_side"
+                android:layout_marginBottom="@dimen/line_padding_bottom"
+                android:background="@color/defaultButtonBackground" />
+
+            <TextView
+                android:id="@+id/shopCartCouponHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/shopCartSecondLine"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:text="Alennuskuponki" />
+
+            <FrameLayout
+                android:id="@+id/shopCartCouponsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/background_padding_top"
+                android:layout_below="@id/shopCartCouponHeader"
+                android:background="@drawable/products_info_spinner">
+
+                <Spinner
+                    android:id="@+id/shopCartCoupons"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </FrameLayout>
+
+            <View
+                android:id="@+id/shopCartThirdLine"
+                android:layout_width="match_parent"
+                android:layout_below="@id/shopCartCouponsLayout"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/background_padding_side"
+                android:layout_marginBottom="@dimen/line_padding_bottom"
+                android:background="@color/defaultButtonBackground" />
+
+            <TextView
+                android:id="@+id/shopCartPriceHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/shopCartThirdLine"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:text="Summa" />
+
+            <TextView
+                android:id="@+id/shopCartPriceListed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/content_padding_side"
+                android:layout_marginTop="@dimen/background_padding_top"
+                android:layout_below="@id/shopCartPriceHeader"
+                android:textColor="@color/black"
+                android:text="Suomma\nVälisumma" />
+
+            <TextView
+                android:id="@+id/shopCartPriceSumHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/background_padding_top"
+                android:layout_below="@id/shopCartPriceListed"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:text="Summa ynteensä" />
+
+            <TextView
+                android:id="@+id/shopCartPriceSum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/shopCartPriceSumHeader"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:text="100e" />
+
+            <View
+                android:id="@+id/shopCartFourthLine"
+                android:layout_width="match_parent"
+                android:layout_below="@id/shopCartPriceSum"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/background_padding_side"
+                android:layout_marginBottom="@dimen/line_padding_bottom"
+                android:background="@color/defaultButtonBackground" />
+
+            <TextView
+                android:id="@+id/shopCartRestaurantHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/shopCartFourthLine"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:text="Ravintola" />
+
+            <FrameLayout
+                android:id="@+id/shopCartRestaurantsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/background_padding_top"
+                android:layout_below="@id/shopCartRestaurantHeader"
+                android:background="@drawable/products_info_spinner">
+
+                <Spinner
+                    android:id="@+id/shopCartRestaurant"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </FrameLayout>
+
+            <View
+                android:id="@+id/shopCartFifthLine"
+                android:layout_width="match_parent"
+                android:layout_below="@id/shopCartRestaurantsLayout"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/background_padding_side"
+                android:layout_marginBottom="@dimen/line_padding_bottom"
+                android:background="@color/defaultButtonBackground" />
+
+            <TextView
+                android:id="@+id/shopCartPaymentHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/shopCartFifthLine"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:text="Maksu" />
+
+            <RadioGroup
+                android:id="@+id/shopCartPaymentChoose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/background_padding_side"
+                android:layout_below="@id/shopCartPaymentHeader">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/white"
+                    android:text="Maksa kortilla" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-10dp"
+                    android:buttonTint="@color/white"
+                    android:text="Maksa ravintolassa" />
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/shopCartPaymentButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/shopCartPaymentChoose"
+                android:layout_marginTop="@dimen/background_padding_top"
+                android:layout_centerHorizontal="true"
+                android:backgroundTint="@color/defaultButtonBackground"
+                android:textColor="@color/defaultButtonFont"
+                android:text="Tee tilaus" />
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

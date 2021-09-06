@@ -22,6 +22,7 @@ import androidx.fragment.app.FragmentManager;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private User _user = null;
+
     // Menu related
     private DrawerLayout mDrawerLayout;
     private Toolbar toolbar;
@@ -30,6 +31,10 @@ public class MainActivity extends AppCompatActivity
 
     public void setUser(String name, String pass) {
         _user = new User(name, pass);
+    }
+
+    final public User getUser() {
+        return _user;
     }
 
     public void logoutUser() {
