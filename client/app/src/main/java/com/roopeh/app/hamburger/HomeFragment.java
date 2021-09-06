@@ -17,11 +17,9 @@ public class HomeFragment extends Fragment {
 
         Button loginBut = rootView.findViewById(R.id.testLogin);
         Button logoutBut = rootView.findViewById(R.id.testLogout);
-        Button shopBut = rootView.findViewById(R.id.testShopCart);
 
         loginBut.setOnClickListener(v -> Objects.requireNonNull((MainActivity)getActivity()).setUser("test", "test"));
         logoutBut.setOnClickListener(v -> Objects.requireNonNull((MainActivity)getActivity()).logoutUser());
-        shopBut.setOnClickListener(v -> Objects.requireNonNull((MainActivity)getActivity()).loadFragment(new CartFragment()));
 
         return rootView;
     }

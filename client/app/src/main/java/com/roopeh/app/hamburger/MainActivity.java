@@ -2,6 +2,7 @@ package com.roopeh.app.hamburger;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -94,9 +95,24 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_cart_menu, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(@NotNull MenuItem item) {
         if (mDrawerToggle.onOptionsItemSelected(item))
             return true;
+
+        if (item.getItemId() == R.id.shopping_cart_button) {
+            if (_user == null) {
+                Toast.makeText(this, "Sinun täytyy olla kirjautunut sisään", Toast.LENGTH_LONG).show();
+                loadFragment(new LoginFragment());
+            } else {
+                loadFragment(new CartFragment());
+            }
+        }
 
         return super.onOptionsItemSelected(item);
     }
