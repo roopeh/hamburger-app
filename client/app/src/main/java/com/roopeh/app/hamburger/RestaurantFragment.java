@@ -42,7 +42,7 @@ public class RestaurantFragment extends Fragment {
 
         restaurantList.setOnItemClickListener((parent, view, position, id) -> {
             final Restaurant res = (Restaurant)parent.getItemAtPosition(position);
-            Objects.requireNonNull(((MainActivity)getActivity())).loadFragment(new RestaurantInfoFragment(res));
+            Objects.requireNonNull(((MainActivity)getActivity())).loadFragment(new RestaurantInfoFragment(res), false);
         });
         return rootView;
     }

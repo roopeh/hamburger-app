@@ -30,7 +30,7 @@ public class ProductsFragment extends Fragment {
         grid.setOnItemClickListener(((parent, view, position, id) -> {
             final String item = (String)parent.getItemAtPosition(position);
             final int category = item.equals("Ateriat") ? ProductsListFragment.CATEGORY_MEAL : ProductsListFragment.CATEGORY_HAMBURGER;
-            Objects.requireNonNull((MainActivity)getActivity()).loadFragment(new ProductsListFragment(category));
+            Objects.requireNonNull((MainActivity)getActivity()).loadFragment(new ProductsListFragment(category), false);
         }));
 
         return rootView;

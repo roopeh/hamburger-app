@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.Spinner;
@@ -27,10 +29,11 @@ public class CartFragment extends Fragment {
         ScrollView defaultView = rootView.findViewById(R.id.shopCartDefaultView);
 
         User user = Objects.requireNonNull((MainActivity)getActivity()).getUser();
-        if (user != null && user.getCart().isCartEmpty())
-        {
+        // Load correct layout
+        if (!user.getCart().isCartEmpty()) {
             emptyView.setVisibility(View.VISIBLE);
-            //defaultView.setVisibility(View.VISIBLE);
+        } else {
+            defaultView.setVisibility(View.VISIBLE);
         }
 
         ListView shoppingItems = rootView.findViewById(R.id.shopCartProducts);
@@ -60,13 +63,16 @@ public class CartFragment extends Fragment {
         ProductsListAdapter adapter = new ProductsListAdapter(getContext(), tests);
         shoppingItems.setAdapter(adapter);
 
+        ImageButton backButton = rootView.findViewById(R.id.shopCartBackButton);
+        backButton.setOnClickListener(v -> Objects.requireNonNull((MainActivity)getActivity()).returnToPreviousFragment(false));
+
         return rootView;
     }
 }
 
 class ProductsListAdapter extends BaseAdapter {
-    final Context _context;
-    final List<ShoppingItem> _content;
+    final private Context _context;
+    final private List<ShoppingItem> _content;
 
     public ProductsListAdapter(Context context, List<ShoppingItem> content) {
         _context = context;

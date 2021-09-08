@@ -58,7 +58,7 @@ public class RestaurantInfoFragment extends Fragment {
         // TODO: google maps widget
 
         ImageButton backButton = rootView.findViewById(R.id.restaurantInfoBackButton);
-        backButton.setOnClickListener(v -> Objects.requireNonNull(((MainActivity)getActivity())).loadFragment(new RestaurantFragment()));
+        backButton.setOnClickListener(v -> Objects.requireNonNull(((MainActivity)getActivity())).loadFragment(new RestaurantFragment(), false));
 
         return rootView;
     }

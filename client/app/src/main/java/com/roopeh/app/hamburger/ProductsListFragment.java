@@ -54,11 +54,11 @@ public class ProductsListFragment extends Fragment {
         grid.setAdapter(adapter);
         grid.setOnItemClickListener((parent, view, position, id) -> {
             final Product product = (Product)parent.getItemAtPosition(position);
-            Objects.requireNonNull((MainActivity)getActivity()).loadFragment(new ProductsInfoFragment(product));
+            Objects.requireNonNull((MainActivity)getActivity()).loadFragment(new ProductsInfoFragment(product), false);
         });
 
         ImageButton returnButton = rootView.findViewById(R.id.productsListBackButton);
-        returnButton.setOnClickListener(v -> Objects.requireNonNull((MainActivity)getActivity()).loadFragment(new ProductsFragment()));
+        returnButton.setOnClickListener(v -> Objects.requireNonNull((MainActivity)getActivity()).loadFragment(new ProductsFragment(), false));
         return rootView;
     }
 }

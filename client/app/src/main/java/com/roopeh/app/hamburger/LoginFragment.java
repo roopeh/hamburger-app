@@ -18,7 +18,7 @@ public class LoginFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_login, container, false);
 
         TextView registerButton = rootView.findViewById(R.id.loginRegisterLink);
-        registerButton.setOnClickListener(v -> ((MainActivity)getActivity()).loadFragment(new RegisterFragment()));
+        registerButton.setOnClickListener(v -> ((MainActivity)getActivity()).loadFragment(new RegisterFragment(), false));
 
         ImageButton loginButton = rootView.findViewById(R.id.loginButton);
         loginButton.setOnClickListener(v -> {

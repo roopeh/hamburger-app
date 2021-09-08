@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity
         initMenuToggle();
 
         // Load home fragment on startup
-        loadFragment(new HomeFragment());
+        loadFragment(new HomeFragment(), true);
     }
 
     void initMenu() {
@@ -82,15 +82,42 @@ public class MainActivity extends AppCompatActivity
         mDrawerToggle.syncState();
     }
 
-    void loadFragment(Fragment fragment) {
+    void loadFragment(Fragment fragment, boolean onStartUp) {
         // TODO: handle fragment transition in background thread
         if (fragment != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.toolbar_content_frame, fragment).commit();
+            if (!onStartUp)
+                fragmentManager.beginTransaction().replace(R.id.toolbar_content_frame, fragment).addToBackStack(null).commit();
+            else
+                fragmentManager.beginTransaction().replace(R.id.toolbar_content_frame, fragment).commit();
 
             mDrawerLayout.closeDrawers();
         } else {
             Log.d("DEBUG_TAG", "Error while creating a fragment");
+        }
+    }
+
+    final public boolean returnToPreviousFragment(boolean usingDefaultButton) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() > 0 ) {
+            fragmentManager.popBackStackImmediate();
+            return true;
+        }
+
+        // First fragment, return to home by default
+        // but if built-in back button is pressed, do nothing
+        if (!usingDefaultButton) {
+            loadFragment(new HomeFragment(), false);
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!returnToPreviousFragment(true)) {
+            super.onBackPressed();
         }
     }
 
@@ -108,9 +135,9 @@ public class MainActivity extends AppCompatActivity
         if (item.getItemId() == R.id.shopping_cart_button) {
             if (_user == null) {
                 Toast.makeText(this, "Sinun täytyy olla kirjautunut sisään", Toast.LENGTH_LONG).show();
-                loadFragment(new LoginFragment());
+                loadFragment(new LoginFragment(), false);
             } else {
-                loadFragment(new CartFragment());
+                loadFragment(new CartFragment(), false);
             }
         }
 
@@ -165,7 +192,7 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
 
-        loadFragment(fragment);
+        loadFragment(fragment, false);
         return false;
     }
 }
