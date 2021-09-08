@@ -20,6 +20,7 @@ local.properties
 .idea/**/shelf
 .idea/**/vcs.xml
 .idea/**/assetWizardSettings.xml
+.idea/**/deploymentTargetDropDown.xml
 
 # AWS User-specific
 .idea/**/aws.xml
@@ -45,8 +46,8 @@ local.properties
 # since they will be recreated, and may cause churn.  Uncomment if using
 # auto-import.
 # .idea/artifacts
-# .idea/compiler.xml
-# .idea/jarRepositories.xml
+.idea/compiler.xml
+.idea/jarRepositories.xml
 .idea/modules.xml
 # .idea/*.iml
 # .idea/modules
