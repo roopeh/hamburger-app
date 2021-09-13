@@ -100,7 +100,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/content_padding_side"
                 android:layout_marginTop="@dimen/background_padding_top"
-                android:layout_below="@id/shopCartProductsHeader" />
+                android:layout_below="@id/shopCartProductsHeader"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="8dp" />
 
             <View
                 android:id="@+id/shopCartSecondLine"

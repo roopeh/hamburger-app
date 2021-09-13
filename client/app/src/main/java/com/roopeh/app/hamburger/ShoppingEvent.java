@@ -17,4 +17,12 @@ public class ShoppingEvent {
     final public boolean isCartEmpty() {
         return _items.isEmpty();
     }
+
+    public void addToCart(ShoppingItem item) {
+        _items.add(item);
+    }
+
+    public void removeFromCart(ShoppingItem item) {
+        _items.remove(item);
+    }
 }

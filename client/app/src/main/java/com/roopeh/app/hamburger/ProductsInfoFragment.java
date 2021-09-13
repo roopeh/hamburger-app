@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -12,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Objects;
 
@@ -39,13 +41,13 @@ public class ProductsInfoFragment extends Fragment {
         TextView price = rootView.findViewById(R.id.productsInfoPrice);
         price.setText(String.valueOf(_product.getPrice()) + " €");
 
+        Spinner drinkSpinner = rootView.findViewById(R.id.productsInfoDrink);
+        CheckBox drinkLarge = rootView.findViewById(R.id.productsInfoDrinkLarge);
+        FrameLayout extrasSpinnerLayout = rootView.findViewById(R.id.productsInfoExtraLayout);
+        Spinner extrasSpinner = rootView.findViewById(R.id.productsInfoExtra);
+        CheckBox extrasLarge = rootView.findViewById(R.id.productsInfoExtraLarge);
         if (_product.isMeal()) {
             FrameLayout drinkSpinnerLayout = rootView.findViewById(R.id.productsInfoDrinkLayout);
-            Spinner drinkSpinner = rootView.findViewById(R.id.productsInfoDrink);
-            CheckBox drinkLarge = rootView.findViewById(R.id.productsInfoDrinkLarge);
-            FrameLayout extrasSpinnerLayout = rootView.findViewById(R.id.productsInfoExtraLayout);
-            Spinner extrasSpinner = rootView.findViewById(R.id.productsInfoExtra);
-            CheckBox extrasLarge = rootView.findViewById(R.id.productsInfoExtraLarge);
 
             // Set meals only widgets visible
             drinkSpinnerLayout.setVisibility(View.VISIBLE);
@@ -73,6 +75,26 @@ public class ProductsInfoFragment extends Fragment {
 
         amountIncr.setOnClickListener(v -> updateQuantity(rootView, 1));
         amountDecr.setOnClickListener(v -> updateQuantity(rootView, -1));
+
+        Button addToCart = rootView.findViewById(R.id.productsInfoBuyButton);
+        addToCart.setOnClickListener(v -> {
+            User user = Objects.requireNonNull((MainActivity)getActivity()).getUser();
+            if (user == null) {
+                Toast.makeText(getContext(), "Sinun täytyy olla kirjautunut sisään!", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            // Create new shopping item(s)
+            for (int i = 0; i < _quantity; ++i) {
+                ShoppingItem item = new ShoppingItem(_product);
+                if (_product.isMeal()) {
+                    item.setMealDrink((int)drinkSpinner.getSelectedItemId(), drinkLarge.isSelected());
+                    item.setMealExtra((int)extrasSpinner.getSelectedItemId(), extrasLarge.isSelected());
+                }
+
+                user.getCart().addToCart(item);
+            }
+        });
 
         updateQuantity(rootView, 1);
         return rootView;

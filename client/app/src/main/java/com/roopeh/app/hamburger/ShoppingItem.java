@@ -5,6 +5,8 @@ public class ShoppingItem {
     final private Product _product;
     private int _mealDrink = 0;
     private int _mealExtra = 0;
+    private boolean _largeDrink = false;
+    private boolean _largeExtra = false;
 
     public ShoppingItem(Product product) {
         _product = product;
@@ -14,25 +16,35 @@ public class ShoppingItem {
         return _product;
     }
 
-    public void setMealDrink(int drink) {
+    public void setMealDrink(int drink, boolean large) {
         if (!_product.isMeal())
             return;
 
         _mealDrink = drink;
+        _largeDrink = large;
     }
 
     final public int getMealDrink() {
         return _mealDrink;
     }
 
-    public void setMealExtra(int extra) {
+    final public boolean isLargeDrink() {
+        return _largeDrink;
+    }
+
+    public void setMealExtra(int extra, boolean large) {
         if (!_product.isMeal())
             return;
 
         _mealExtra = extra;
+        _largeExtra = large;
     }
 
     final public int getMealExtra() {
         return _mealExtra;
+    }
+
+    final public boolean isLargeExtra() {
+        return _largeExtra;
     }
 }

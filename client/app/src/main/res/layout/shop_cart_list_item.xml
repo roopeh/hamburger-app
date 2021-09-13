@@ -16,7 +16,31 @@
         android:id="@+id/shopCartItemPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_toStartOf="@id/shopCartItemRemove"
+        android:layout_marginEnd="@dimen/background_padding_side"
+        android:textSize="17sp"
+        android:textColor="@color/black" />
+
+    <ImageButton
+        android:id="@+id/shopCartItemRemove"
+        android:background="@android:color/transparent"
+        android:src="@drawable/menu_close_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
+        android:maxWidth="25dp"
+        android:maxHeight="25dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:contentDescription="Remove" />
+
+    <TextView
+        android:id="@+id/shopCartItemExtra"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/shopCartItemName"
+        android:layout_marginStart="@dimen/content_padding_side"
+        android:visibility="gone"
         android:textSize="17sp"
         android:textColor="@color/black" />
 </RelativeLayout>

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 import androidx.fragment.app.Fragment;
 
@@ -32,20 +33,20 @@ public class ProductsListFragment extends Fragment {
         TextView header = rootView.findViewById(R.id.productsListHeader);
         List<Product> content = new ArrayList<>();
 
-        // Create content
+        // todo: dummy content
         if (_category == CATEGORY_MEAL) {
             header.setText("Ateriat");
             for (int i = 0; i < 3; ++i) {
-                content.add(new Meal("Juustoateria"));
-                content.add(new Meal("Pekoniateria"));
-                content.add(new Meal("Kinkkuateria"));
+                content.add(generateProduct("Juustoateria", true));
+                content.add(generateProduct("Pekoniateria", true));
+                content.add(generateProduct("Kinkkuateria", true));
             }
         } else {
             header.setText("Hampurilaiset");
             for (int i = 0; i < 3; ++i) {
-                content.add(new Product("Juusto"));
-                content.add(new Product("Pekoni"));
-                content.add(new Product("Kinkku"));
+                content.add(generateProduct("Juusto", false));
+                content.add(generateProduct("Pekoni", false));
+                content.add(generateProduct("Kinkku", false));
             }
         }
 
@@ -60,6 +61,17 @@ public class ProductsListFragment extends Fragment {
         ImageButton returnButton = rootView.findViewById(R.id.productsListBackButton);
         returnButton.setOnClickListener(v -> Objects.requireNonNull((MainActivity)getActivity()).loadFragment(new ProductsFragment(), false));
         return rootView;
+    }
+
+    // Generates test products with random price
+    private Product generateProduct(String name, boolean meal) {
+        Product prod = meal ? new Meal(name) : new Product(name);
+
+        final int rand = new Random().nextInt(20) + 1;
+        final double price = new Random().nextBoolean() ? rand : rand + (0.25f * (new Random().nextInt(3) + 1));
+        prod.setPrice(price);
+
+        return prod;
     }
 }
 

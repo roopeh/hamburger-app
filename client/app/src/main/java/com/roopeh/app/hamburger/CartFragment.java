@@ -7,14 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,7 +29,7 @@ public class CartFragment extends Fragment {
 
         User user = Objects.requireNonNull((MainActivity)getActivity()).getUser();
         // Load correct layout
-        if (!user.getCart().isCartEmpty()) {
+        if (user.getCart().isCartEmpty()) {
             emptyView.setVisibility(View.VISIBLE);
         } else {
             defaultView.setVisibility(View.VISIBLE);
@@ -39,10 +38,6 @@ public class CartFragment extends Fragment {
         ListView shoppingItems = rootView.findViewById(R.id.shopCartProducts);
         Spinner couponSpinner = rootView.findViewById(R.id.shopCartCoupons);
         Spinner restaurantSpinner = rootView.findViewById(R.id.shopCartRestaurant);
-
-        // todo: Dummy content
-        List<ShoppingItem> tests = new ArrayList<>();
-        tests.add(new ShoppingItem(new Product("Pekoni")));
 
         // todo: Dummy content
         String[] tests2 = {
@@ -60,23 +55,41 @@ public class CartFragment extends Fragment {
         restaurantAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         restaurantSpinner.setAdapter(restaurantAdapter);
 
-        ProductsListAdapter adapter = new ProductsListAdapter(getContext(), tests);
-        shoppingItems.setAdapter(adapter);
+        ProductsListAdapter shoppingAdapter = new ProductsListAdapter(getContext(), user);
+        shoppingItems.setAdapter(shoppingAdapter);
+        // Need to calculate height manually for listview because it is in a scrollview
+        calculateHeightForList(shoppingItems);
 
         ImageButton backButton = rootView.findViewById(R.id.shopCartBackButton);
         backButton.setOnClickListener(v -> Objects.requireNonNull((MainActivity)getActivity()).returnToPreviousFragment(false));
 
         return rootView;
     }
+
+    private void calculateHeightForList(ListView list) {
+        final ListAdapter listAdapter = list.getAdapter();
+        int totalHeight = 0;
+        for (int size = 0; size < listAdapter.getCount(); ++size) {
+            final View listItem = listAdapter.getView(size, null, list);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        final ViewGroup.LayoutParams params = list.getLayoutParams();
+        params.height = totalHeight + (list.getDividerHeight() * (listAdapter.getCount() - 1));
+        list.setLayoutParams(params);
+    }
 }
 
 class ProductsListAdapter extends BaseAdapter {
     final private Context _context;
     final private List<ShoppingItem> _content;
+    final private User _user;
 
-    public ProductsListAdapter(Context context, List<ShoppingItem> content) {
+    public ProductsListAdapter(Context context, User user) {
         _context = context;
-        _content = content;
+        _content = user.getCart().getItems();
+        _user = user;
     }
 
     @Override
@@ -104,6 +117,19 @@ class ProductsListAdapter extends BaseAdapter {
 
         TextView price = view.findViewById(R.id.shopCartItemPrice);
         price.setText(String.valueOf(item.getProduct().getPrice()) + " €");
+
+        TextView extraInfo = view.findViewById(R.id.shopCartItemExtra);
+        if (item.getProduct().isMeal()) {
+            extraInfo.setVisibility(View.VISIBLE);
+            // TODO: if meal
+            //extraInfo.setText("- TEST");
+        }
+
+        ImageButton removeButton = view.findViewById(R.id.shopCartItemRemove);
+        removeButton.setOnClickListener(v -> {
+            _user.getCart().removeFromCart(item);
+            notifyDataSetChanged();
+        });
 
         return view;
     }
