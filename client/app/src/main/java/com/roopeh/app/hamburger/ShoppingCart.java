@@ -3,10 +3,10 @@ package com.roopeh.app.hamburger;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShoppingEvent {
+public class ShoppingCart {
     final private List<ShoppingItem> _items;
 
-    public ShoppingEvent() {
+    public ShoppingCart() {
         _items = new ArrayList<>();
     }
 

@@ -1,6 +1,6 @@
 package com.roopeh.app.hamburger;
 
-// This is the chosen meal or product inserted into shopping cart (ShoppingEvent)
+// This is the chosen meal or product inserted into shopping cart (ShoppingCart)
 public class ShoppingItem {
     final private Product _product;
     private int _mealDrink = 0;

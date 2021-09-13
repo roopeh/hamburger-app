@@ -5,16 +5,16 @@ public class User {
 
     private String _pass = "";
 
-    final private ShoppingEvent _cart;
+    final private ShoppingCart _cart;
 
     public User(String user, String pass) {
         _user = user;
         _pass = pass;
 
-        _cart = new ShoppingEvent();
+        _cart = new ShoppingCart();
     }
 
-    final public ShoppingEvent getCart() {
+    final public ShoppingCart getCart() {
         return _cart;
     }
 }
