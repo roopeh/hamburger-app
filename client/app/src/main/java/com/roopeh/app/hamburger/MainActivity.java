@@ -22,28 +22,11 @@ import androidx.fragment.app.FragmentManager;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private User _user = null;
-
     // Menu related
     private DrawerLayout mDrawerLayout;
     private Toolbar toolbar;
     private CharSequence mTitle;
     private androidx.appcompat.app.ActionBarDrawerToggle mDrawerToggle;
-
-    public void setUser(String name, String pass) {
-        _user = new User(name, pass);
-    }
-
-    final public User getUser() {
-        return _user;
-    }
-
-    public void logoutUser() {
-        if (_user == null)
-            return;
-
-        _user = null;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,7 +116,7 @@ public class MainActivity extends AppCompatActivity
             return true;
 
         if (item.getItemId() == R.id.shopping_cart_button) {
-            if (_user == null) {
+            if (Helper.getInstance().getUser() == null) {
                 Toast.makeText(this, "Sinun täytyy olla kirjautunut sisään", Toast.LENGTH_LONG).show();
                 loadFragment(new LoginFragment(), false);
             } else {
@@ -170,7 +153,7 @@ public class MainActivity extends AppCompatActivity
                 fragment = new RestaurantFragment();
                 break;
             case R.id.menuCoupons:
-                if (_user == null) {
+                if (Helper.getInstance().getUser() == null) {
                     Toast.makeText(this, "Sinun täytyy olla kirjautunut sisään", Toast.LENGTH_LONG).show();
                     fragment = new LoginFragment();
                 } else {
@@ -178,7 +161,7 @@ public class MainActivity extends AppCompatActivity
                 }
                 break;
             case R.id.menuHistory:
-                if (_user == null) {
+                if (Helper.getInstance().getUser() == null) {
                     Toast.makeText(this, "Sinun täytyy olla kirjautunut sisään", Toast.LENGTH_LONG).show();
                     fragment = new LoginFragment();
                 } else {

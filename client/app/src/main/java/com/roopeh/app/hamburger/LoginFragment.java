@@ -29,7 +29,7 @@ public class LoginFragment extends Fragment {
             String user = userField.getText().toString();
             String pass = passField.getText().toString();
 
-            Objects.requireNonNull((MainActivity)getActivity()).setUser(user, pass);
+            Helper.getInstance().setUser(user, pass);
         });
 
         return rootView;

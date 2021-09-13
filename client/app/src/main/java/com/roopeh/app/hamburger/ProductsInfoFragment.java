@@ -33,7 +33,7 @@ public class ProductsInfoFragment extends Fragment {
 
         ImageButton returnButton = rootView.findViewById(R.id.productsInfoBackButton);
         final int category = _product.isMeal() ? ProductsListFragment.CATEGORY_MEAL : ProductsListFragment.CATEGORY_HAMBURGER;
-        returnButton.setOnClickListener(v -> Objects.requireNonNull((MainActivity)getActivity()).loadFragment(new ProductsListFragment(category), false));
+        returnButton.setOnClickListener(v -> Objects.requireNonNull((MainActivity)getActivity()).returnToPreviousFragment(false));
 
         TextView name = rootView.findViewById(R.id.productsInfoName);
         name.setText(_product.getName());
@@ -78,7 +78,7 @@ public class ProductsInfoFragment extends Fragment {
 
         Button addToCart = rootView.findViewById(R.id.productsInfoBuyButton);
         addToCart.setOnClickListener(v -> {
-            User user = Objects.requireNonNull((MainActivity)getActivity()).getUser();
+            final User user = Helper.getInstance().getUser();
             if (user == null) {
                 Toast.makeText(getContext(), "Sinun täytyy olla kirjautunut sisään!", Toast.LENGTH_LONG).show();
                 return;

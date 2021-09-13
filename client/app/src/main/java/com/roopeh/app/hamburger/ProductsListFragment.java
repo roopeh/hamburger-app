@@ -59,7 +59,7 @@ public class ProductsListFragment extends Fragment {
         });
 
         ImageButton returnButton = rootView.findViewById(R.id.productsListBackButton);
-        returnButton.setOnClickListener(v -> Objects.requireNonNull((MainActivity)getActivity()).loadFragment(new ProductsFragment(), false));
+        returnButton.setOnClickListener(v -> Objects.requireNonNull((MainActivity)getActivity()).returnToPreviousFragment(false));
         return rootView;
     }
 

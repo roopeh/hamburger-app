@@ -27,7 +27,7 @@ public class CartFragment extends Fragment {
         ScrollView emptyView = rootView.findViewById(R.id.shopCartEmptyView);
         ScrollView defaultView = rootView.findViewById(R.id.shopCartDefaultView);
 
-        User user = Objects.requireNonNull((MainActivity)getActivity()).getUser();
+        final User user = Helper.getInstance().getUser();
         // Load correct layout
         if (user.getCart().isCartEmpty()) {
             emptyView.setVisibility(View.VISIBLE);
