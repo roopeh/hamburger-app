@@ -55,6 +55,10 @@ public class ProductsInfoFragment extends Fragment {
             extrasSpinnerLayout.setVisibility(View.VISIBLE);
             extrasLarge.setVisibility(View.VISIBLE);
 
+            // Add prices for large drinks and extras
+            drinkLarge.setText(drinkLarge.getText() + " (+0.50 €)");
+            extrasLarge.setText(extrasLarge.getText() + " (+0.40 €)");
+
             ArrayAdapter<CharSequence> drinkAdapter = ArrayAdapter.createFromResource(getContext(), R.array.stringMealDrinks, android.R.layout.simple_spinner_item);
             drinkAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             drinkSpinner.setAdapter(drinkAdapter);
@@ -88,8 +92,14 @@ public class ProductsInfoFragment extends Fragment {
             for (int i = 0; i < _quantity; ++i) {
                 ShoppingItem item = new ShoppingItem(_product);
                 if (_product.isMeal()) {
-                    item.setMealDrink((int)drinkSpinner.getSelectedItemId(), drinkLarge.isSelected());
-                    item.setMealExtra((int)extrasSpinner.getSelectedItemId(), extrasLarge.isSelected());
+                    item.setMealDrink((int)drinkSpinner.getSelectedItemId(), drinkLarge.isChecked());
+                    item.setMealExtra((int)extrasSpinner.getSelectedItemId(), extrasLarge.isChecked());
+
+                    if ((int)drinkSpinner.getSelectedItemId() > 0 && drinkLarge.isChecked())
+                        item.setPrice(item.getPrice() + 0.50);
+
+                    if ((int)extrasSpinner.getSelectedItemId() > 0 && extrasLarge.isChecked())
+                        item.setPrice(item.getPrice() + 0.40);
                 }
 
                 user.getCart().addToCart(item);

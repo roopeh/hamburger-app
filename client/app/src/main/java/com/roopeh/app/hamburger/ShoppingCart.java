@@ -25,4 +25,8 @@ public class ShoppingCart {
     public void removeFromCart(ShoppingItem item) {
         _items.remove(item);
     }
+
+    public void emptyCart() {
+        _items.clear();
+    }
 }

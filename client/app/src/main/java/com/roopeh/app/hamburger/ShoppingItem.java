@@ -3,6 +3,7 @@ package com.roopeh.app.hamburger;
 // This is the chosen meal or product inserted into shopping cart (ShoppingCart)
 public class ShoppingItem {
     final private Product _product;
+    private double _price;
     private int _mealDrink = 0;
     private int _mealExtra = 0;
     private boolean _largeDrink = false;
@@ -10,10 +11,19 @@ public class ShoppingItem {
 
     public ShoppingItem(Product product) {
         _product = product;
+        _price = _product.getPrice();
     }
 
     final public Product getProduct() {
         return _product;
+    }
+
+    public void setPrice(double price) {
+        _price = price;
+    }
+
+    final public double getPrice() {
+        return _price;
     }
 
     public void setMealDrink(int drink, boolean large) {

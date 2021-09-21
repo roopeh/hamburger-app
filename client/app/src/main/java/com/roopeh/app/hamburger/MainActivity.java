@@ -50,6 +50,12 @@ public class MainActivity extends AppCompatActivity
         mDrawerList.setNavigationItemSelectedListener(this);
         initMenuToggle();
 
+        // Load restaurants
+        Helper.getInstance().initializeRestaurants();
+
+        // Load products
+        Helper.getInstance().initializeProducts();
+
         // Load home fragment on startup
         loadFragment(new HomeFragment(), true);
     }

@@ -33,20 +33,19 @@ public class ProductsListFragment extends Fragment {
         TextView header = rootView.findViewById(R.id.productsListHeader);
         List<Product> content = new ArrayList<>();
 
-        // todo: dummy content
+        // Populate list with correct products
         if (_category == CATEGORY_MEAL) {
             header.setText("Ateriat");
-            for (int i = 0; i < 3; ++i) {
-                content.add(generateProduct("Juustoateria", true));
-                content.add(generateProduct("Pekoniateria", true));
-                content.add(generateProduct("Kinkkuateria", true));
+            for (Product meal : Helper.getInstance().getProducts()) {
+                if (meal.isMeal())
+                    content.add(meal);
             }
         } else {
             header.setText("Hampurilaiset");
-            for (int i = 0; i < 3; ++i) {
-                content.add(generateProduct("Juusto", false));
-                content.add(generateProduct("Pekoni", false));
-                content.add(generateProduct("Kinkku", false));
+            for (Product product : Helper.getInstance().getProducts()) {
+                if (!product.isMeal()) {
+                    content.add(product);
+                }
             }
         }
 
@@ -61,17 +60,6 @@ public class ProductsListFragment extends Fragment {
         ImageButton returnButton = rootView.findViewById(R.id.productsListBackButton);
         returnButton.setOnClickListener(v -> Objects.requireNonNull((MainActivity)getActivity()).returnToPreviousFragment(false));
         return rootView;
-    }
-
-    // Generates test products with random price
-    private Product generateProduct(String name, boolean meal) {
-        Product prod = meal ? new Meal(name) : new Product(name);
-
-        final int rand = new Random().nextInt(20) + 1;
-        final double price = new Random().nextBoolean() ? rand : rand + (0.25f * (new Random().nextInt(3) + 1));
-        prod.setPrice(price);
-
-        return prod;
     }
 }
 

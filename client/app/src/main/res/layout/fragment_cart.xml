@@ -161,8 +161,7 @@
                 android:layout_marginStart="@dimen/content_padding_side"
                 android:layout_marginTop="@dimen/background_padding_top"
                 android:layout_below="@id/shopCartPriceHeader"
-                android:textColor="@color/black"
-                android:text="Suomma\nVälisumma" />
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/shopCartPriceSumHeader"
@@ -175,7 +174,7 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:text="Summa ynteensä" />
+                android:text="Summa yhteensä" />
 
             <TextView
                 android:id="@+id/shopCartPriceSum"
@@ -186,8 +185,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:text="100e" />
+                android:textStyle="bold" />
 
             <View
                 android:id="@+id/shopCartFourthLine"
@@ -247,12 +245,14 @@
                 android:layout_below="@id/shopCartPaymentHeader">
 
                 <RadioButton
+                    android:id="@+id/shopCartPaymentCard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/white"
                     android:text="Maksa kortilla" />
 
                 <RadioButton
+                    android:id="@+id/shopCartPaymentRestaurant"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="-10dp"

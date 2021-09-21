@@ -20,17 +20,7 @@ public class CouponFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_coupon, container, false);
         ListView couponList = rootView.findViewById(R.id.couponsList);
 
-        // Dummy content
-        List<Coupon> tests = new ArrayList<>();
-        for (int i = 1; i <= 10; ++i) {
-            int num = i;
-            while (num > 3) {
-                num -= 3;
-            }
-            tests.add(new Coupon(num, 1650995521));
-        }
-
-        CouponListAdapter adapter = new CouponListAdapter(getContext(), tests);
+        CouponListAdapter adapter = new CouponListAdapter(getContext(), Helper.getInstance().getUser().getCoupons());
         couponList.setAdapter(adapter);
 
         return rootView;

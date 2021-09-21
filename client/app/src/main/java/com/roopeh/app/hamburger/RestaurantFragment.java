@@ -21,24 +21,8 @@ public class RestaurantFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_restaurant, container, false);
         ListView restaurantList = rootView.findViewById(R.id.restaurantList);
 
-        // Dummy content
-        List<Restaurant> tests = new ArrayList<>();
-        for (int i = 1; i < 20; ++i) {
-            Restaurant res = new Restaurant("Restaurant " + i);
-            res.setLocation("Testikatu " + (i * 12), "Oulu");
-
-            res.setHours(1, "08", "10");
-            res.setHours(2, "11", "13");
-            res.setHours(3, "14", "16");
-            res.setHours(4, "16", "18");
-            res.setHours(5, "20", "23");
-            res.setHours(7, "10", "14");
-
-            tests.add(res);
-        }
-
-        RestaurantListAdapter test = new RestaurantListAdapter(getContext(), tests);
-        restaurantList.setAdapter(test);
+        RestaurantListAdapter adapter = new RestaurantListAdapter(getContext(), Helper.getInstance().getRestaurants());
+        restaurantList.setAdapter(adapter);
 
         restaurantList.setOnItemClickListener((parent, view, position, id) -> {
             final Restaurant res = (Restaurant)parent.getItemAtPosition(position);
