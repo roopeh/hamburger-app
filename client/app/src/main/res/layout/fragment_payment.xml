@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="@dimen/background_padding_side"
+    android:layout_marginEnd="@dimen/background_padding_side"
+    android:layout_marginBottom="@dimen/background_padding_bottom"
+    android:paddingStart="@dimen/content_padding_side"
+    android:paddingEnd="@dimen/content_padding_side"
+    android:paddingBottom="@dimen/content_padding_bottom"
+    android:background="@drawable/rounded_main">
+
+    <ImageButton
+        android:id="@+id/paymentReturn"
+        android:background="@android:color/transparent"
+        android:src="@drawable/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="-4dp"
+        android:maxWidth="40dp"
+        android:maxHeight="40dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:contentDescription="Return" />
+
+    <TextView
+        android:id="@+id/paymentHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/background_padding_side"
+        android:layout_toEndOf="@id/paymentReturn"
+        android:text="Payment"
+        android:theme="@style/DefaultHeaderStyle" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/content_padding_side"
+        android:layout_below="@id/paymentHeader"
+        android:paddingStart="@dimen/content_padding_side"
+        android:paddingEnd="@dimen/content_padding_side"
+        android:paddingTop="@dimen/content_padding_top"
+        android:paddingBottom="@dimen/content_padding_bottom"
+        android:background="@drawable/rounded_inner_main">
+
+        <Button
+            android:id="@+id/paymentButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/content_padding_top"
+            android:layout_centerHorizontal="true"
+            android:backgroundTint="@color/defaultButtonBackground"
+            android:textColor="@color/defaultButtonFont"
+            android:text="Suorita maksu" />
+
+        <TextView
+            android:id="@+id/paymentSuccessText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/paymentButton"
+            android:layout_marginTop="50dp"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone"
+            android:textSize="17sp"
+            android:text="Maksu onnistunut!" />
+
+        <Button
+            android:id="@+id/paymentSuccessReturn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/background_padding_top"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone"
+            android:layout_below="@id/paymentSuccessText"
+            android:backgroundTint="@color/defaultButtonBackground"
+            android:textColor="@color/defaultButtonFont"
+            android:text="Palaa aloitussivulle" />
+    </RelativeLayout>
+</RelativeLayout>

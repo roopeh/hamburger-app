@@ -91,6 +91,12 @@ public class CartFragment extends Fragment {
 
         // Order button
         orderButton.setOnClickListener(v -> {
+            // If user already has an active order, new order cannot be made
+            if (user.getCurrentOrder() != null) {
+                Toast.makeText(getContext(), "Sinulla on jo aktiivinen tilaus", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             // Make sure payment method is selected
             if (paymentGroup.getCheckedRadioButtonId() == -1) {
                 Toast.makeText(getContext(), "Valitse maksutapasi", Toast.LENGTH_SHORT).show();
@@ -105,25 +111,26 @@ public class CartFragment extends Fragment {
 
             // Create new order
             Order order = new Order(user.getCart().getItems());
-            order.setDate(System.currentTimeMillis() / 1000);
             order.setRestaurant((Restaurant)restaurantSpinner.getSelectedItem());
             order.setPrices(getSum(), getDiscount(), getSum() - getDiscount());
 
-            // Remove used coupon
-            final Coupon coupon = (Coupon)couponSpinner.getSelectedItem();
-            if (coupon.getType() != Coupon.TYPE_EMPTY_COUPON)
-                user.removeCoupon(coupon);
-
-            // Clear shopping items
-            user.getCart().emptyCart();
-
             // If payment is done at restaurant, skip payment page and finalize order
             if (paymentRestaurant.isChecked()) {
+                order.setDate(System.currentTimeMillis() / 1000);
+
+                // Remove used coupon
+                final Coupon coupon = (Coupon)couponSpinner.getSelectedItem();
+                if (coupon.getType() != Coupon.TYPE_EMPTY_COUPON)
+                    user.removeCoupon(coupon);
+
+                // Clear shopping items
+                user.getCart().emptyCart();
+
                 user.setCurrentOrder(order);
                 Toast.makeText(getContext(), "Tilaus onnistui!", Toast.LENGTH_LONG).show();
                 Objects.requireNonNull((MainActivity)getActivity()).loadFragment(new HomeFragment(), false);
             } else if (paymentCard.isChecked()) {
-                // TODO
+                Objects.requireNonNull((MainActivity)getActivity()).loadFragment(new PaymentFragment(order, (Coupon)couponSpinner.getSelectedItem()), false);
             }
         });
 
