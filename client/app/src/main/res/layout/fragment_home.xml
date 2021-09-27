@@ -1,41 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginStart="@dimen/background_padding_side"
-    android:layout_marginEnd="@dimen/background_padding_side"
-    android:layout_marginBottom="@dimen/background_padding_bottom"
-    android:paddingStart="@dimen/content_padding_side"
-    android:paddingEnd="@dimen/content_padding_side"
-    android:paddingBottom="@dimen/content_padding_bottom"
-    android:background="@drawable/rounded_main">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/testButtons"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:orientation="horizontal">
-        <Button
-            android:id="@+id/testLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="Log In" />
-        <Button
-            android:id="@+id/testLogout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="Log Out" />
-    </LinearLayout>
-
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/testButtons"
-        android:textAlignment="center"
-        android:text="Home"
-        android:textSize="20sp" />
+        android:layout_marginStart="@dimen/background_padding_side"
+        android:layout_marginEnd="@dimen/background_padding_side"
+        android:layout_marginBottom="@dimen/background_padding_bottom"
+        android:paddingStart="@dimen/content_padding_side"
+        android:paddingEnd="@dimen/content_padding_side"
+        android:paddingBottom="@dimen/content_padding_bottom"
+        android:background="@drawable/rounded_main">
 
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/homeMainImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_launcher_background" />
+
+        <Button
+            android:id="@+id/homeOrderButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/content_padding_top"
+            android:layout_below="@id/homeMainImage"
+            android:backgroundTint="@color/defaultButtonFont"
+            android:textColor="@color/black"
+            android:text="Tarkastele tilaustasi" />
+
+        <com.roopeh.app.hamburger.ExpendableGridView
+            android:id="@+id/homeGrid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/content_padding_top"
+            android:layout_below="@id/homeOrderButton"
+            android:numColumns="2"
+            android:isScrollContainer="false"
+            android:stretchMode="columnWidth"
+            android:horizontalSpacing="@dimen/content_padding_side"
+            android:verticalSpacing="@dimen/content_padding_side" />
+    </RelativeLayout>
+</ScrollView>
