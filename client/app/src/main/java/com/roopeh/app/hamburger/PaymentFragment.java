@@ -35,7 +35,9 @@ public class PaymentFragment extends Fragment {
 
         payButton.setOnClickListener(v -> {
             final User user = Helper.getInstance().getUser();
-            _order.setDate(System.currentTimeMillis() / 1000);
+            _order.setOrderDate(System.currentTimeMillis() / 1000);
+            _order.setPickupDate();
+            _order.setPaid(true);
 
             // Remove used coupon
             if (_coupon.getType() != Coupon.TYPE_EMPTY_COUPON)
@@ -45,6 +47,7 @@ public class PaymentFragment extends Fragment {
             user.getCart().emptyCart();
 
             user.setCurrentOrder(_order);
+            Objects.requireNonNull((MainActivity)getActivity()).createOrderTimer();
 
             // Make views visible
             successText.setVisibility(View.VISIBLE);

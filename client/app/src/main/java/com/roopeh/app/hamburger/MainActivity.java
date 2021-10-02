@@ -1,6 +1,11 @@
 package com.roopeh.app.hamburger;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,12 +21,16 @@ import java.util.Objects;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private CountDownTimer _orderTimer;
+
     // Menu related
     private DrawerLayout mDrawerLayout;
     private Toolbar toolbar;
@@ -183,5 +192,57 @@ public class MainActivity extends AppCompatActivity
 
         loadFragment(fragment, false);
         return false;
+    }
+
+    public void createOrderTimer() {
+        final User user = Helper.getInstance().getUser();
+        if (user == null || user.getCurrentOrder() == null)
+            return;
+
+        if (_orderTimer != null) {
+            _orderTimer.cancel();
+            _orderTimer = null;
+        }
+
+        final long timeDiff = user.getCurrentOrder().getPickupDate() - (System.currentTimeMillis() / 1000);
+        _orderTimer = new CountDownTimer(timeDiff * 1000, 10 * 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                // do nothing
+                // local timer updates remaining time in CurrentOrderFragment
+            }
+
+            @Override
+            public void onFinish() {
+                user.setCurrentOrder(null);
+                createNotification();
+            }
+        }.start();
+    }
+
+    private void createNotification() {
+        // TODO: missing on click method, requires an ID for order
+        final String _channelId = "123456";
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, _channelId)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                // TODO: strings resource
+                .setContentTitle("Tilauksesi on noudettavissa!")
+                .setContentText("Tarkastale tilaustasi...")
+                .setAutoCancel(true)
+                .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+        // Create notification channel for SDK 26+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            final int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            final NotificationChannel channel = new NotificationChannel(_channelId, "Notification_channel_name", importance);
+            channel.enableLights(true);
+            builder.setChannelId(_channelId);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        notificationManager.notify(0, builder.build());
     }
 }

@@ -63,7 +63,7 @@ public class CartFragment extends Fragment {
         orderButton = rootView.findViewById(R.id.shopCartPaymentButton);
 
         // Products
-        final ProductsListAdapter shoppingAdapter = new ProductsListAdapter(getContext(), user, this);
+        final CartProductsListAdapter shoppingAdapter = new CartProductsListAdapter(getContext(), user, this);
         shoppingItems.setAdapter(shoppingAdapter);
         // Need to calculate height manually for listview because it is in a scrollview
         calculateHeightForList(shoppingItems);
@@ -116,7 +116,8 @@ public class CartFragment extends Fragment {
 
             // If payment is done at restaurant, skip payment page and finalize order
             if (paymentRestaurant.isChecked()) {
-                order.setDate(System.currentTimeMillis() / 1000);
+                order.setOrderDate(System.currentTimeMillis() / 1000);
+                order.setPickupDate();
 
                 // Remove used coupon
                 final Coupon coupon = (Coupon)couponSpinner.getSelectedItem();
@@ -128,6 +129,7 @@ public class CartFragment extends Fragment {
 
                 user.setCurrentOrder(order);
                 Toast.makeText(getContext(), "Tilaus onnistui!", Toast.LENGTH_LONG).show();
+                Objects.requireNonNull((MainActivity)getActivity()).createOrderTimer();
                 Objects.requireNonNull((MainActivity)getActivity()).loadFragment(new HomeFragment(), false);
             } else if (paymentCard.isChecked()) {
                 Objects.requireNonNull((MainActivity)getActivity()).loadFragment(new PaymentFragment(order, (Coupon)couponSpinner.getSelectedItem()), false);
@@ -263,13 +265,13 @@ public class CartFragment extends Fragment {
     }
 }
 
-class ProductsListAdapter extends BaseAdapter {
+class CartProductsListAdapter extends BaseAdapter {
     final private Context _context;
     final private List<ShoppingItem> _content;
     final private User _user;
     final private CartFragment _frag;
 
-    public ProductsListAdapter(Context context, User user, CartFragment frag) {
+    public CartProductsListAdapter(Context context, User user, CartFragment frag) {
         _context = context;
         _content = user.getCart().getItems();
         _user = user;
@@ -282,7 +284,7 @@ class ProductsListAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public ShoppingItem getItem(int position) {
         return _content.get(position);
     }
 
@@ -294,7 +296,7 @@ class ProductsListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final View view = View.inflate(_context, R.layout.shop_cart_list_item, null);
-        ShoppingItem item = _content.get(position);
+        final ShoppingItem item = getItem(position);
 
         final TextView name = view.findViewById(R.id.shopCartItemName);
         name.setText("- " + item.getProduct().getName());

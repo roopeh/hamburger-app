@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="@dimen/background_padding_side"
+    android:layout_marginEnd="@dimen/background_padding_side"
+    android:layout_marginBottom="@dimen/background_padding_bottom"
+    android:paddingStart="@dimen/content_padding_side"
+    android:paddingEnd="@dimen/content_padding_side"
+    android:paddingBottom="@dimen/content_padding_bottom"
+    android:background="@drawable/rounded_main">
+
+    <ImageButton
+        android:id="@+id/currentOrderBackButton"
+        android:background="@android:color/transparent"
+        android:src="@drawable/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="-4dp"
+        android:maxWidth="40dp"
+        android:maxHeight="40dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:contentDescription="Return" />
+
+    <TextView
+        android:id="@+id/currentOrderHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/background_padding_side"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@id/currentOrderBackButton"
+        android:theme="@style/DefaultHeaderStyle"
+        android:text="Your current order" />
+
+    <ScrollView
+        android:id="@+id/currentOrderScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/background_padding_top"
+        android:layout_below="@id/currentOrderHeader">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/background_padding_side"
+            android:background="@drawable/rounded_inner_main">
+
+            <View
+                android:id="@+id/currentOrderFirstLine"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/background_padding_side"
+                android:layout_marginBottom="@dimen/line_padding_bottom"
+                android:background="@color/defaultButtonBackground" />
+
+            <TextView
+                android:id="@+id/currentOrderProductsHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/currentOrderFirstLine"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:text="Tuotteet" />
+
+            <ListView
+                android:id="@+id/currentOrderProducts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/content_padding_side"
+                android:layout_marginTop="@dimen/background_padding_top"
+                android:layout_below="@id/currentOrderProductsHeader"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="8dp" />
+
+            <View
+                android:id="@+id/currentOrderSecondLine"
+                android:layout_width="match_parent"
+                android:layout_below="@id/currentOrderProducts"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/background_padding_side"
+                android:layout_marginBottom="@dimen/line_padding_bottom"
+                android:background="@color/defaultButtonBackground" />
+
+            <TextView
+                android:id="@+id/currentOrderPaymentStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/currentOrderSecondLine"
+                android:textColor="@color/black"
+                android:textSize="17sp" />
+
+            <View
+                android:id="@+id/currentOrderThirdLine"
+                android:layout_width="match_parent"
+                android:layout_below="@id/currentOrderPaymentStatus"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/background_padding_side"
+                android:layout_marginBottom="@dimen/line_padding_bottom"
+                android:background="@color/defaultButtonBackground" />
+
+            <TextView
+                android:id="@+id/currentOrderStatusHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/currentOrderThirdLine"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:text="Arvioitu valmistumisaika:" />
+
+            <TextView
+                android:id="@+id/currentOrderStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/currentOrderStatusHeader"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/currentOrderFourthLine"
+                android:layout_width="match_parent"
+                android:layout_below="@id/currentOrderStatus"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/background_padding_side"
+                android:layout_marginBottom="@dimen/line_padding_bottom"
+                android:background="@color/defaultButtonBackground" />
+
+            <TextView
+                android:id="@+id/currentOrderRestaurantInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/currentOrderFourthLine"
+                android:textColor="@color/black"
+                android:textSize="17sp" />
+
+            <Button
+                android:id="@+id/currentOrderRestaurantButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/currentOrderRestaurantInfo"
+                android:layout_marginTop="@dimen/background_padding_top"
+                android:layout_centerHorizontal="true"
+                android:backgroundTint="@color/defaultButtonBackground"
+                android:textColor="@color/defaultButtonFont"
+                android:text="Katso ravintolan tiedot" />
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

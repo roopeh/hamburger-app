@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import androidx.fragment.app.Fragment;
 
@@ -33,17 +34,15 @@ public class HomeFragment extends Fragment {
         final List<Integer> content = new ArrayList<>();
         final User user = Helper.getInstance().getUser();
 
-        // If user is not logged in or has no current order, hide current order button
-        if (user == null || user.getCurrentOrder() == null) {
+        // If user is not logged in, has no current order or the order is ready, hide current order button
+        if (user == null || user.getCurrentOrder() == null || user.getCurrentOrder().isOrderReady()) {
             orderButton.setVisibility(View.GONE);
             // Adjust grid's layout params
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)grid.getLayoutParams();
             params.addRule(RelativeLayout.BELOW, R.id.homeMainImage);
             grid.setLayoutParams(params);
         } else {
-            orderButton.setOnClickListener(v -> {
-                // TODO
-            });
+            orderButton.setOnClickListener(v -> Objects.requireNonNull((MainActivity)getActivity()).loadFragment(new CurrentOrderFragment(), false));
         }
 
         // Add stuff to grids

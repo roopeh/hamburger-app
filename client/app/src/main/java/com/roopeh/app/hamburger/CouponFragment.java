@@ -7,9 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.fragment.app.Fragment;
@@ -17,10 +17,20 @@ import androidx.fragment.app.Fragment;
 public class CouponFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_coupon, container, false);
-        ListView couponList = rootView.findViewById(R.id.couponsList);
+        final View rootView = inflater.inflate(R.layout.fragment_coupon, container, false);
+        final RelativeLayout layout = rootView.findViewById(R.id.couponsEmptyLayout);
+        final ListView couponList = rootView.findViewById(R.id.couponsList);
 
-        CouponListAdapter adapter = new CouponListAdapter(getContext(), Helper.getInstance().getUser().getCoupons());
+        final User user = Helper.getInstance().getUser();
+        // Check if user has any coupons
+        if (user == null || user.getCoupons().isEmpty()) {
+            layout.setVisibility(View.VISIBLE);
+            return rootView;
+        }
+
+        couponList.setVisibility(View.VISIBLE);
+
+        final CouponListAdapter adapter = new CouponListAdapter(getContext(), user.getCoupons());
         couponList.setAdapter(adapter);
 
         return rootView;

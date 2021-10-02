@@ -69,6 +69,6 @@ public class RestaurantInfoFragment extends Fragment {
         if (startHour == -1 || endHour == -1)
             return "kiinni";
 
-        return String.format((Locale)null, "%02d", startHour) + "-" + String.format((Locale)null, "%02d", endHour);
+        return String.format(Locale.getDefault(), "%02d", startHour) + "-" + String.format(Locale.getDefault(), "%02d", endHour);
     }
 }

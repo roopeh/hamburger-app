@@ -1,11 +1,14 @@
 package com.roopeh.app.hamburger;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 
 public class Order {
     final private List<ShoppingItem> _items;
     private long _orderDate;
+    private long _pickupDate;
     private Restaurant _restaurant = null;
     private boolean _isPaid = false;
 
@@ -22,12 +25,28 @@ public class Order {
         return _items;
     }
 
-    public void setDate(long date) {
+    public void setOrderDate(long date) {
         _orderDate = date;
     }
 
-    final public long getDate() {
+    final public long getOrderDate() {
         return _orderDate;
+    }
+
+    public void setPickupDate() {
+        // Calculates random pickup date (10-25min)
+        //final int randomMinute = new Random().nextInt(16) + 10;
+        // TODO: temporary 20 sec test timer
+        final double randomMinute = 20 / 60f;
+        _pickupDate = (System.currentTimeMillis() / 1000) + (long)(randomMinute * 60);
+    }
+
+    final public long getPickupDate() {
+        return _pickupDate;
+    }
+
+    final public boolean isOrderReady() {
+        return (getPickupDate() - (System.currentTimeMillis() / 1000)) <= 0;
     }
 
     public void setRestaurant(Restaurant res) {
