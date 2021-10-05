@@ -152,6 +152,11 @@ class OrderProductsListAdapter extends BaseAdapter {
     }
 
     @Override
+    public boolean isEnabled(int position) {
+        return false;
+    }
+
+    @Override
     public int getCount() {
         return _content.size();
     }

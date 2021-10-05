@@ -12,11 +12,41 @@
     android:background="@drawable/rounded_main">
 
     <TextView
+        android:id="@+id/historyHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tilaushistoria"
+        android:theme="@style/DefaultHeaderStyle" />
+
+    <RelativeLayout
+        android:id="@+id/historyEmptyLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textAlignment="center"
-        android:text="History"
-        android:textSize="20sp" />
+        android:layout_marginTop="@dimen/content_padding_side"
+        android:layout_below="@id/historyHeader"
+        android:padding="10dp"
+        android:visibility="gone"
+        android:background="@drawable/rounded_inner_main">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/content_padding_top"
+            android:layout_marginBottom="@dimen/content_padding_bottom"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:text="Sinulla ei ole tilauksia!" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/historyList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/content_padding_side"
+        android:layout_below="@id/historyHeader"
+        android:visibility="gone"
+        android:listSelector="@android:color/transparent"
+        android:divider="@color/backgroundInner"
+        android:dividerHeight="15dp" />
 </RelativeLayout>

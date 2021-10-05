@@ -40,6 +40,7 @@ public class User {
 
     public void setCurrentOrder(Order order) {
         _currentOrder = order;
+        // TODO: orders should be from newest to oldest
         if (order != null)
             _allOrders.add(order);
     }

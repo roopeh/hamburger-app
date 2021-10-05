@@ -47,6 +47,11 @@ class CouponListAdapter extends BaseAdapter {
     }
 
     @Override
+    public boolean isEnabled(int position) {
+        return false;
+    }
+
+    @Override
     public int getCount() {
         return _list.size();
     }
