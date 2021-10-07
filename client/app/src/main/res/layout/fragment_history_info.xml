@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="@dimen/background_padding_side"
+    android:layout_marginEnd="@dimen/background_padding_side"
+    android:layout_marginBottom="@dimen/background_padding_bottom"
+    android:paddingStart="@dimen/content_padding_side"
+    android:paddingEnd="@dimen/content_padding_side"
+    android:paddingBottom="@dimen/content_padding_bottom"
+    android:background="@drawable/rounded_main">
+
+    <ImageButton
+        android:id="@+id/historyInfoBackButton"
+        android:background="@android:color/transparent"
+        android:src="@drawable/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="-4dp"
+        android:maxWidth="40dp"
+        android:maxHeight="40dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:contentDescription="Return" />
+
+    <TextView
+        android:id="@+id/historyInfoHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/background_padding_side"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@id/historyInfoBackButton"
+        android:theme="@style/DefaultHeaderStyle"
+        android:text="Your order" />
+
+    <ScrollView
+        android:id="@+id/historyInfoScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/background_padding_top"
+        android:layout_below="@id/historyInfoBackButton">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/background_padding_side"
+            android:background="@drawable/rounded_inner_main">
+
+            <TextView
+                android:id="@+id/historyInfoRestaurant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_alignParentStart="true"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/historyInfoAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/historyInfoRestaurant"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/historyInfoPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/historyInfoAddress"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <View
+                android:id="@+id/historyInfoFirstLine"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/background_padding_side"
+                android:layout_marginBottom="@dimen/line_padding_bottom"
+                android:layout_below="@id/historyInfoPhone"
+                android:background="@color/defaultButtonBackground" />
+
+            <TextView
+                android:id="@+id/historyInfoDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/historyInfoFirstLine"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/historyInfoProductHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_below="@id/historyInfoDate"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:text="Tilaus:" />
+
+            <ListView
+                android:id="@+id/historyInfoProducts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/historyInfoProductHeader"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="8dp" />
+
+            <View
+                android:id="@+id/historyInfoSecondLine"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/background_padding_side"
+                android:layout_marginBottom="@dimen/line_padding_bottom"
+                android:layout_below="@id/historyInfoProducts"
+                android:background="@color/defaultButtonBackground" />
+
+            <TextView
+                android:id="@+id/historyInfoPriceListed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/historyInfoSecondLine"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/historyInfoPriceSumHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/background_padding_top"
+                android:layout_below="@id/historyInfoPriceListed"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:text="Summa yhteensä" />
+
+            <TextView
+                android:id="@+id/historyInfoPriceSum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/historyInfoPriceSumHeader"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

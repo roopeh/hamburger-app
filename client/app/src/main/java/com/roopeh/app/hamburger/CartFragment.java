@@ -63,7 +63,7 @@ public class CartFragment extends Fragment {
         orderButton = rootView.findViewById(R.id.shopCartPaymentButton);
 
         // Products
-        final CartProductsListAdapter shoppingAdapter = new CartProductsListAdapter(getContext(), user, this);
+        final ProductsListAdapter shoppingAdapter = new ProductsListAdapter(getContext(), user, this);
         shoppingItems.setAdapter(shoppingAdapter);
         // Need to calculate height manually for listview because it is in a scrollview
         calculateHeightForList(shoppingItems);
@@ -262,89 +262,6 @@ public class CartFragment extends Fragment {
         final ViewGroup.LayoutParams params = list.getLayoutParams();
         params.height = totalHeight + (list.getDividerHeight() * (listAdapter.getCount() - 1));
         list.setLayoutParams(params);
-    }
-}
-
-class CartProductsListAdapter extends BaseAdapter {
-    final private Context _context;
-    final private List<ShoppingItem> _content;
-    final private User _user;
-    final private CartFragment _frag;
-
-    public CartProductsListAdapter(Context context, User user, CartFragment frag) {
-        _context = context;
-        _content = user.getCart().getItems();
-        _user = user;
-        _frag = frag;
-    }
-
-    @Override
-    public boolean isEnabled(int position) {
-        return false;
-    }
-
-    @Override
-    public int getCount() {
-        return _content.size();
-    }
-
-    @Override
-    public ShoppingItem getItem(int position) {
-        return _content.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        final View view = View.inflate(_context, R.layout.shop_cart_list_item, null);
-        final ShoppingItem item = getItem(position);
-
-        final TextView name = view.findViewById(R.id.shopCartItemName);
-        name.setText("- " + item.getProduct().getName());
-
-        final TextView price = view.findViewById(R.id.shopCartItemPrice);
-        price.setText(String.format(Locale.getDefault(), "%.2f", item.getPrice()) + " €");
-
-        final TextView extraInfo = view.findViewById(R.id.shopCartItemExtra);
-        if (item.getProduct().isMeal()) {
-            String extra = "";
-            if (item.getMealDrink() > 0) {
-                extra += _context.getResources().getStringArray(R.array.stringMealDrinks)[item.getMealDrink()];
-                if (item.isLargeDrink())
-                    extra += " (Large)";
-
-                extra += "\n";
-            }
-
-            if (item.getMealExtra() > 0) {
-                extra += _context.getResources().getStringArray(R.array.stringMealExtras)[item.getMealExtra()];
-                if (item.isLargeExtra())
-                    extra += " (Large)";
-            }
-
-            extraInfo.setVisibility(View.VISIBLE);
-            extraInfo.setText(extra);
-        }
-
-        final ImageButton removeButton = view.findViewById(R.id.shopCartItemRemove);
-        removeButton.setOnClickListener(v -> {
-            _user.getCart().removeFromCart(item);
-            // Close shopping cart if it's empty now
-            if (_user.getCart().isCartEmpty()) {
-                Objects.requireNonNull((MainActivity)_frag.getActivity()).returnToPreviousFragment(false);
-                return;
-            }
-
-            notifyDataSetChanged();
-            _frag.populatePrice();
-            _frag.populateFinalPrice();
-        });
-
-        return view;
     }
 }
 

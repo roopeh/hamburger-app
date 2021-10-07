@@ -53,7 +53,10 @@ public class RestaurantInfoFragment extends Fragment {
         hours.setText(hourStr);
 
         TextView address = rootView.findViewById(R.id.restaurantInfoAddress);
-        address.setText(_res.getAddress());
+        address.setText(_res.getLocationString());
+
+        TextView phone = rootView.findViewById(R.id.restaurantInfoPhone);
+        phone.setText(_res.getPhoneNumber());
 
         // TODO: google maps widget
 

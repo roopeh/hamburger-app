@@ -100,6 +100,7 @@ public class Helper {
         res2.setHours(Calendar.FRIDAY, "00", "24");
         res2.setHours(Calendar.SATURDAY, "00", "24");
         res2.setHours(Calendar.SUNDAY, "00", "24");
+        res2.setPhoneNumber("040-1234567");
         _restaurants.add(res2);
 
         for (int i = 1; i < 20; ++i) {
@@ -112,6 +113,7 @@ public class Helper {
             res.setHours(Calendar.FRIDAY, "16", "18");
             res.setHours(Calendar.SATURDAY, "20", "23");
             res.setHours(Calendar.SUNDAY, "10", "14");
+            res.setPhoneNumber("040-1234567");
 
             _restaurants.add(res);
         }

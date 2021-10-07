@@ -7,6 +7,7 @@ public class Restaurant {
     private final String _name;
     private String _address;
     private String _city;
+    private String _phone;
 
     private final RestaurantDates dates;
 
@@ -28,7 +29,11 @@ public class Restaurant {
     }
 
     final public String getLocationString() {
-        return _address + ", " + _city;
+        return getAddress() + ", " + _city;
+    }
+
+    final public String getPhoneNumber() {
+        return _phone;
     }
 
     final public boolean isRestaurantOpen() {
@@ -48,6 +53,10 @@ public class Restaurant {
 
         if (!city.isEmpty())
             _city = city;
+    }
+
+    public void setPhoneNumber(String number) {
+        _phone = number;
     }
 
     public void setHours(int weekday, String start, String end) {

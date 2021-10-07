@@ -57,7 +57,7 @@ public class CurrentOrderFragment extends Fragment {
         returnButton.setOnClickListener(v -> Objects.requireNonNull((MainActivity)getActivity()).returnToPreviousFragment(false));
 
         // Products
-        final OrderProductsListAdapter productsAdapter = new OrderProductsListAdapter(getContext(), currentOrder);
+        final ProductsListAdapter productsAdapter = new ProductsListAdapter(getContext(), currentOrder);
         productsList.setAdapter(productsAdapter);
         // Need to calculate height manually for listview because it is in a scrollview
         calculateHeightForList(productsList);
@@ -139,70 +139,5 @@ public class CurrentOrderFragment extends Fragment {
         final ViewGroup.LayoutParams params = list.getLayoutParams();
         params.height = totalHeight + (list.getDividerHeight() * (listAdapter.getCount() - 1));
         list.setLayoutParams(params);
-    }
-}
-
-class OrderProductsListAdapter extends BaseAdapter {
-    final private Context _context;
-    final private List<ShoppingItem> _content;
-
-    public OrderProductsListAdapter(Context context, Order order) {
-        _context = context;
-        _content = order.getItems();
-    }
-
-    @Override
-    public boolean isEnabled(int position) {
-        return false;
-    }
-
-    @Override
-    public int getCount() {
-        return _content.size();
-    }
-
-    @Override
-    public ShoppingItem getItem(int position) {
-        return _content.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        final View view = View.inflate(_context, R.layout.order_list_item, null);
-        final ShoppingItem item = getItem(position);
-
-        final TextView name = view.findViewById(R.id.orderItemName);
-        name.setText("- " + item.getProduct().getName());
-
-        final TextView price = view.findViewById(R.id.orderItemPrice);
-        price.setText(String.format(Locale.getDefault(), "%.2f", item.getPrice()) + " €");
-
-        final TextView extraInfo = view.findViewById(R.id.orderItemExtra);
-        if (item.getProduct().isMeal()) {
-            String extra = "";
-            if (item.getMealDrink() > 0) {
-                extra += _context.getResources().getStringArray(R.array.stringMealDrinks)[item.getMealDrink()];
-                if (item.isLargeDrink())
-                    extra += " (Large)";
-
-                extra += "\n";
-            }
-
-            if (item.getMealExtra() > 0) {
-                extra += _context.getResources().getStringArray(R.array.stringMealExtras)[item.getMealExtra()];
-                if (item.isLargeExtra())
-                    extra += " (Large)";
-            }
-
-            extraInfo.setVisibility(View.VISIBLE);
-            extraInfo.setText(extra);
-        }
-
-        return view;
     }
 }

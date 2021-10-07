@@ -111,5 +111,14 @@
             android:layout_below="@id/restaurantInfoSecondLine"
             android:textSize="15sp"
             android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/restaurantInfoPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/restaurantInfoAddress"
+            android:textSize="15sp"
+            android:textColor="@color/black" />
     </RelativeLayout>
 </RelativeLayout>
