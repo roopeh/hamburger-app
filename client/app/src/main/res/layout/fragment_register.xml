@@ -165,8 +165,7 @@
                 android:layout_below="@id/registerPass2"
                 android:layout_marginStart="5dp"
                 android:buttonTint="@color/white"
-                android:text="Näytä salasanat"
-                />
+                android:text="Näytä salasanat" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

@@ -184,7 +184,10 @@ public class MainActivity extends AppCompatActivity
                 }
                 break;
             case R.id.menuAccount:
-                fragment = new LoginFragment();
+                if (Helper.getInstance().getUser() == null)
+                    fragment = new LoginFragment();
+                else
+                    fragment = new UserFragment();
                 break;
             default:
                 break;

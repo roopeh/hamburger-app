@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="@dimen/background_padding_side"
+    android:layout_marginEnd="@dimen/background_padding_side"
+    android:layout_marginBottom="@dimen/background_padding_bottom"
+    android:paddingStart="@dimen/content_padding_side"
+    android:paddingEnd="@dimen/content_padding_side"
+    android:paddingBottom="@dimen/content_padding_bottom"
+    android:background="@drawable/rounded_main">
+
+    <TextView
+        android:id="@+id/userHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your account"
+        android:theme="@style/DefaultHeaderStyle" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/content_padding_side"
+        android:layout_below="@id/userHeader"
+        android:paddingStart="@dimen/content_padding_side"
+        android:paddingEnd="@dimen/content_padding_side"
+        android:paddingTop="@dimen/content_padding_top"
+        android:paddingBottom="@dimen/content_padding_bottom"
+        android:background="@drawable/rounded_inner_main">
+
+        <Button
+            android:id="@+id/userLogoutButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:backgroundTint="@color/defaultButtonBackground"
+            android:textColor="@color/defaultButtonFont"
+            android:text="Kirjaudu ulos" />
+
+        <View
+            android:id="@+id/userFirstLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/background_padding_side"
+            android:layout_marginBottom="@dimen/line_padding_bottom"
+            android:layout_below="@id/userLogoutButton"
+            android:background="@color/defaultButtonBackground" />
+
+        <TextView
+            android:id="@+id/userPasswordHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userFirstLine"
+            android:textColor="@color/black"
+            android:text="Vaihda salasanasi" />
+
+        <TextView
+            android:id="@+id/userPasswordFirstHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/background_padding_side"
+            android:layout_marginTop="@dimen/background_padding_top"
+            android:layout_below="@id/userPasswordHeader"
+            android:textColor="@color/black"
+            android:text="Uusi salasanasi" />
+
+        <EditText
+            android:id="@+id/userPasswordFirst"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userPasswordFirstHeader"
+            android:layout_marginTop="5dp"
+            android:inputType="textPassword"
+            android:background="@color/white" />
+
+        <TextView
+            android:id="@+id/userPasswordSecondHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userPasswordFirst"
+            android:layout_marginTop="@dimen/content_padding_side"
+            android:layout_marginStart="@dimen/background_padding_side"
+            android:textColor="@color/black"
+            android:text="Toista salasanasi" />
+
+        <EditText
+            android:id="@+id/userPasswordSecond"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userPasswordSecondHeader"
+            android:layout_marginTop="5dp"
+            android:inputType="textPassword"
+            android:background="@color/white" />
+
+        <CheckBox
+            android:id="@+id/userPasswordShow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userPasswordSecond"
+            android:layout_marginStart="5dp"
+            android:buttonTint="@color/white"
+            android:text="Näytä salasanat" />
+
+        <Button
+            android:id="@+id/userPasswordButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/userPasswordShow"
+            android:layout_marginTop="@dimen/content_padding_top"
+            android:backgroundTint="@color/defaultButtonBackground"
+            android:textColor="@color/defaultButtonFont"
+            android:text="Vaihda salasana" />
+    </RelativeLayout>
+</RelativeLayout>
