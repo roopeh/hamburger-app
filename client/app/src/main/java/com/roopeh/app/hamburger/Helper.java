@@ -105,7 +105,7 @@ public class Helper {
 
         for (int i = 1; i < 20; ++i) {
             Restaurant res = new Restaurant("Restaurant " + i);
-            res.setLocation("Testikatu " + (i * 12), "Oulu");
+            res.setLocation("Kotkantie 2", "Oulu");
 
             res.setHours(Calendar.TUESDAY, "08", "10");
             res.setHours(Calendar.WEDNESDAY, "11", "13");
