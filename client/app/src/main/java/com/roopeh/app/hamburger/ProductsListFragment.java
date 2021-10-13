@@ -20,9 +20,6 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ProductsListFragment extends Fragment {
     final private int _category;
 
-    final public static int CATEGORY_HAMBURGER = 0;
-    final public static int CATEGORY_MEAL = 1;
-
     public ProductsListFragment(int category) {
         _category = category;
     }
@@ -34,7 +31,7 @@ public class ProductsListFragment extends Fragment {
         List<Product> content = new ArrayList<>();
 
         // Populate list with correct products
-        if (_category == CATEGORY_MEAL) {
+        if (_category == Helper.Constants.CATEGORY_MEAL) {
             header.setText("Ateriat");
             for (Product meal : Helper.getInstance().getProducts()) {
                 if (meal.isMeal())
@@ -52,7 +49,7 @@ public class ProductsListFragment extends Fragment {
         final RecyclerView grid = rootView.findViewById(R.id.productsListGrid);
         final ProductsListGridAdapter adapter = new ProductsListGridAdapter(content, this);
         grid.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        grid.addItemDecoration(new RecyclerViewDivider(30, 30, 2));
+        grid.addItemDecoration(new RecyclerViewDivider(Helper.Constants.GRID_DIVIDER, Helper.Constants.GRID_DIVIDER, 2));
         grid.setAdapter(adapter);
 
         ImageButton returnButton = rootView.findViewById(R.id.productsListBackButton);

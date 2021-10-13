@@ -58,7 +58,7 @@ public class HistoryInfoFragment extends Fragment {
         // Products
         final ProductsListAdapter adapter = new ProductsListAdapter(getContext(), _order);
         products.setLayoutManager(new LinearLayoutManager(getContext()));
-        products.addItemDecoration(new RecyclerViewDivider(16));
+        products.addItemDecoration(new RecyclerViewDivider(Helper.Constants.LIST_DIVIDER));
         products.setAdapter(adapter);
 
         // Price

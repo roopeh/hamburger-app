@@ -32,7 +32,7 @@ public class CouponFragment extends Fragment {
 
         final CouponListAdapter adapter = new CouponListAdapter(user.getCoupons());
         couponList.setLayoutManager(new LinearLayoutManager(getContext()));
-        couponList.addItemDecoration(new RecyclerViewDivider(30));
+        couponList.addItemDecoration(new RecyclerViewDivider(Helper.Constants.GRID_DIVIDER));
         couponList.setAdapter(adapter);
 
         return rootView;

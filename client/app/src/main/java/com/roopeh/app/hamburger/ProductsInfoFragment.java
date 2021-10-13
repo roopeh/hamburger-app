@@ -89,13 +89,13 @@ public class ProductsInfoFragment extends Fragment {
             }
 
             final int selectedDrink = (int)drinkSpinner.getSelectedItemId();
-            if (selectedDrink == 0) {
+            if (_product.isMeal() && selectedDrink == 0) {
                 Toast.makeText(getContext(), "Sinun täytyy valita juoma", Toast.LENGTH_LONG).show();
                 return;
             }
 
             final int selectedExtra = (int)extrasSpinner.getSelectedItemId();
-            if (selectedExtra == 0) {
+            if (_product.isMeal() && selectedExtra == 0) {
                 Toast.makeText(getContext(), "Sinun täytyy valita lisuke", Toast.LENGTH_LONG).show();
                 return;
             }

@@ -41,7 +41,7 @@ public class RestaurantFragment extends PermissionsFragment {
         final RecyclerView restaurantList = rootView.findViewById(R.id.restaurantList);
         adapter = new RestaurantListAdapter(Helper.getInstance().getRestaurants(), this);
         restaurantList.setLayoutManager(new LinearLayoutManager(getContext()));
-        restaurantList.addItemDecoration(new RecyclerViewDivider(30));
+        restaurantList.addItemDecoration(new RecyclerViewDivider(Helper.Constants.GRID_DIVIDER));
         restaurantList.setAdapter(adapter);
 
         activityResultLauncher.launch(new String[]{Manifest.permission.ACCESS_FINE_LOCATION});

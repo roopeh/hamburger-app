@@ -64,7 +64,7 @@ public class CartFragment extends Fragment {
         // Products
         final ProductsListAdapter shoppingAdapter = new ProductsListAdapter(getContext(), user, this);
         shoppingItems.setLayoutManager(new LinearLayoutManager(getContext()));
-        shoppingItems.addItemDecoration(new RecyclerViewDivider(16));
+        shoppingItems.addItemDecoration(new RecyclerViewDivider(Helper.Constants.LIST_DIVIDER));
         shoppingItems.setAdapter(shoppingAdapter);
 
         // Coupons

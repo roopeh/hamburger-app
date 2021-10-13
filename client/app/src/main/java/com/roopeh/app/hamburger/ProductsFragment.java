@@ -27,7 +27,7 @@ public class ProductsFragment extends Fragment {
         final RecyclerView grid = rootView.findViewById(R.id.productsMainGrid);
         final ProductsMainGridAdapter adapter = new ProductsMainGridAdapter(content, this);
         grid.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        grid.addItemDecoration(new RecyclerViewDivider(30, 30, 2));
+        grid.addItemDecoration(new RecyclerViewDivider(Helper.Constants.GRID_DIVIDER, Helper.Constants.GRID_DIVIDER, 2));
         grid.setAdapter(adapter);
 
         return rootView;
@@ -46,7 +46,7 @@ class ProductsMainGridAdapter extends RecyclerView.Adapter<ProductsMainGridAdapt
 
             itemView.setOnClickListener(v -> {
                 final String item = list.get(getAdapterPosition());
-                final int category = item.equals("Ateriat") ? ProductsListFragment.CATEGORY_MEAL : ProductsListFragment.CATEGORY_HAMBURGER;
+                final int category = item.equals("Ateriat") ? Helper.Constants.CATEGORY_MEAL : Helper.Constants.CATEGORY_HAMBURGER;
                 Objects.requireNonNull((MainActivity)fragment.getActivity()).loadFragment(new ProductsListFragment(category), false);
             });
 

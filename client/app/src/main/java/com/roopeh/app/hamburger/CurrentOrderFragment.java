@@ -56,7 +56,7 @@ public class CurrentOrderFragment extends Fragment {
         // Products
         final ProductsListAdapter productsAdapter = new ProductsListAdapter(getContext(), currentOrder);
         productsList.setLayoutManager(new LinearLayoutManager(getContext()));
-        productsList.addItemDecoration(new RecyclerViewDivider(16));
+        productsList.addItemDecoration(new RecyclerViewDivider(Helper.Constants.LIST_DIVIDER));
         productsList.setAdapter(productsAdapter);
 
         // Payment status

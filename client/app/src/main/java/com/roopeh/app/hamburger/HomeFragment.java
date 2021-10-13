@@ -62,7 +62,7 @@ public class HomeFragment extends Fragment {
 
         final HomeGridAdapter adapter = new HomeGridAdapter(content);
         grid.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        grid.addItemDecoration(new RecyclerViewDivider(34, 34, 2));
+        grid.addItemDecoration(new RecyclerViewDivider(Helper.Constants.GRID_DIVIDER, Helper.Constants.GRID_DIVIDER, 2));
         grid.setAdapter(adapter);
 
         return rootView;

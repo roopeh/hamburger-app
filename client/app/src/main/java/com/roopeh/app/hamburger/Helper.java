@@ -7,6 +7,14 @@ import java.util.Random;
 
 // Singleton helper class
 public class Helper {
+    public static class Constants {
+        final public static int GRID_DIVIDER = 45;
+        final public static int LIST_DIVIDER = 16;
+
+        final public static int CATEGORY_HAMBURGER = 0;
+        final public static int CATEGORY_MEAL = 1;
+    }
+
     private static Helper mInstance = null;
 
     private User _user = null;
