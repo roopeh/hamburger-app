@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Locale;
 import java.util.Objects;
 
 import androidx.fragment.app.Fragment;
@@ -32,14 +33,13 @@ public class ProductsInfoFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_products_info, container, false);
 
         ImageButton returnButton = rootView.findViewById(R.id.productsInfoBackButton);
-        final int category = _product.isMeal() ? ProductsListFragment.CATEGORY_MEAL : ProductsListFragment.CATEGORY_HAMBURGER;
         returnButton.setOnClickListener(v -> Objects.requireNonNull((MainActivity)getActivity()).returnToPreviousFragment(false));
 
         TextView name = rootView.findViewById(R.id.productsInfoName);
         name.setText(_product.getName());
 
         TextView price = rootView.findViewById(R.id.productsInfoPrice);
-        price.setText(String.valueOf(_product.getPrice()) + " €");
+        price.setText(String.format(Locale.getDefault(), "%.2f", _product.getPrice()) + " €");
 
         Spinner drinkSpinner = rootView.findViewById(R.id.productsInfoDrink);
         CheckBox drinkLarge = rootView.findViewById(R.id.productsInfoDrinkLarge);
@@ -88,12 +88,24 @@ public class ProductsInfoFragment extends Fragment {
                 return;
             }
 
+            final int selectedDrink = (int)drinkSpinner.getSelectedItemId();
+            if (selectedDrink == 0) {
+                Toast.makeText(getContext(), "Sinun täytyy valita juoma", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            final int selectedExtra = (int)extrasSpinner.getSelectedItemId();
+            if (selectedExtra == 0) {
+                Toast.makeText(getContext(), "Sinun täytyy valita lisuke", Toast.LENGTH_LONG).show();
+                return;
+            }
+
             // Create new shopping item(s)
             for (int i = 0; i < _quantity; ++i) {
                 ShoppingItem item = new ShoppingItem(_product);
                 if (_product.isMeal()) {
-                    item.setMealDrink((int)drinkSpinner.getSelectedItemId(), drinkLarge.isChecked());
-                    item.setMealExtra((int)extrasSpinner.getSelectedItemId(), extrasLarge.isChecked());
+                    item.setMealDrink(selectedDrink, drinkLarge.isChecked());
+                    item.setMealExtra(selectedExtra, extrasLarge.isChecked());
 
                     if ((int)drinkSpinner.getSelectedItemId() > 0 && drinkLarge.isChecked())
                         item.setPrice(item.getPrice() + 0.50);
