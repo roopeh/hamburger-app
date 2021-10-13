@@ -32,16 +32,12 @@
         android:layout_marginStart="@dimen/background_padding_side"
         android:layout_marginTop="4dp"
         android:layout_toEndOf="@id/productsListBackButton"
-        android:theme="@style/DefaultHeaderStyle"
-        android:text="" />
+        android:theme="@style/DefaultHeaderStyle" />
 
-    <GridView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/productsListGrid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/productsListHeader"
-        android:layout_marginTop="@dimen/content_padding_side"
-        android:numColumns="2"
-        android:horizontalSpacing="@dimen/content_padding_side"
-        android:verticalSpacing="@dimen/content_padding_side"/>
+        android:layout_marginTop="@dimen/content_padding_side" />
 </RelativeLayout>

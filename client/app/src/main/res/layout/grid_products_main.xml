@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.roopeh.app.hamburger.SquareGridview xmlns:android="http://schemas.android.com/apk/res/android"
+<com.roopeh.app.hamburger.SquareGridview
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/rounded_inner_main"
@@ -11,5 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:textAlignment="center"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMinTextSize="14sp"
+        app:autoSizeMaxTextSize="20sp"
         android:theme="@style/DefaultHeaderStyle" />
 </com.roopeh.app.hamburger.SquareGridview>

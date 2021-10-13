@@ -1,11 +1,9 @@
 package com.roopeh.app.hamburger;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -14,7 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class HomeFragment extends Fragment {
     // Type definitions for GridView
@@ -30,7 +31,7 @@ public class HomeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
         final Button orderButton = rootView.findViewById(R.id.homeOrderButton);
-        final ExpendableGridView grid = rootView.findViewById(R.id.homeGrid);
+        final RecyclerView grid = rootView.findViewById(R.id.homeGrid);
         final List<Integer> content = new ArrayList<>();
         final User user = Helper.getInstance().getUser();
 
@@ -59,73 +60,96 @@ public class HomeFragment extends Fragment {
         // Final grid is social media
         content.add(TYPE_SOME);
 
-        final HomeGridAdapter adapter = new HomeGridAdapter(getContext(), content);
+        final HomeGridAdapter adapter = new HomeGridAdapter(content);
+        grid.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        grid.addItemDecoration(new RecyclerViewDivider(34, 34, 2));
         grid.setAdapter(adapter);
-        grid.setExpanded(true);
 
         return rootView;
     }
 }
 
-class HomeGridAdapter extends BaseAdapter {
-    final private Context _context;
-    final private List<Integer> _content;
+class HomeGridAdapter extends RecyclerView.Adapter<HomeGridAdapter.ViewHolder> {
+    final private List<Integer> _list;
 
-    public HomeGridAdapter(Context context, List<Integer> content) {
-        _context = context;
-        _content = content;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        final private TextView defaultText;
+        final private RelativeLayout extraLayout;
+        final private TextView jobText;
+        final private TextView socialText;
+        final private Button devButton;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            defaultText = itemView.findViewById(R.id.homeGridText);
+            extraLayout = itemView.findViewById(R.id.homeGridExtraLayout);
+            jobText = itemView.findViewById(R.id.homeGridSecondText);
+            socialText = itemView.findViewById(R.id.homeGridThirdText);
+            devButton = itemView.findViewById(R.id.homeGridDevButton);
+        }
+
+        final public TextView getDefaultText() {
+            return defaultText;
+        }
+
+        final public RelativeLayout getExtraLayout() {
+            return extraLayout;
+        }
+
+        final public TextView getJobText() {
+            return jobText;
+        }
+
+        final public TextView getSocialText() {
+            return socialText;
+        }
+
+        final public Button getDevButton() {
+            return devButton;
+        }
+    }
+
+    public HomeGridAdapter(List<Integer> list) {
+        _list = list;
+    }
+
+    @NonNull
+    @Override
+    public HomeGridAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        final View listItem = inflater.inflate(R.layout.grid_home, parent, false);
+        return new ViewHolder(listItem);
     }
 
     @Override
-    public int getCount() {
-        return _content.size();
-    }
-
-    @Override
-    public Integer getItem(int position) {
-        return _content.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        final View view = View.inflate(_context, R.layout.grid_home, null);
-
-        switch (getItem(position)) {
+    public void onBindViewHolder(@NonNull HomeGridAdapter.ViewHolder holder, int position) {
+        switch (_list.get(position)) {
             case HomeFragment.TYPE_DEFAULT: {
-                final TextView defaultText = view.findViewById(R.id.homeGridText);
-                defaultText.setVisibility(View.VISIBLE);
-                defaultText.setText("");
+                holder.getDefaultText().setVisibility(View.VISIBLE);
+                holder.getDefaultText().setText("");
             } break;
             case HomeFragment.TYPE_JOB:
             case HomeFragment.TYPE_SOME: {
-                final RelativeLayout extraLayout = view.findViewById(R.id.homeGridExtraLayout);
-                final TextView jobText = view.findViewById(R.id.homeGridSecondText);
-                final TextView someText = view.findViewById(R.id.homeGridThirdText);
-                extraLayout.setVisibility(View.VISIBLE);
+                holder.getExtraLayout().setVisibility(View.VISIBLE);
 
-                if (getItem(position) == HomeFragment.TYPE_JOB) {
-                    jobText.setVisibility(View.VISIBLE);
+                if (_list.get(position) == HomeFragment.TYPE_JOB) {
+                    holder.getJobText().setVisibility(View.VISIBLE);
                 } else {
-                    someText.setVisibility(View.VISIBLE);
+                    holder.getSocialText().setVisibility(View.VISIBLE);
                 }
             } break;
             case HomeFragment.TYPE_LOGIN:
             case HomeFragment.TYPE_LOGOUT: {
-                final Button button = view.findViewById(R.id.homeGridDevButton);
-                button.setVisibility(View.VISIBLE);
+                holder.getDevButton().setVisibility(View.VISIBLE);
 
-                if (getItem(position) == HomeFragment.TYPE_LOGIN)
-                    button.setText("Login");
+                if (_list.get(position) == HomeFragment.TYPE_LOGIN)
+                    holder.getDevButton().setText("Login");
                 else
-                    button.setText("Logout");
+                    holder.getDevButton().setText("Logout");
 
-                button.setOnClickListener(v -> {
-                    if (getItem(position) == HomeFragment.TYPE_LOGIN)
+                holder.getDevButton().setOnClickListener(v -> {
+                    if (_list.get(position) == HomeFragment.TYPE_LOGIN)
                         Helper.getInstance().setUser("test", "test");
                     else
                         Helper.getInstance().logoutUser();
@@ -133,7 +157,10 @@ class HomeGridAdapter extends BaseAdapter {
             } break;
             default: break;
         }
+    }
 
-        return view;
+    @Override
+    public int getItemCount() {
+        return _list.size();
     }
 }

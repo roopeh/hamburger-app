@@ -12,8 +12,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -23,6 +21,8 @@ import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class RestaurantFragment extends PermissionsFragment {
     private RestaurantListAdapter adapter;
@@ -38,14 +38,11 @@ public class RestaurantFragment extends PermissionsFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_restaurant, container, false);
 
-        final ListView restaurantList = rootView.findViewById(R.id.restaurantList);
-        adapter = new RestaurantListAdapter(getContext(), Helper.getInstance().getRestaurants(), this);
+        final RecyclerView restaurantList = rootView.findViewById(R.id.restaurantList);
+        adapter = new RestaurantListAdapter(Helper.getInstance().getRestaurants(), this);
+        restaurantList.setLayoutManager(new LinearLayoutManager(getContext()));
+        restaurantList.addItemDecoration(new RecyclerViewDivider(30));
         restaurantList.setAdapter(adapter);
-
-        restaurantList.setOnItemClickListener((parent, view, position, id) -> {
-            final Restaurant res = (Restaurant) parent.getItemAtPosition(position);
-            Objects.requireNonNull(((MainActivity) getActivity())).loadFragment(new RestaurantInfoFragment(res), false);
-        });
 
         activityResultLauncher.launch(new String[]{Manifest.permission.ACCESS_FINE_LOCATION});
 
@@ -101,70 +98,98 @@ public class RestaurantFragment extends PermissionsFragment {
         public void onLocationChanged(@NonNull Location location) {
             _frag.ownLocation = location;
             locationManager.removeUpdates(this);
-            _frag.adapter.notifyDataSetChanged();
+            _frag.adapter.notifyItemRangeChanged(0, _frag.adapter.getItemCount());
         }
     }
 }
 
-class RestaurantListAdapter extends BaseAdapter {
-    final private Context _context;
+class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAdapter.ViewHolder> {
     final private List<Restaurant> _list;
     final private RestaurantFragment _frag;
 
-    public RestaurantListAdapter(Context cont, List<Restaurant> list, RestaurantFragment fragment) {
-        _context = cont;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        final private TextView restaurantName;
+        final private TextView restaurantLoc;
+        final private TextView restaurantDist;
+        final private TextView restaurantStatus;
+
+        public ViewHolder(@NonNull View itemView, List<Restaurant> list, RestaurantFragment fragment) {
+            super(itemView);
+
+            itemView.setOnClickListener(v -> {
+                final Restaurant res = list.get(getAdapterPosition());
+                Objects.requireNonNull((MainActivity)fragment.getActivity()).loadFragment(new RestaurantInfoFragment(res), false);
+            });
+
+            restaurantName = itemView.findViewById(R.id.restaurantListItemName);
+            restaurantLoc = itemView.findViewById(R.id.restaurantListItemLocation);
+            restaurantDist = itemView.findViewById(R.id.restaurantListItemDistance);
+            restaurantStatus = itemView.findViewById(R.id.restaurantListItemStatus);
+        }
+
+        final public TextView getRestaurantName() {
+            return restaurantName;
+        }
+
+        final public TextView getRestaurantLocation() {
+            return restaurantLoc;
+        }
+
+        final public TextView getRestaurantDistance() {
+            return restaurantDist;
+        }
+
+        final public TextView getRestaurantStatus() {
+            return restaurantStatus;
+        }
+    }
+
+    public RestaurantListAdapter(List<Restaurant> list, RestaurantFragment fragment) {
         _list = list;
         _frag = fragment;
     }
 
+    @NonNull
     @Override
-    public int getCount() {
-        return _list.size();
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        final View listItem = inflater.inflate(R.layout.restaurant_list_item, parent, false);
+        return new ViewHolder(listItem, _list, _frag);
     }
 
     @Override
-    public Object getItem(int position) {
-        return _list.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        final View view = View.inflate(_context, R.layout.restaurant_list_item, null);
-        Restaurant res = _list.get(position);
-
-        final TextView name = view.findViewById(R.id.restaurantListItemName);
-        name.setText(res.getName());
-
-        final TextView location = view.findViewById(R.id.restaurantListItemLocation);
-        location.setText(res.getLocationString());
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        final Restaurant res = _list.get(position);
+        holder.getRestaurantName().setText(res.getName());
+        holder.getRestaurantLocation().setText(res.getLocationString());
 
         // Get distance to restaurant
-        final TextView dist = view.findViewById(R.id.restaurantListItemDistance);
-        final double distance = _frag.getDistance(res.getLocationString());
-        if (distance > 0) {
-            if (distance >= 10000) {
-                final int intDistance = (int)Math.round(distance / 1000);
-                dist.setText(intDistance + " km");
-            } else if (distance >= 1000) {
-                final double doubleDistance = distance / 1000;
-                dist.setText(String.format(Locale.getDefault(), "%.1f", doubleDistance) + " km");
-            } else {
-                final int intDistance = (int)Math.round(distance);
-                dist.setText(intDistance + " m");
+        // Check if its calculated already
+        if (holder.getRestaurantDistance().getText().toString().isEmpty()) {
+            final double distance = _frag.getDistance(res.getLocationString());
+            if (distance > 0) {
+                if (distance >= 10000) {
+                    final int intDistance = (int)Math.round(distance / 1000);
+                    holder.getRestaurantDistance().setText(intDistance + " km");
+                } else if (distance >= 1000) {
+                    final double doubleDistance = distance / 1000;
+                    holder.getRestaurantDistance().setText(String.format(Locale.getDefault(), "%.1f", doubleDistance) + " km");
+                } else {
+                    final int intDistance = (int)Math.round(distance);
+                    holder.getRestaurantDistance().setText(intDistance + " m");
+                }
             }
         }
 
-        final TextView status = view.findViewById(R.id.restaurantListItemStatus);
+        // Restaurant status
         if (res.isRestaurantOpen())
-            status.setText("Open");
+            holder.getRestaurantStatus().setText("Open");
         else
-            status.setText("Closed");
+            holder.getRestaurantStatus().setText("Closed");
+    }
 
-        return view;
+    @Override
+    public int getItemCount() {
+        return _list.size();
     }
 }

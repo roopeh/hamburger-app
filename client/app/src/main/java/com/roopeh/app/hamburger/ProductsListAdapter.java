@@ -1,9 +1,9 @@
 package com.roopeh.app.hamburger;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -11,79 +11,100 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 enum ProductsListType {
     DEFAULT,        // Default list
     CART            // In shopping cart
 }
 
-class ProductsListAdapter extends BaseAdapter {
+class ProductsListAdapter extends RecyclerView.Adapter<ProductsListAdapter.ViewHolder> {
     final private Context _context;
-    final private List<ShoppingItem> _content;
+    final private List<ShoppingItem> _list;
     final private ProductsListType _type;
     final private User _user;
     final private CartFragment _frag;
 
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        final private TextView name;
+        final private TextView price;
+        final private TextView extra;
+        final private ImageButton removeButton;
+
+        public ViewHolder(@NonNull View itemView, ProductsListType type) {
+            super(itemView);
+
+            final int itemNameLayoutId, itemPriceLayoutId, itemExtraLayoutId;
+            if (type == ProductsListType.CART) {
+                itemNameLayoutId = R.id.shopCartItemName;
+                itemPriceLayoutId = R.id.shopCartItemPrice;
+                itemExtraLayoutId = R.id.shopCartItemExtra;
+                removeButton = itemView.findViewById(R.id.shopCartItemRemove);
+            } else {
+                itemNameLayoutId = R.id.orderItemName;
+                itemPriceLayoutId = R.id.orderItemPrice;
+                itemExtraLayoutId = R.id.orderItemExtra;
+                removeButton = null;
+            }
+
+            name = itemView.findViewById(itemNameLayoutId);
+            price = itemView.findViewById(itemPriceLayoutId);
+            extra = itemView.findViewById(itemExtraLayoutId);
+        }
+
+        final public TextView getName() {
+            return name;
+        }
+
+        final public TextView getPrice() {
+            return price;
+        }
+
+        final public TextView getExtra() {
+            return extra;
+        }
+
+        final public ImageButton getRemoveButton() {
+            return removeButton;
+        }
+    }
+
     public ProductsListAdapter(Context context, User user, CartFragment frag) {
-        _type = ProductsListType.CART;
         _context = context;
-        _content = user.getCart().getItems();
+        _type = ProductsListType.CART;
+        _list = user.getCart().getItems();
         _user = user;
         _frag = frag;
     }
 
     public ProductsListAdapter(Context context, Order order) {
-        _type = ProductsListType.DEFAULT;
         _context = context;
-        _content = order.getItems();
+        _type = ProductsListType.DEFAULT;
+        _list = order.getItems();
         _user = null;
         _frag = null;
     }
 
+    @NonNull
     @Override
-    public boolean isEnabled(int position) {
-        return false;
+    public ProductsListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        final View itemView;
+        if (_type == ProductsListType.CART)
+            itemView = inflater.inflate(R.layout.shop_cart_list_item, parent, false);
+        else
+            itemView = inflater.inflate(R.layout.order_list_item, parent, false);
+
+        return new ViewHolder(itemView, _type);
     }
 
     @Override
-    public int getCount() {
-        return _content.size();
-    }
+    public void onBindViewHolder(@NonNull ProductsListAdapter.ViewHolder holder, int position) {
+        final ShoppingItem item = _list.get(position);
+        holder.getName().setText("- " + item.getProduct().getName());
+        holder.getPrice().setText(String.format(Locale.getDefault(), "%.2f", item.getPrice()) + " €");
 
-    @Override
-    public ShoppingItem getItem(int position) {
-        return _content.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        final View view;
-        final int itemNameLayoutId, itemPriceLayoutId, itemExtraLayoutId;
-        if (_type == ProductsListType.CART) {
-            view = View.inflate(_context, R.layout.shop_cart_list_item, null);
-            itemNameLayoutId = R.id.shopCartItemName;
-            itemPriceLayoutId = R.id.shopCartItemPrice;
-            itemExtraLayoutId = R.id.shopCartItemExtra;
-        } else {
-            view = View.inflate(_context, R.layout.order_list_item, null);
-            itemNameLayoutId = R.id.orderItemName;
-            itemPriceLayoutId = R.id.orderItemPrice;
-            itemExtraLayoutId = R.id.orderItemExtra;
-        }
-
-        final ShoppingItem item = getItem(position);
-
-        final TextView name = view.findViewById(itemNameLayoutId);
-        name.setText("- " + item.getProduct().getName());
-
-        final TextView price = view.findViewById(itemPriceLayoutId);
-        price.setText(String.format(Locale.getDefault(), "%.2f", item.getPrice()) + " €");
-
-        final TextView extraInfo = view.findViewById(itemExtraLayoutId);
         if (item.getProduct().isMeal()) {
             String extra = "";
             if (item.getMealDrink() > 0) {
@@ -100,13 +121,12 @@ class ProductsListAdapter extends BaseAdapter {
                     extra += " (Large)";
             }
 
-            extraInfo.setVisibility(View.VISIBLE);
-            extraInfo.setText(extra);
+            holder.getExtra().setVisibility(View.VISIBLE);
+            holder.getExtra().setText(extra);
         }
 
         if (_type == ProductsListType.CART) {
-            final ImageButton removeButton = view.findViewById(R.id.shopCartItemRemove);
-            removeButton.setOnClickListener(v -> {
+            holder.getRemoveButton().setOnClickListener(v -> {
                 _user.getCart().removeFromCart(item);
                 // Close shopping cart if it's empty now
                 if (_user.getCart().isCartEmpty()) {
@@ -114,12 +134,16 @@ class ProductsListAdapter extends BaseAdapter {
                     return;
                 }
 
-                notifyDataSetChanged();
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, getItemCount());
                 _frag.populatePrice();
                 _frag.populateFinalPrice();
             });
         }
+    }
 
-        return view;
+    @Override
+    public int getItemCount() {
+        return _list.size();
     }
 }

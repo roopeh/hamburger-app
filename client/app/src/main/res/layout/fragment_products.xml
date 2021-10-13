@@ -18,12 +18,10 @@
         android:theme="@style/DefaultHeaderStyle"
         android:text="Choose category" />
 
-    <GridView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/productsMainGrid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/productsHeader"
-        android:layout_marginTop="@dimen/content_padding_side"
-        android:numColumns="2"
-        android:horizontalSpacing="@dimen/content_padding_side" />
+        android:layout_marginTop="@dimen/content_padding_side" />
 </RelativeLayout>

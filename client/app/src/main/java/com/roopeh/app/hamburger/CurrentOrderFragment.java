@@ -1,17 +1,11 @@
 package com.roopeh.app.hamburger;
 
-import android.content.Context;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
@@ -19,9 +13,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class CurrentOrderFragment extends Fragment {
     private CountDownTimer _orderTimer = null;
@@ -39,7 +36,7 @@ public class CurrentOrderFragment extends Fragment {
         }
 
         final ImageButton returnButton = rootView.findViewById(R.id.currentOrderBackButton);
-        final ListView productsList = rootView.findViewById(R.id.currentOrderProducts);
+        final RecyclerView productsList = rootView.findViewById(R.id.currentOrderProducts);
         final TextView paymentStatus = rootView.findViewById(R.id.currentOrderPaymentStatus);
         final TextView orderStatus = rootView.findViewById(R.id.currentOrderStatus);
         final TextView restaurantInfo = rootView.findViewById(R.id.currentOrderRestaurantInfo);
@@ -58,9 +55,9 @@ public class CurrentOrderFragment extends Fragment {
 
         // Products
         final ProductsListAdapter productsAdapter = new ProductsListAdapter(getContext(), currentOrder);
+        productsList.setLayoutManager(new LinearLayoutManager(getContext()));
+        productsList.addItemDecoration(new RecyclerViewDivider(16));
         productsList.setAdapter(productsAdapter);
-        // Need to calculate height manually for listview because it is in a scrollview
-        calculateHeightForList(productsList);
 
         // Payment status
         if (currentOrder.isPaid())
@@ -125,19 +122,5 @@ public class CurrentOrderFragment extends Fragment {
         // java.lang.IllegalStateException: FragmentManager is already executing transactions
         Handler handler = new Handler();
         handler.post(() -> Objects.requireNonNull((MainActivity)getActivity()).returnToPreviousFragment(false));
-    }
-
-    private void calculateHeightForList(ListView list) {
-        final ListAdapter listAdapter = list.getAdapter();
-        int totalHeight = 0;
-        for (int size = 0; size < listAdapter.getCount(); ++size) {
-            final View listItem = listAdapter.getView(size, null, list);
-            listItem.measure(0, 0);
-            totalHeight += listItem.getMeasuredHeight();
-        }
-
-        final ViewGroup.LayoutParams params = list.getLayoutParams();
-        params.height = totalHeight + (list.getDividerHeight() * (listAdapter.getCount() - 1));
-        list.setLayoutParams(params);
     }
 }

@@ -3,6 +3,8 @@ package com.roopeh.app.hamburger;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +35,7 @@ public class HistoryInfoFragment extends Fragment {
         final TextView restaurantAddress = rootView.findViewById(R.id.historyInfoAddress);
         final TextView restaurantPhone = rootView.findViewById(R.id.historyInfoPhone);
         final TextView orderDate = rootView.findViewById(R.id.historyInfoDate);
-        final ListView products = rootView.findViewById(R.id.historyInfoProducts);
+        final RecyclerView products = rootView.findViewById(R.id.historyInfoProducts);
         final TextView priceListed = rootView.findViewById(R.id.historyInfoPriceListed);
         final TextView priceTotal = rootView.findViewById(R.id.historyInfoPriceSum);
 
@@ -55,9 +57,9 @@ public class HistoryInfoFragment extends Fragment {
 
         // Products
         final ProductsListAdapter adapter = new ProductsListAdapter(getContext(), _order);
+        products.setLayoutManager(new LinearLayoutManager(getContext()));
+        products.addItemDecoration(new RecyclerViewDivider(16));
         products.setAdapter(adapter);
-        // Need to calculate height manually for listview because it is in a scrollview
-        calculateHeightForList(products);
 
         // Price
         String priceStr = "Välisumma " + String.format(Locale.getDefault(), "%.2f", _order.getOriginalPrice()) + " €";
@@ -71,19 +73,5 @@ public class HistoryInfoFragment extends Fragment {
         priceTotal.setText(String.format(Locale.getDefault(), "%.2f", _order.getTotalPrice()) + " €");
 
         return rootView;
-    }
-
-    private void calculateHeightForList(ListView list) {
-        final ListAdapter listAdapter = list.getAdapter();
-        int totalHeight = 0;
-        for (int size = 0; size < listAdapter.getCount(); ++size) {
-            final View listItem = listAdapter.getView(size, null, list);
-            listItem.measure(0, 0);
-            totalHeight += listItem.getMeasuredHeight();
-        }
-
-        final ViewGroup.LayoutParams params = list.getLayoutParams();
-        params.height = totalHeight + (list.getDividerHeight() * (listAdapter.getCount() - 1));
-        list.setLayoutParams(params);
     }
 }

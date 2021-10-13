@@ -39,14 +39,12 @@
             android:text="Sinulla ei ole alennuskuponkeja" />
     </RelativeLayout>
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/couponsList"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/content_padding_side"
         android:layout_below="@id/couponsHeader"
         android:visibility="gone"
-        android:listSelector="@android:color/transparent"
-        android:divider="@color/backgroundInner"
-        android:dividerHeight="15dp" />
+        android:listSelector="@android:color/transparent" />
 </RelativeLayout>

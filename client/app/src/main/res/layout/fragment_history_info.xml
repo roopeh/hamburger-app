@@ -103,13 +103,11 @@
                 android:textStyle="bold"
                 android:text="Tilaus:" />
 
-            <ListView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/historyInfoProducts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/historyInfoProductHeader"
-                android:divider="@android:color/transparent"
-                android:dividerHeight="8dp" />
+                android:layout_below="@id/historyInfoProductHeader" />
 
             <View
                 android:id="@+id/historyInfoSecondLine"

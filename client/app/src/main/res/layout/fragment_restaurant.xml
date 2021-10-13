@@ -18,12 +18,10 @@
         android:text="Restaurants"
         android:theme="@style/DefaultHeaderStyle" />
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/restaurantList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/content_padding_side"
-        android:layout_below="@id/restaurantHeader"
-        android:divider="@color/backgroundInner"
-        android:dividerHeight="15dp" />
+        android:layout_marginTop="@dimen/content_padding_top"
+        android:layout_below="@id/restaurantHeader" />
 </RelativeLayout>

@@ -8,11 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
@@ -28,6 +25,8 @@ import java.util.Objects;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class CartFragment extends Fragment {
     private Spinner couponSpinner;
@@ -55,7 +54,7 @@ public class CartFragment extends Fragment {
 
         defaultView.setVisibility(View.VISIBLE);
 
-        final ListView shoppingItems = rootView.findViewById(R.id.shopCartProducts);
+        final RecyclerView shoppingItems = rootView.findViewById(R.id.shopCartProducts);
         couponSpinner = rootView.findViewById(R.id.shopCartCoupons);
         final Spinner restaurantSpinner = rootView.findViewById(R.id.shopCartRestaurant);
         listedPrice = rootView.findViewById(R.id.shopCartPriceListed);
@@ -64,9 +63,9 @@ public class CartFragment extends Fragment {
 
         // Products
         final ProductsListAdapter shoppingAdapter = new ProductsListAdapter(getContext(), user, this);
+        shoppingItems.setLayoutManager(new LinearLayoutManager(getContext()));
+        shoppingItems.addItemDecoration(new RecyclerViewDivider(16));
         shoppingItems.setAdapter(shoppingAdapter);
-        // Need to calculate height manually for listview because it is in a scrollview
-        calculateHeightForList(shoppingItems);
 
         // Coupons
         populateCoupons(couponSpinner);
@@ -248,20 +247,6 @@ public class CartFragment extends Fragment {
     public void populateFinalPrice() {
         final String price = String.format(Locale.getDefault(), "%.2f", getSum() - getDiscount()) + " €";
         totalSum.setText(price);
-    }
-
-    private void calculateHeightForList(ListView list) {
-        final ListAdapter listAdapter = list.getAdapter();
-        int totalHeight = 0;
-        for (int size = 0; size < listAdapter.getCount(); ++size) {
-            final View listItem = listAdapter.getView(size, null, list);
-            listItem.measure(0, 0);
-            totalHeight += listItem.getMeasuredHeight();
-        }
-
-        final ViewGroup.LayoutParams params = list.getLayoutParams();
-        params.height = totalHeight + (list.getDividerHeight() * (listAdapter.getCount() - 1));
-        list.setLayoutParams(params);
     }
 }
 
