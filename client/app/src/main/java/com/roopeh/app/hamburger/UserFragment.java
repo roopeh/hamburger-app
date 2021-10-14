@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Objects;
@@ -20,11 +21,16 @@ public class UserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_user, container, false);
 
+        final TextView userName = rootView.findViewById(R.id.userHelloText);
         final Button logoutButton = rootView.findViewById(R.id.userLogoutButton);
         final EditText firstPass = rootView.findViewById(R.id.userPasswordFirst);
         final EditText secondPass = rootView.findViewById(R.id.userPasswordSecond);
         final CheckBox checkBox = rootView.findViewById(R.id.userPasswordShow);
         final Button passButton = rootView.findViewById(R.id.userPasswordButton);
+
+        final User user = Helper.getInstance().getUser();
+
+        userName.setText("Hei, " + user.getFirstName() + " " + user.getLastName() + "!");
 
         // Logout button
         logoutButton.setOnClickListener(v -> {

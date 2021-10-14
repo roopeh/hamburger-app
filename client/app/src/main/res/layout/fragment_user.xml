@@ -29,11 +29,21 @@
         android:paddingBottom="@dimen/content_padding_bottom"
         android:background="@drawable/rounded_inner_main">
 
+        <TextView
+            android:id="@+id/userHelloText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
         <Button
             android:id="@+id/userLogoutButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/background_padding_top"
+            android:layout_below="@id/userHelloText"
             android:backgroundTint="@color/defaultButtonBackground"
             android:textColor="@color/defaultButtonFont"
             android:text="Kirjaudu ulos" />
