@@ -46,7 +46,7 @@ class ProductsMainGridAdapter extends RecyclerView.Adapter<ProductsMainGridAdapt
 
             itemView.setOnClickListener(v -> {
                 final String item = list.get(getAdapterPosition());
-                final int category = item.equals("Ateriat") ? Helper.Constants.CATEGORY_MEAL : Helper.Constants.CATEGORY_HAMBURGER;
+                final int category = item.equals("Ateriat") ? Helper.Constants.PRODUCT_CATEGORY_MEAL : Helper.Constants.PRODUCT_CATEGORY_HAMBURGER;
                 Objects.requireNonNull((MainActivity)fragment.getActivity()).loadFragment(new ProductsListFragment(category), false);
             });
 

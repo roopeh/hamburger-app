@@ -31,7 +31,7 @@ public class ProductsListFragment extends Fragment {
         List<Product> content = new ArrayList<>();
 
         // Populate list with correct products
-        if (_category == Helper.Constants.CATEGORY_MEAL) {
+        if (_category == Helper.Constants.PRODUCT_CATEGORY_MEAL) {
             header.setText("Ateriat");
             for (Product meal : Helper.getInstance().getProducts()) {
                 if (meal.isMeal())

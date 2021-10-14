@@ -136,6 +136,7 @@ class ProductsListAdapter extends RecyclerView.Adapter<ProductsListAdapter.ViewH
 
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, getItemCount());
+                _frag.populateCoupons();
                 _frag.populatePrice();
                 _frag.populateFinalPrice();
             });

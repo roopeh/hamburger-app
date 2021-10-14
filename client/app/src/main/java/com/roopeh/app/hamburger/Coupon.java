@@ -11,12 +11,6 @@ public class Coupon {
     final private int _type;
     final private long _expiryDate;
 
-    // Coupon types
-    public static final int TYPE_FREE_LARGE_DRINK               = 1;
-    public static final int TYPE_FREE_LARGE_EXTRAS              = 2;
-    public static final int TYPE_50_OFF                         = 3;
-    public static final int TYPE_EMPTY_COUPON                   = 10;
-
     public Coupon(int type, long expiryDate) {
         _type = type;
         _expiryDate = expiryDate;
@@ -39,13 +33,13 @@ public class Coupon {
     // TODO: put to strings resource file
     public final String getName() {
         switch (_type) {
-            case TYPE_FREE_LARGE_DRINK:
+            case Helper.Constants.COUPON_TYPE_FREE_LARGE_DRINK:
                 return "Large drink";
-            case TYPE_FREE_LARGE_EXTRAS:
+            case Helper.Constants.COUPON_TYPE_FREE_LARGE_EXTRAS:
                 return "Large extras";
-            case TYPE_50_OFF:
+            case Helper.Constants.COUPON_TYPE_50_OFF:
                 return "50% off";
-            case TYPE_EMPTY_COUPON:
+            case Helper.Constants.COUPON_TYPE_EMPTY_COUPON:
                 return "No coupon";
             default:
                 return "Unknown coupon type";
@@ -54,16 +48,69 @@ public class Coupon {
 
     public final String getDescription() {
         switch (_type) {
-            case TYPE_FREE_LARGE_DRINK:
+            case Helper.Constants.COUPON_TYPE_FREE_LARGE_DRINK:
                 return "Large drink for free";
-            case TYPE_FREE_LARGE_EXTRAS:
+            case Helper.Constants.COUPON_TYPE_FREE_LARGE_EXTRAS:
                 return "Large extras for free";
-            case TYPE_50_OFF:
+            case Helper.Constants.COUPON_TYPE_50_OFF:
                 return "50% cheaper!";
-            case TYPE_EMPTY_COUPON:
+            case Helper.Constants.COUPON_TYPE_EMPTY_COUPON:
                 return "No coupon";
             default:
                 return "Unknown coupon type";
         }
+    }
+
+    /*
+     * Static methods
+     */
+    public static double getDiscountFromCoupon(final int couponType, final double sum) {
+        switch (couponType) {
+            case Helper.Constants.COUPON_TYPE_FREE_LARGE_DRINK:
+                return 0.5;
+            case Helper.Constants.COUPON_TYPE_FREE_LARGE_EXTRAS:
+                return 0.4;
+            case Helper.Constants.COUPON_TYPE_50_OFF:
+                return sum / 2;
+            default:
+                return 0.0;
+        }
+    }
+
+    public static boolean isCouponAvailableForCart(final int couponType) {
+        switch (couponType) {
+            case Helper.Constants.COUPON_TYPE_FREE_LARGE_DRINK: {
+                for (final ShoppingItem item : Helper.getInstance().getUser().getCart().getItems()) {
+                    if (!item.getProduct().isMeal())
+                        continue;
+
+                    if (item.getMealDrink() == 0)
+                        continue;
+
+                    if (item.isLargeDrink()) {
+                        return true;
+                    }
+                }
+            } break;
+            case Helper.Constants.COUPON_TYPE_FREE_LARGE_EXTRAS: {
+                for (final ShoppingItem item : Helper.getInstance().getUser().getCart().getItems()) {
+                    if (!item.getProduct().isMeal())
+                        continue;
+
+                    if (item.getMealExtra() == 0)
+                        continue;
+
+                    if (item.isLargeExtra()) {
+                        return true;
+                    }
+                }
+            } break;
+            case Helper.Constants.COUPON_TYPE_50_OFF: {
+                return true;
+            }
+            default: break;
+        }
+
+        return false;
     }
 }

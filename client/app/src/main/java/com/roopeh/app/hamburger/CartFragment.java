@@ -68,17 +68,7 @@ public class CartFragment extends Fragment {
         shoppingItems.setAdapter(shoppingAdapter);
 
         // Coupons
-        populateCoupons(couponSpinner);
-        couponSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                populatePrice();
-                populateFinalPrice();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
-        });
+        populateCoupons();
 
         // Restaurants
         populateRestaurants(restaurantSpinner);
@@ -120,7 +110,7 @@ public class CartFragment extends Fragment {
 
                 // Remove used coupon
                 final Coupon coupon = (Coupon)couponSpinner.getSelectedItem();
-                if (coupon.getType() != Coupon.TYPE_EMPTY_COUPON)
+                if (coupon.getType() != Helper.Constants.COUPON_TYPE_EMPTY_COUPON)
                     user.removeCoupon(coupon);
 
                 // Clear shopping items
@@ -138,52 +128,31 @@ public class CartFragment extends Fragment {
         return rootView;
     }
 
-    private void populateCoupons(Spinner couponSpinner) {
+    public void populateCoupons() {
         List<Coupon> coupons = new ArrayList<>();
-        coupons.add(new Coupon(Coupon.TYPE_EMPTY_COUPON, 0));
+        coupons.add(new Coupon(Helper.Constants.COUPON_TYPE_EMPTY_COUPON, 0));
 
         // Check for available coupons
         for (final Coupon coupon : Helper.getInstance().getUser().getCoupons()) {
             // Check if the coupon can be used for any item in the shopping cart
-            switch (coupon.getType()) {
-                case Coupon.TYPE_FREE_LARGE_DRINK: {
-                    for (final ShoppingItem item : Helper.getInstance().getUser().getCart().getItems()) {
-                        if (!item.getProduct().isMeal())
-                            continue;
-
-                        if (item.getMealDrink() == 0)
-                            continue;
-
-                        if (item.isLargeDrink()) {
-                            coupons.add(coupon);
-                            break;
-                        }
-                    }
-                } break;
-                case Coupon.TYPE_FREE_LARGE_EXTRAS: {
-                    for (final ShoppingItem item : Helper.getInstance().getUser().getCart().getItems()) {
-                        if (!item.getProduct().isMeal())
-                            continue;
-
-                        if (item.getMealExtra() == 0)
-                            continue;
-
-                        if (item.isLargeExtra()) {
-                            coupons.add(coupon);
-                            break;
-                        }
-                    }
-                } break;
-                case Coupon.TYPE_50_OFF: {
-                    coupons.add(coupon);
-                } break;
-                default: break;
-            }
+            if (Coupon.isCouponAvailableForCart(coupon.getType()))
+                coupons.add(coupon);
         }
 
         final CouponAdapter couponAdapter = new CouponAdapter(getContext(), android.R.layout.simple_spinner_item, coupons);
         couponAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         couponSpinner.setAdapter(couponAdapter);
+
+        couponSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                populatePrice();
+                populateFinalPrice();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+        });
     }
 
     private void populateRestaurants(Spinner restaurantSpinner) {
@@ -218,16 +187,7 @@ public class CartFragment extends Fragment {
 
     private double getDiscount() {
         final Coupon coupon = (Coupon)couponSpinner.getSelectedItem();
-        switch (coupon.getType()) {
-            case Coupon.TYPE_FREE_LARGE_DRINK:
-                return 0.5;
-            case Coupon.TYPE_FREE_LARGE_EXTRAS:
-                return 0.4;
-            case Coupon.TYPE_50_OFF:
-                return getSum() / 2;
-            default:
-                return 0.0;
-        }
+        return Coupon.getDiscountFromCoupon(coupon.getType(), getSum());
     }
 
     // TODO: to strings resources

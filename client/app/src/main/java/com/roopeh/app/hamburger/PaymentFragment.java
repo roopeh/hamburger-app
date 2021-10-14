@@ -40,7 +40,7 @@ public class PaymentFragment extends Fragment {
             _order.setPaid(true);
 
             // Remove used coupon
-            if (_coupon.getType() != Coupon.TYPE_EMPTY_COUPON)
+            if (_coupon.getType() != Helper.Constants.COUPON_TYPE_EMPTY_COUPON)
                 user.removeCoupon(_coupon);
 
             // Clear shopping items

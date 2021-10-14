@@ -84,19 +84,19 @@ public class ProductsInfoFragment extends Fragment {
         addToCart.setOnClickListener(v -> {
             final User user = Helper.getInstance().getUser();
             if (user == null) {
-                Toast.makeText(getContext(), "Sinun täytyy olla kirjautunut sisään!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Sinun täytyy olla kirjautunut sisään!", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             final int selectedDrink = (int)drinkSpinner.getSelectedItemId();
             if (_product.isMeal() && selectedDrink == 0) {
-                Toast.makeText(getContext(), "Sinun täytyy valita juoma", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Sinun täytyy valita juoma", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             final int selectedExtra = (int)extrasSpinner.getSelectedItemId();
             if (_product.isMeal() && selectedExtra == 0) {
-                Toast.makeText(getContext(), "Sinun täytyy valita lisuke", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Sinun täytyy valita lisuke", Toast.LENGTH_SHORT).show();
                 return;
             }
 
