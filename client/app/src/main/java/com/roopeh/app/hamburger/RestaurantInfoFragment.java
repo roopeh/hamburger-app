@@ -1,22 +1,30 @@
 package com.roopeh.app.hamburger;
 
+import android.Manifest;
+import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-import androidx.fragment.app.Fragment;
-
-public class RestaurantInfoFragment extends Fragment {
+public class RestaurantInfoFragment extends PermissionsFragment {
     private final Restaurant _res;
+    private ImageView _mapView;
 
     public RestaurantInfoFragment(Restaurant res) {
+        super();
         _res = res;
     }
 
@@ -58,10 +66,12 @@ public class RestaurantInfoFragment extends Fragment {
         TextView phone = rootView.findViewById(R.id.restaurantInfoPhone);
         phone.setText(_res.getPhoneNumber());
 
-        // TODO: google maps widget
+        _mapView = rootView.findViewById(R.id.restaurantInfoMaps);
 
         ImageButton backButton = rootView.findViewById(R.id.restaurantInfoBackButton);
         backButton.setOnClickListener(v -> Objects.requireNonNull((MainActivity)getActivity()).returnToPreviousFragment(false));
+
+        activityResultLauncher.launch(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION});
 
         return rootView;
     }
@@ -73,5 +83,30 @@ public class RestaurantInfoFragment extends Fragment {
             return "kiinni";
 
         return String.format(Locale.getDefault(), "%02d", startHour) + "-" + String.format(Locale.getDefault(), "%02d", endHour);
+    }
+
+    private void showMapImage(final double lat, final double lon) {
+        _mapView.setVisibility(View.VISIBLE);
+        _mapView.setOnClickListener(v -> {
+            final Uri uri = Uri.parse("geo:" + lat + "," + lon + "?q=" + lat + "," + lon + "(" + Uri.encode(_res.getName()) + ")");
+            final Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            intent.setPackage("com.google.android.apps.maps");
+            startActivity(intent);
+        });
+    }
+
+    @Override
+    protected void onPermissionsCheck(final boolean allGranted) {
+        if (!allGranted)
+            return;
+
+        try {
+            final Geocoder geocoder = new Geocoder(getContext());
+            final List<Address> all = geocoder.getFromLocationName(_res.getLocationString(), 3);
+            final Address address = all.get(0);
+            showMapImage(address.getLatitude(), address.getLongitude());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

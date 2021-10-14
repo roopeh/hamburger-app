@@ -51,6 +51,9 @@ public class RestaurantFragment extends PermissionsFragment {
 
     @Override
     protected void onPermissionsCheck(final boolean allGranted) {
+        if (!allGranted)
+            return;
+
         geocoder = new Geocoder(getContext());
 
         try {
@@ -72,8 +75,8 @@ public class RestaurantFragment extends PermissionsFragment {
         Location restaurantLocation = null;
 
         try {
-            List<Address> all = geocoder.getFromLocationName(address, 3);
-            Address restaurantAddress = all.get(0);
+            final List<Address> all = geocoder.getFromLocationName(address, 3);
+            final Address restaurantAddress = all.get(0);
             restaurantLocation = new Location("Restaurant");
             restaurantLocation.setLatitude(restaurantAddress.getLatitude());
             restaurantLocation.setLongitude(restaurantAddress.getLongitude());
