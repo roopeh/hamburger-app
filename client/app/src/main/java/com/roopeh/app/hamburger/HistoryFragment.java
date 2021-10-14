@@ -34,8 +34,6 @@ public class HistoryFragment extends Fragment {
 
         historyList.setVisibility(View.VISIBLE);
 
-        // TODO: new orders should be on top, not in bottom
-
         final HistoryListAdapter adapter = new HistoryListAdapter(user.getAllOrders(), this);
         historyList.setLayoutManager(new LinearLayoutManager(getContext()));
         historyList.addItemDecoration(new RecyclerViewDivider(Helper.Constants.GRID_DIVIDER));
