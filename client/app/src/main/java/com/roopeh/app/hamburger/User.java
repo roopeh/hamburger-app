@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
+    final private int _userId;
     final private String _userName;
 
-    private String _pass = "";
     private String _firstName = "";
     private String _lastName = "";
     private String _email = "";
@@ -17,13 +17,17 @@ public class User {
     private Order _currentOrder = null;
     final private List<Order> _allOrders;
 
-    public User(String user, String pass) {
-        _userName = user;
-        _pass = pass;
+    public User(int userId, String username) {
+        _userId = userId;
+        _userName = username;
 
         _cart = new ShoppingCart();
         _coupons = new ArrayList<>();
         _allOrders = new ArrayList<>();
+    }
+
+    final public int getUserId() {
+        return _userId;
     }
 
     final public String getUserName() {

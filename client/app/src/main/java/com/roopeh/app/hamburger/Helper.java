@@ -1,5 +1,10 @@
 package com.roopeh.app.hamburger;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.view.Gravity;
+import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -8,6 +13,9 @@ import java.util.Random;
 // Singleton helper class
 public class Helper {
     public static class Constants {
+        final public static String API_LINK = "http://192.168.200.53";
+        final public static String VOLLEY_TAG = "VolleyTag";
+
         final public static int GRID_DIVIDER = 45;
         final public static int LIST_DIVIDER = 16;
 
@@ -18,6 +26,10 @@ public class Helper {
         final public static int COUPON_TYPE_FREE_LARGE_EXTRAS = 2;
         final public static int COUPON_TYPE_50_OFF = 3;
         final public static int COUPON_TYPE_EMPTY_COUPON = 10;
+    }
+
+    public enum ApiResponseType {
+        LOGIN
     }
 
     private static Helper mInstance = null;
@@ -36,13 +48,29 @@ public class Helper {
     }
 
     /*
+     * Api related
+     */
+    final public AlertDialog createAlertDialog(Context context, String message) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(message).setCancelable(false);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        TextView msgView = dialog.findViewById(android.R.id.message);
+        msgView.setGravity(Gravity.CENTER);
+
+        return dialog;
+    }
+
+    /*
      * User
      */
-    public void setUser(String name, String pass) {
+    public void setUser(User user) {
         if (_user != null)
             return;
 
-        _user = new User(name, pass);
+        _user = user;
 
         // todo: dummy content (coupons)
         for (int i = 1; i <= 10; ++i) {

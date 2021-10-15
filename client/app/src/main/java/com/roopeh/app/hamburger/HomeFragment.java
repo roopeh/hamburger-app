@@ -1,12 +1,14 @@
 package com.roopeh.app.hamburger;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements ApiResponseInterface {
     // Type definitions for GridView
     final static public int TYPE_DEFAULT = 0;
     final static public int TYPE_JOB = 1;
@@ -60,17 +62,23 @@ public class HomeFragment extends Fragment {
         // Final grid is social media
         content.add(TYPE_SOME);
 
-        final HomeGridAdapter adapter = new HomeGridAdapter(content);
+        final HomeGridAdapter adapter = new HomeGridAdapter(content, this);
         grid.setLayoutManager(new GridLayoutManager(getContext(), 2));
         grid.addItemDecoration(new RecyclerViewDivider(Helper.Constants.GRID_DIVIDER, Helper.Constants.GRID_DIVIDER, 2));
         grid.setAdapter(adapter);
 
         return rootView;
     }
+
+    @Override
+    public void onResponse(Helper.ApiResponseType apiResponse, Bundle bundle) {
+        LoginFragment.onLoginResponse(getContext(), apiResponse, bundle);
+    }
 }
 
 class HomeGridAdapter extends RecyclerView.Adapter<HomeGridAdapter.ViewHolder> {
     final private List<Integer> _list;
+    final private HomeFragment _frag;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         final private TextView defaultText;
@@ -110,8 +118,9 @@ class HomeGridAdapter extends RecyclerView.Adapter<HomeGridAdapter.ViewHolder> {
         }
     }
 
-    public HomeGridAdapter(List<Integer> list) {
+    public HomeGridAdapter(List<Integer> list, HomeFragment frag) {
         _list = list;
+        _frag = frag;
     }
 
     @NonNull
@@ -150,7 +159,7 @@ class HomeGridAdapter extends RecyclerView.Adapter<HomeGridAdapter.ViewHolder> {
 
                 holder.getDevButton().setOnClickListener(v -> {
                     if (_list.get(position) == HomeFragment.TYPE_LOGIN)
-                        Helper.getInstance().setUser("test", "test");
+                        new ApiConnector(_frag).login(_frag.getContext(), "TESTI", "testi");
                     else
                         Helper.getInstance().logoutUser();
                 });
