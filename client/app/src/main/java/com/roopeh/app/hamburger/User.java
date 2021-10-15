@@ -95,4 +95,9 @@ public class User {
     final public List<Order> getAllOrders() {
         return _allOrders;
     }
+
+    // Only on db load
+    public void addOrder(Order order) {
+        _allOrders.add(order);
+    }
 }

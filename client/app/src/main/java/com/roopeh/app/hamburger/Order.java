@@ -41,6 +41,11 @@ public class Order {
         _pickupDate = (System.currentTimeMillis() / 1000) + (long)(randomMinute * 60);
     }
 
+    // Used when loaded from db
+    public void setPickupDate(long date) {
+        _pickupDate = date;
+    }
+
     final public long getPickupDate() {
         return _pickupDate;
     }

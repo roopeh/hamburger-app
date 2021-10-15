@@ -43,11 +43,24 @@ public class ApiConnector {
                     final boolean success = Boolean.parseBoolean(result.getString("result"));
                     if (success) {
                         final JSONObject userData = result.getJSONArray("userdata").getJSONObject(0);
+
                         // Save user data to a Bundle
                         final JSONArray userStrings = userData.names();
                         for (int i = 0; i < (userStrings != null ? userStrings.length() : 0); ++i) {
                             bundle.putString(userStrings.getString(i), userData.getString(userStrings.getString(i)));
                         }
+
+                        // Save raw coupon JSON data to a Bundle
+                        final JSONArray couponData = result.getJSONArray("coupons");
+                        bundle.putString("coupons-json", couponData.toString());
+
+                        // Save raw order item JSON data to a Bundle
+                        final JSONArray orderItemData = result.getJSONArray("order-items");
+                        bundle.putString("order-items-json", orderItemData.toString());
+
+                        // Save order data to a Bundle
+                        final JSONArray orderData = result.getJSONArray("orders");
+                        bundle.putString("orders-json", orderData.toString());
                     }
 
                     bundle.putString("result", result.getString("result"));
