@@ -1,6 +1,9 @@
 package com.roopeh.app.hamburger;
 
+import android.content.Context;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class User {
@@ -97,7 +100,25 @@ public class User {
     }
 
     // Only on db load
+    public void sortOrders() {
+        Collections.sort(_allOrders);
+    }
+
+    // Only on db load
     public void addOrder(Order order) {
         _allOrders.add(order);
+    }
+
+    // Only on db load
+    public void checkForCurrentOrder(MainActivity activity) {
+        final long curTime = System.currentTimeMillis() / 1000;
+        for (final Order order : getAllOrders()) {
+            if (order.getPickupDate() > curTime) {
+                // This order is not yet done, set it as current order
+                _currentOrder = order;
+                activity.createOrderTimer();
+                break;
+            }
+        }
     }
 }

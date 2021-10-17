@@ -2,8 +2,8 @@ package com.roopeh.app.hamburger;
 
 public class Meal extends Product {
 
-    public Meal(String name) {
-        super(name);
+    public Meal(int id, String name) {
+        super(id, name);
     }
 
     @Override

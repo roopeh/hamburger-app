@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 
 public class Restaurant {
+    private final int _id;
     private final String _name;
     private String _address;
     private String _city;
@@ -11,9 +12,14 @@ public class Restaurant {
 
     private final RestaurantDates dates;
 
-    public Restaurant(String name) {
+    public Restaurant(int id, String name) {
+        _id = id;
         _name = name;
         dates = new RestaurantDates();
+    }
+
+    final public int getId() {
+        return _id;
     }
 
     final public String getName() {
@@ -68,8 +74,6 @@ public class Restaurant {
 }
 
 class RestaurantDates {
-    // TODO: database table format; shop id, weekday, start hours, end hours
-
     // Empty value for index means the shop is closed for that day
     // Note, index 0 = sunday and index 6 = saturday
     // i.e. value "1022" means the shop opens at 10 and is closed at 22
@@ -101,6 +105,9 @@ class RestaurantDates {
     }
 
     public void setHours(int weekday, String hours) {
+        if (hours.equals("-1"))
+            return;
+
         dates[weekday - 1] = hours;
     }
 }

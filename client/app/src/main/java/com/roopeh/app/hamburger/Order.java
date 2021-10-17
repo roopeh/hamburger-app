@@ -5,7 +5,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
-public class Order {
+public class Order implements Comparable<Order> {
+    final private int _id;
     final private List<ShoppingItem> _items;
     private long _orderDate;
     private long _pickupDate;
@@ -16,9 +17,14 @@ public class Order {
     private double _discountPrice = 0.0;
     private double _totalPrice = 0.0;
 
-    public Order(List<ShoppingItem> items) {
+    public Order(int id, List<ShoppingItem> items) {
+        _id = id;
         _items = new ArrayList<>();
         _items.addAll(items);
+    }
+
+    final public int getId() {
+        return _id;
     }
 
     final public List<ShoppingItem> getItems() {
@@ -86,5 +92,10 @@ public class Order {
 
     final public double getTotalPrice() {
         return _totalPrice;
+    }
+
+    @Override
+    public int compareTo(Order o) {
+        return Long.compare(getOrderDate(), o.getOrderDate());
     }
 }

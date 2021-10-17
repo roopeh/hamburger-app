@@ -5,8 +5,7 @@ import android.content.Context;
 import android.view.Gravity;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -29,6 +28,8 @@ public class Helper {
     }
 
     public enum ApiResponseType {
+        RESTAURANTS,
+        PRODUCTS,
         LOGIN
     }
 
@@ -96,24 +97,20 @@ public class Helper {
     /*
      * Products
      */
-    public void initializeProducts() {
-        _products = new ArrayList<>();
-
-        // todo: dummy content
-        for (int i = 0; i < 3; ++i) {
-            _products.add(generateTestProduct("Juustoateria", true));
-            _products.add(generateTestProduct("Pekoniateria", true));
-            _products.add(generateTestProduct("Muna-ateria", true));
-            _products.add(generateTestProduct("Juustohampurilainen", false));
-            _products.add(generateTestProduct("Pekonihampurilainen", false));
-            _products.add(generateTestProduct("Munahampurilainen", false));
-        }
+    public void initializeProducts(List<Product> products) {
+        _products = products;
+        // API 24+
+        //Collections.sort(_products, Comparator.comparing(Product::getName));
+        // For older APis
+        Collections.sort(_products, (prod1, prod2) -> prod1.getName().compareTo(prod2.getName()));
     }
 
     // Generates test products with random price
     private Product generateTestProduct(String name, boolean meal) {
-        Product prod = meal ? new Meal(name) : new Product(name);
+        Product prod = meal ? new Meal(-1, name) : new Product(-1, name);
 
+        // Generates random price from 1 to 20 euros
+        // also generates either .0, .25, .50 or .75 cents
         final int rand = new Random().nextInt(20) + 1;
         final double price = new Random().nextBoolean() ? rand : rand + (0.25f * (new Random().nextInt(3) + 1));
         prod.setPrice(price);
@@ -125,42 +122,37 @@ public class Helper {
         return _products;
     }
 
+    final public Product getProductById(int id) {
+        for (final Product product : _products) {
+            if (product.getId() == id)
+                return product;
+        }
+
+        return null;
+    }
+
     /*
      * Restaurants
      */
-    public void initializeRestaurants() {
-        _restaurants = new ArrayList<>();
+    public void initializeRestaurants(List<Restaurant> restaurants) {
+        _restaurants = restaurants;
 
-        // todo: dummy content
-        Restaurant res2 = new Restaurant("Restaurant 24h");
-        res2.setLocation("Kotkantie 2", "Oulu");
-        res2.setHours(Calendar.MONDAY,  "00", "24");
-        res2.setHours(Calendar.TUESDAY, "00", "24");
-        res2.setHours(Calendar.WEDNESDAY, "00", "24");
-        res2.setHours(Calendar.THURSDAY, "00", "24");
-        res2.setHours(Calendar.FRIDAY, "00", "24");
-        res2.setHours(Calendar.SATURDAY, "00", "24");
-        res2.setHours(Calendar.SUNDAY, "00", "24");
-        res2.setPhoneNumber("040-1234567");
-        _restaurants.add(res2);
-
-        for (int i = 1; i < 20; ++i) {
-            Restaurant res = new Restaurant("Restaurant " + i);
-            res.setLocation("Kotkantie 2", "Oulu");
-
-            res.setHours(Calendar.TUESDAY, "08", "10");
-            res.setHours(Calendar.WEDNESDAY, "11", "13");
-            res.setHours(Calendar.THURSDAY, "14", "16");
-            res.setHours(Calendar.FRIDAY, "16", "18");
-            res.setHours(Calendar.SATURDAY, "20", "23");
-            res.setHours(Calendar.SUNDAY, "10", "14");
-            res.setPhoneNumber("040-1234567");
-
-            _restaurants.add(res);
-        }
+        // API 24+
+        //Collections.sort(_restaurants, Comparator.comparing(Product::getName));
+        // For older APIs
+        Collections.sort(_restaurants, (prod1, prod2) -> prod1.getName().compareTo(prod2.getName()));
     }
 
     final public List<Restaurant> getRestaurants() {
         return _restaurants;
+    }
+
+    final public Restaurant getRestaurantById(int id) {
+        for (final Restaurant res : _restaurants) {
+            if (res.getId() == id)
+                return res;
+        }
+
+        return null;
     }
 }

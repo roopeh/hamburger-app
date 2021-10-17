@@ -10,6 +10,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -67,12 +71,20 @@ public class HomeFragment extends Fragment implements ApiResponseInterface {
         grid.addItemDecoration(new RecyclerViewDivider(Helper.Constants.GRID_DIVIDER, Helper.Constants.GRID_DIVIDER, 2));
         grid.setAdapter(adapter);
 
+        if (Helper.getInstance().getRestaurants() == null || Helper.getInstance().getRestaurants().isEmpty() ||
+                Helper.getInstance().getProducts() == null || Helper.getInstance().getProducts().isEmpty())
+        new ApiConnector(this).initRestaurantsAndProducts(getContext());
+
         return rootView;
     }
 
     @Override
     public void onResponse(Helper.ApiResponseType apiResponse, Bundle bundle) {
-        LoginFragment.onLoginResponse(getContext(), apiResponse, bundle);
+        ApiJsonParser.parseDatabaseData(getContext(), apiResponse, bundle);
+
+        // Check for possible current order
+        if (Helper.getInstance().getUser() != null)
+            Helper.getInstance().getUser().checkForCurrentOrder(Objects.requireNonNull((MainActivity)getActivity()));
     }
 }
 

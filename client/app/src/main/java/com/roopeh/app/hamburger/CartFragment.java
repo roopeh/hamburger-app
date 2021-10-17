@@ -99,7 +99,8 @@ public class CartFragment extends Fragment {
             }
 
             // Create new order
-            Order order = new Order(user.getCart().getItems());
+            // Unique id will be created when order is saved to db
+            final Order order = new Order(-1, user.getCart().getItems());
             order.setRestaurant((Restaurant)restaurantSpinner.getSelectedItem());
             order.setPrices(getSum(), getDiscount(), getSum() - getDiscount());
 
@@ -166,7 +167,7 @@ public class CartFragment extends Fragment {
 
         // If there is no open restaurants, order cannot be made
         if (restaurants.isEmpty()) {
-            restaurants.add(new Restaurant("Ei avoinna olevia ravintoloita"));
+            restaurants.add(new Restaurant(-1, "Ei avoinna olevia ravintoloita"));
 
             orderButton.setText("Ei avoinna olevia ravintoloita");
             orderButton.setClickable(false);
