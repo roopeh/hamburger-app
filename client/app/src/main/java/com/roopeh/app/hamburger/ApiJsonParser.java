@@ -2,6 +2,7 @@ package com.roopeh.app.hamburger;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -117,57 +118,64 @@ public class ApiJsonParser {
                 user.setPhoneNumber(bundle.getString("phone_number"));
 
                 try {
-                    // Parse raw coupon JSON data
-                    final JSONArray couponData = new JSONArray(bundle.getString("coupons-json"));
-                    for (int i = 0; i < couponData.length(); ++i) {
-                        final JSONObject couponObj = couponData.getJSONObject(i);
-                        user.addCoupon(new Coupon(couponObj.getInt("coupon_type"), couponObj.getLong("expiry_date")));
-                    }
-
-                    // Parse raw order items JSON data
-                    // and save them to a Map
-                    final JSONArray orderItemData = new JSONArray(bundle.getString("order-items-json"));
-                    final Map<Integer, List<ShoppingItem>> orderItemList = new HashMap<>();
-                    for (int i = 0; i < orderItemData.length(); ++i) {
-                        final JSONObject itemObj = orderItemData.getJSONObject(i);
-
-                        final int orderId = itemObj.getInt("order_id");
-                        if (orderItemList.get(orderId) == null)
-                            orderItemList.put(orderId, new ArrayList<>());
-
-                        // Create ShoppingItem here and save ShoppingItems to a Map
-                        // so it can be placed into Order next
-                        final Product product = Helper.getInstance().getProductById(itemObj.getInt("product_id"));
-                        if (product == null)
-                            continue;
-
-                        final ShoppingItem item = new ShoppingItem(product);
-                        item.setPrice(itemObj.getDouble("price"));
-                        if (product.isMeal()) {
-                            item.setMealDrink(itemObj.getInt("meal_drink"), itemObj.getInt("large_drink") != 0);
-                            item.setMealExtra(itemObj.getInt("meal_extra"), itemObj.getInt("large_extra") != 0);
+                    if (bundle.containsKey("coupons-json")) {
+                        // Parse raw coupon JSON data
+                        final JSONArray couponData = new JSONArray(bundle.getString("coupons-json"));
+                        for (int i = 0; i < couponData.length(); ++i) {
+                            final JSONObject couponObj = couponData.getJSONObject(i);
+                            user.addCoupon(new Coupon(couponObj.getInt("coupon_type"), couponObj.getLong("expiry_date")));
                         }
-                        Objects.requireNonNull(orderItemList.get(orderId)).add(item);
                     }
 
-                    // Parse raw order JSON data
-                    final JSONArray orderData = new JSONArray(bundle.getString("orders-json"));
-                    for (int i = 0; i < orderData.length(); ++i) {
-                        final JSONObject orderObj = orderData.getJSONObject(i);
-                        final int orderId = orderObj.getInt("id");
+                    final Map<Integer, List<ShoppingItem>> orderItemList = new HashMap<>();
+                    if (bundle.containsKey("order-items-json")) {
+                        // Parse raw order items JSON data
+                        // and save them to a Map
+                        final JSONArray orderItemData = new JSONArray(bundle.getString("order-items-json"));
+                        for (int i = 0; i < orderItemData.length(); ++i) {
+                            final JSONObject itemObj = orderItemData.getJSONObject(i);
 
-                        final Restaurant res = Helper.getInstance().getRestaurantById(Integer.parseInt(orderObj.getString("restaurant_id")));
-                        if (res == null)
-                            continue;
+                            final int orderId = itemObj.getInt("order_id");
+                            if (orderItemList.get(orderId) == null)
+                                orderItemList.put(orderId, new ArrayList<>());
 
-                        final Order order = new Order(orderId, orderItemList.get(orderId));
-                        order.setRestaurant(res);
-                        order.setOrderDate(orderObj.getLong("order_date"));
-                        order.setPickupDate(orderObj.getLong("pickup_date"));
-                        order.setPaid(Boolean.parseBoolean(orderObj.getString("paid_status")));
-                        order.setPrices(orderObj.getDouble("original_price"), orderObj.getDouble("discount_price"), orderObj.getDouble("total_price"));
-                        user.addOrder(order);
+                            // Create ShoppingItem here and save ShoppingItems to a Map
+                            // so it can be placed into Order next
+                            final Product product = Helper.getInstance().getProductById(itemObj.getInt("product_id"));
+                            if (product == null)
+                                continue;
+
+                            final ShoppingItem item = new ShoppingItem(product);
+                            item.setPrice(itemObj.getDouble("price"));
+                            if (product.isMeal()) {
+                                item.setMealDrink(itemObj.getInt("meal_drink"), itemObj.getInt("large_drink") != 0);
+                                item.setMealExtra(itemObj.getInt("meal_extra"), itemObj.getInt("large_extra") != 0);
+                            }
+                            Objects.requireNonNull(orderItemList.get(orderId)).add(item);
+                        }
                     }
+
+                    if (bundle.containsKey("orders-json")) {
+                        // Parse raw order JSON data
+                        final JSONArray orderData = new JSONArray(bundle.getString("orders-json"));
+                        for (int i = 0; i < orderData.length(); ++i) {
+                            final JSONObject orderObj = orderData.getJSONObject(i);
+                            final int orderId = orderObj.getInt("id");
+
+                            final Restaurant res = Helper.getInstance().getRestaurantById(Integer.parseInt(orderObj.getString("restaurant_id")));
+                            if (res == null)
+                                continue;
+
+                            final Order order = new Order(orderId, orderItemList.get(orderId));
+                            order.setRestaurant(res);
+                            order.setOrderDate(orderObj.getLong("order_date"));
+                            order.setPickupDate(orderObj.getLong("pickup_date"));
+                            order.setPaid(orderObj.getInt("paid_status") != 0);
+                            order.setPrices(orderObj.getDouble("original_price"), orderObj.getDouble("discount_price"), orderObj.getDouble("total_price"));
+                            user.addOrder(order);
+                        }
+                    }
+
                     // Last but not least; sort orders from newest to oldest
                     user.sortOrders();
 
@@ -178,6 +186,20 @@ public class ApiJsonParser {
                     Toast.makeText(context, "Error in the API", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
+            } break;
+            case SAVE_ORDER: {
+                if (response == null || response.isEmpty() || response.equals("error")) {
+                    // API error
+                    Toast.makeText(context, "Error in the API", Toast.LENGTH_SHORT).show();
+                    return;
+                } else if (response.equals("false")) {
+                    // Database error
+                    Toast.makeText(context, "Error in the database", Toast.LENGTH_SHORT).show();
+                    Log.d("DEBUG_TAG", "Database error: " + bundle.getString("error_text"));
+                    return;
+                }
+
+                // No need to do anything else here
             } break;
             default: break;
         }

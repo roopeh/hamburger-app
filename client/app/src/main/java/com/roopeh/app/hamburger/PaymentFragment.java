@@ -12,9 +12,12 @@ import java.util.Objects;
 
 import androidx.fragment.app.Fragment;
 
-public class PaymentFragment extends Fragment {
+public class PaymentFragment extends Fragment implements ApiResponseInterface {
     final private Order _order;
     final private Coupon _coupon;
+
+    private TextView successText;
+    private Button successReturn;
 
     public PaymentFragment(Order order, Coupon usedCoupon) {
         _order = order;
@@ -30,14 +33,28 @@ public class PaymentFragment extends Fragment {
         returnButton.setOnClickListener(v -> Objects.requireNonNull((MainActivity)getActivity()).returnToPreviousFragment(false));
 
         final Button payButton = rootView.findViewById(R.id.paymentButton);
-        final TextView successText = rootView.findViewById(R.id.paymentSuccessText);
-        final Button successReturn = rootView.findViewById(R.id.paymentSuccessReturn);
+        successText = rootView.findViewById(R.id.paymentSuccessText);
+        successReturn = rootView.findViewById(R.id.paymentSuccessReturn);
 
         payButton.setOnClickListener(v -> {
-            final User user = Helper.getInstance().getUser();
             _order.setOrderDate(System.currentTimeMillis() / 1000);
             _order.setPickupDate();
             _order.setPaid(true);
+
+            // Save to db
+            new ApiConnector(this).saveOrder(getContext(), _order);
+        });
+
+        successReturn.setOnClickListener(v -> Objects.requireNonNull((MainActivity)getActivity()).loadFragment(new HomeFragment(), false));
+        return rootView;
+    }
+
+    @Override
+    public void onResponse(Helper.ApiResponseType apiResponse, Bundle bundle) {
+        ApiJsonParser.parseDatabaseData(getContext(), apiResponse, bundle);
+
+        if (bundle.getString("result").equals("true")) {
+            final User user = Helper.getInstance().getUser();
 
             // Remove used coupon
             if (_coupon.getType() != Helper.Constants.COUPON_TYPE_EMPTY_COUPON)
@@ -52,9 +69,6 @@ public class PaymentFragment extends Fragment {
             // Make views visible
             successText.setVisibility(View.VISIBLE);
             successReturn.setVisibility(View.VISIBLE);
-        });
-
-        successReturn.setOnClickListener(v -> Objects.requireNonNull((MainActivity)getActivity()).loadFragment(new HomeFragment(), false));
-        return rootView;
+        }
     }
 }

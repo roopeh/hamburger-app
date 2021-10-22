@@ -28,11 +28,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class CartFragment extends Fragment {
+public class CartFragment extends Fragment implements ApiResponseInterface {
     private Spinner couponSpinner;
     private TextView listedPrice;
     private TextView totalSum;
     private Button orderButton;
+
+    private Order _order = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -108,19 +110,10 @@ public class CartFragment extends Fragment {
             if (paymentRestaurant.isChecked()) {
                 order.setOrderDate(System.currentTimeMillis() / 1000);
                 order.setPickupDate();
+                _order = order;
 
-                // Remove used coupon
-                final Coupon coupon = (Coupon)couponSpinner.getSelectedItem();
-                if (coupon.getType() != Helper.Constants.COUPON_TYPE_EMPTY_COUPON)
-                    user.removeCoupon(coupon);
-
-                // Clear shopping items
-                user.getCart().emptyCart();
-
-                user.setCurrentOrder(order);
-                Toast.makeText(getContext(), "Tilaus onnistui!", Toast.LENGTH_LONG).show();
-                Objects.requireNonNull((MainActivity)getActivity()).createOrderTimer();
-                Objects.requireNonNull((MainActivity)getActivity()).loadFragment(new HomeFragment(), false);
+                // Save to db
+                new ApiConnector(this).saveOrder(getContext(), order);
             } else if (paymentCard.isChecked()) {
                 Objects.requireNonNull((MainActivity)getActivity()).loadFragment(new PaymentFragment(order, (Coupon)couponSpinner.getSelectedItem()), false);
             }
@@ -208,6 +201,30 @@ public class CartFragment extends Fragment {
     public void populateFinalPrice() {
         final String price = String.format(Locale.getDefault(), "%.2f", getSum() - getDiscount()) + " €";
         totalSum.setText(price);
+    }
+
+    @Override
+    public void onResponse(Helper.ApiResponseType apiResponse, Bundle bundle) {
+        ApiJsonParser.parseDatabaseData(getContext(), apiResponse, bundle);
+
+        if (bundle.getString("result").equals("true")) {
+            final User user = Helper.getInstance().getUser();
+
+            // Remove used coupon
+            final Coupon coupon = (Coupon)couponSpinner.getSelectedItem();
+            if (coupon.getType() != Helper.Constants.COUPON_TYPE_EMPTY_COUPON)
+                user.removeCoupon(coupon);
+
+            // Clear shopping items
+            user.getCart().emptyCart();
+
+            user.setCurrentOrder(_order);
+            _order = null;
+
+            Toast.makeText(getContext(), "Tilaus onnistui!", Toast.LENGTH_LONG).show();
+            Objects.requireNonNull((MainActivity)getActivity()).createOrderTimer();
+            Objects.requireNonNull((MainActivity)getActivity()).loadFragment(new HomeFragment(), false);
+        }
     }
 }
 

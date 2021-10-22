@@ -30,7 +30,8 @@ public class Helper {
     public enum ApiResponseType {
         RESTAURANTS,
         PRODUCTS,
-        LOGIN
+        LOGIN,
+        SAVE_ORDER
     }
 
     private static Helper mInstance = null;

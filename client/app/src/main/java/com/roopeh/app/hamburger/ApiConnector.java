@@ -65,28 +65,28 @@ public class ApiConnector {
         final Bundle bundle = new Bundle();
 
         final ApiGetRequest request = new ApiGetRequest(urlStr, new HashMap<>(),
-                response -> {
-                    Log.d("DEBUG_TAG", "Successful response via StringRequest: " + response);
-                    try {
-                        final JSONObject result = new JSONObject(response);
+            response -> {
+                Log.d("DEBUG_TAG", "Successful response via StringRequest: " + response);
+                try {
+                    final JSONObject result = new JSONObject(response);
 
-                        final boolean success = Boolean.parseBoolean(result.getString("result"));
-                        if (success) {
-                            final JSONArray productdata = result.getJSONArray("productdata");
-                            bundle.putString("products-json", productdata.toString());
-                        }
-
-                        bundle.putString("result", result.getString("result"));
-                    } catch (JSONException e) {
-                        bundle.putString("result", "error");
-                        e.printStackTrace();
+                    final boolean success = Boolean.parseBoolean(result.getString("result"));
+                    if (success) {
+                        final JSONArray productdata = result.getJSONArray("productdata");
+                        bundle.putString("products-json", productdata.toString());
                     }
 
-                    _initLoadDialog.dismiss();
-                    _apiResponse.onResponse(Helper.ApiResponseType.PRODUCTS, bundle);
-                }, error -> {
-                    _initLoadDialog.dismiss();
-                    ApiRequest.handleErrorInRequest(_apiResponse, Helper.ApiResponseType.PRODUCTS, bundle, error);
+                    bundle.putString("result", result.getString("result"));
+                } catch (JSONException e) {
+                    bundle.putString("result", "error");
+                    e.printStackTrace();
+                }
+
+                _initLoadDialog.dismiss();
+                _apiResponse.onResponse(Helper.ApiResponseType.PRODUCTS, bundle);
+            }, error -> {
+                _initLoadDialog.dismiss();
+                ApiRequest.handleErrorInRequest(_apiResponse, Helper.ApiResponseType.PRODUCTS, bundle, error);
         });
 
         ApplicationController.getInstance().addToRequestQueue(request);
@@ -120,16 +120,25 @@ public class ApiConnector {
                         }
 
                         // Save raw coupon JSON data to a Bundle
-                        final JSONArray couponData = result.getJSONArray("coupons");
-                        bundle.putString("coupons-json", couponData.toString());
+                        // May be empty
+                        if (result.has("coupons")) {
+                            final JSONArray couponData = result.getJSONArray("coupons");
+                            bundle.putString("coupons-json", couponData.toString());
+                        }
 
                         // Save raw order item JSON data to a Bundle
-                        final JSONArray orderItemData = result.getJSONArray("order-items");
-                        bundle.putString("order-items-json", orderItemData.toString());
+                        // May be empty
+                        if (result.has("order-items")) {
+                            final JSONArray orderItemData = result.getJSONArray("order-items");
+                            bundle.putString("order-items-json", orderItemData.toString());
+                        }
 
                         // Save order data to a Bundle
-                        final JSONArray orderData = result.getJSONArray("orders");
-                        bundle.putString("orders-json", orderData.toString());
+                        // May be empty
+                        if (result.has("orders")) {
+                            final JSONArray orderData = result.getJSONArray("orders");
+                            bundle.putString("orders-json", orderData.toString());
+                        }
                     }
 
                     bundle.putString("result", result.getString("result"));
@@ -143,7 +152,94 @@ public class ApiConnector {
             }, error -> {
                 dialog.dismiss();
                 ApiRequest.handleErrorInRequest(_apiResponse, Helper.ApiResponseType.LOGIN, bundle, error);
-            });
+        });
+
+        ApplicationController.getInstance().addToRequestQueue(request);
+    }
+
+    public void saveOrder(Context context, final Order order) {
+        final String urlStr = Helper.Constants.API_LINK + "/save_order.php";
+        final Bundle bundle = new Bundle();
+
+        final Map<String, String> params = new HashMap<>();
+        // Order data
+        params.put("owner_id", String.valueOf(Helper.getInstance().getUser().getUserId()));
+        params.put("order_date", String.valueOf(order.getOrderDate()));
+        params.put("pickup_date", String.valueOf(order.getPickupDate()));
+        params.put("restaurant_id", String.valueOf(order.getRestaurant().getId()));
+        params.put("paid_status", order.isPaid() ? "1" : "0");
+        params.put("original_price", String.valueOf(order.getOriginalPrice()));
+        params.put("discount_price", String.valueOf(order.getDiscountPrice()));
+        params.put("total_price", String.valueOf(order.getTotalPrice()));
+
+        // Order item data
+        final JSONArray allItemObj = new JSONArray();
+        boolean dataCreated = true;
+        for (int i = 0; i < order.getItems().size(); ++i) {
+            try {
+                final JSONObject itemObj = new JSONObject();
+                final ShoppingItem item = order.getItems().get(i);
+                itemObj.put("owner_id", String.valueOf(Helper.getInstance().getUser().getUserId()));
+                itemObj.put("product_id", String.valueOf(item.getProduct().getId()));
+                itemObj.put("price", String.valueOf(item.getPrice()));
+                if (item.getProduct().isMeal()) {
+                    itemObj.put("meal_drink", String.valueOf(item.getMealDrink()));
+                    itemObj.put("large_drink", item.isLargeDrink() ? "1" : "0");
+                    itemObj.put("meal_extra", String.valueOf(item.getMealExtra()));
+                    itemObj.put("large_extra", item.isLargeExtra() ? "1" : "0");
+                } else {
+                    itemObj.put("meal_drink", "0");
+                    itemObj.put("large_drink", "0");
+                    itemObj.put("meal_extra", "0");
+                    itemObj.put("large_extra", "0");
+                }
+
+                allItemObj.put(itemObj);
+            } catch (JSONException e) {
+                e.printStackTrace();
+                dataCreated = false;
+                break;
+            }
+        }
+
+        if (!dataCreated) {
+            bundle.putString("result", "error");
+            _apiResponse.onResponse(Helper.ApiResponseType.SAVE_ORDER, bundle);
+            return;
+        }
+
+        // Finally add items in JSON to params
+        params.put("order_items", allItemObj.toString());
+
+        // Create alert dialog
+        final AlertDialog dialog = Helper.getInstance().createAlertDialog(context, "Creating order...");
+
+        final ApiPostRequest request = new ApiPostRequest(urlStr, params,
+            response -> {
+                Log.d("DEBUG_TAG", "Successful response via StringRequest: " + response);
+                try {
+                    final JSONObject result = new JSONObject(response);
+
+                    final boolean success = Boolean.parseBoolean(result.getString("result"));
+                    if (success) {
+                        final int orderId = Integer.parseInt(result.getString("order_id"));
+                        order.setId(orderId);
+                    } else {
+                        bundle.putString("error_text", result.getString("query_status"));
+                    }
+
+                    bundle.putString("result", result.getString("result"));
+                } catch (JSONException e) {
+                    bundle.putString("result", "error");
+                    e.printStackTrace();
+                }
+
+                dialog.dismiss();
+                _apiResponse.onResponse(Helper.ApiResponseType.SAVE_ORDER, bundle);
+            }, error -> {
+                dialog.dismiss();
+                ApiRequest.handleErrorInRequest(_apiResponse, Helper.ApiResponseType.SAVE_ORDER, bundle, error);
+        });
 
         ApplicationController.getInstance().addToRequestQueue(request);
     }

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Order implements Comparable<Order> {
-    final private int _id;
+    private int _id;
     final private List<ShoppingItem> _items;
     private long _orderDate;
     private long _pickupDate;
@@ -21,6 +21,10 @@ public class Order implements Comparable<Order> {
         _id = id;
         _items = new ArrayList<>();
         _items.addAll(items);
+    }
+
+    public void setId(int id) {
+        _id = id;
     }
 
     final public int getId() {
@@ -96,6 +100,6 @@ public class Order implements Comparable<Order> {
 
     @Override
     public int compareTo(Order o) {
-        return Long.compare(getOrderDate(), o.getOrderDate());
+        return Long.compare(o.getOrderDate(), getOrderDate());
     }
 }

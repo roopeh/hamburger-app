@@ -24,19 +24,19 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/content_padding_side"
         android:layout_below="@id/couponsHeader"
-        android:paddingStart="@dimen/content_padding_side"
-        android:paddingEnd="@dimen/content_padding_side"
-        android:paddingTop="@dimen/content_padding_top"
-        android:paddingBottom="@dimen/content_padding_bottom"
+        android:padding="10dp"
         android:visibility="gone"
         android:background="@drawable/rounded_inner_main">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/content_padding_top"
+            android:layout_marginBottom="@dimen/content_padding_bottom"
+            android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="15sp"
-            android:text="Sinulla ei ole alennuskuponkeja" />
+            android:textSize="17sp"
+            android:text="Sinulla ei ole alennuskuponkeja!" />
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
