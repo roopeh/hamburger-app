@@ -95,6 +95,15 @@ public class User {
         return _currentOrder;
     }
 
+    final public Order getOrderById(int id) {
+        for (final Order order : _allOrders) {
+            if (order.getId() == id)
+                return order;
+        }
+
+        return null;
+    }
+
     final public List<Order> getAllOrders() {
         return _allOrders;
     }

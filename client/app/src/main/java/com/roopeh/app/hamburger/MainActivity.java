@@ -1,7 +1,10 @@
 package com.roopeh.app.hamburger;
 
+import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -61,6 +64,23 @@ public class MainActivity extends AppCompatActivity
 
         // Load home fragment on startup
         loadFragment(new HomeFragment(), true);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent == null || !intent.hasExtra("order_id"))
+            return;
+
+        final int orderId = intent.getIntExtra("order_id", -1);
+        if (orderId == -1)
+            return;
+
+        if (Helper.getInstance().getUser() != null) {
+            final Order order = Helper.getInstance().getUser().getOrderById(orderId);
+            if (order != null)
+                loadFragment(new HistoryInfoFragment(order), false);
+        }
     }
 
     void initMenu() {
@@ -211,25 +231,38 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onFinish() {
-                user.setCurrentOrder(null);
                 createNotification();
+                user.setCurrentOrder(null);
             }
         }.start();
     }
 
+    @SuppressLint("UnspecifiedImmutableFlag")
     private void createNotification() {
-        // TODO: missing on click method, requires an ID for order
+        final Intent intent = getPackageManager().getLaunchIntentForPackage(getPackageName());
+        if (intent != null) {
+            intent.putExtra("order_id", Helper.getInstance().getUser().getCurrentOrder().getId());
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        }
+
+        final PendingIntent pendingIntent;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M)
+            pendingIntent = PendingIntent.getActivity(this, -1, intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+        else
+            pendingIntent = PendingIntent.getActivity(this, -1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
         final String _channelId = "123456";
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, _channelId)
+        final NotificationCompat.Builder builder = new NotificationCompat.Builder(this, _channelId)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 // TODO: strings resource
                 .setContentTitle("Tilauksesi on noudettavissa!")
                 .setContentText("Tarkastale tilaustasi...")
+                .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
 
         // Create notification channel for SDK 26+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
