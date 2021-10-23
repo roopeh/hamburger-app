@@ -13,7 +13,7 @@ import java.util.Objects;
 import androidx.fragment.app.Fragment;
 
 public class PaymentFragment extends Fragment implements ApiResponseInterface {
-    final private Order _order;
+    private Order _order;
     final private Coupon _coupon;
 
     private TextView successText;
@@ -28,6 +28,13 @@ public class PaymentFragment extends Fragment implements ApiResponseInterface {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_payment, container, false);
+
+        // User could end up here when navigating with back button so make sure user is logged in and has an order
+        final User user = Helper.getInstance().getUser();
+        if (user == null || _order == null) {
+            Objects.requireNonNull((MainActivity)getActivity()).returnToPreviousFragment(false);
+            return null;
+        }
 
         final ImageButton returnButton = rootView.findViewById(R.id.paymentReturn);
         returnButton.setOnClickListener(v -> Objects.requireNonNull((MainActivity)getActivity()).returnToPreviousFragment(false));
@@ -65,6 +72,8 @@ public class PaymentFragment extends Fragment implements ApiResponseInterface {
 
             user.setCurrentOrder(_order);
             Objects.requireNonNull((MainActivity)getActivity()).createOrderTimer();
+
+            _order = null;
 
             // Make views visible
             successText.setVisibility(View.VISIBLE);

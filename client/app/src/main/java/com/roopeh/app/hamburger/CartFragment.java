@@ -48,7 +48,10 @@ public class CartFragment extends Fragment implements ApiResponseInterface {
 
         final User user = Helper.getInstance().getUser();
         // Load correct layout
-        if (user.getCart().isCartEmpty()) {
+        if (user == null) {
+            Objects.requireNonNull((MainActivity)getActivity()).returnToPreviousFragment(false);
+            return null;
+        } else if (user.getCart().isCartEmpty()) {
             emptyView.setVisibility(View.VISIBLE);
             // No need to proceed
             return rootView;

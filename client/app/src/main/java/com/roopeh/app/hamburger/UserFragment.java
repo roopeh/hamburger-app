@@ -21,6 +21,12 @@ public class UserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_user, container, false);
 
+        // User could end up here when navigating with back button so make sure user is logged in
+        if (Helper.getInstance().getUser() == null) {
+            Objects.requireNonNull((MainActivity)getActivity()).returnToPreviousFragment(false);
+            return null;
+        }
+
         final TextView userName = rootView.findViewById(R.id.userHelloText);
         final Button logoutButton = rootView.findViewById(R.id.userLogoutButton);
         final EditText firstPass = rootView.findViewById(R.id.userPasswordFirst);

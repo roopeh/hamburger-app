@@ -30,6 +30,12 @@ public class HistoryInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_history_info, container, false);
 
+        // User could end up here when navigating with back button so make sure user is logged in
+        if (Helper.getInstance().getUser() == null) {
+            Objects.requireNonNull((MainActivity)getActivity()).returnToPreviousFragment(false);
+            return null;
+        }
+
         final ImageButton returnButton = rootView.findViewById(R.id.historyInfoBackButton);
         final TextView restaurantName = rootView.findViewById(R.id.historyInfoRestaurant);
         final TextView restaurantAddress = rootView.findViewById(R.id.historyInfoAddress);

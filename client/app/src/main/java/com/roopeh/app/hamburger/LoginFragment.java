@@ -18,16 +18,17 @@ public class LoginFragment extends Fragment implements ApiResponseInterface {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_login, container, false);
 
+        // User could end up here when navigating with back button so make sure user is not logged in
+        if (Helper.getInstance().getUser() != null) {
+            Objects.requireNonNull((MainActivity)getActivity()).returnToPreviousFragment(false);
+            return null;
+        }
+
         final TextView registerButton = rootView.findViewById(R.id.loginRegisterLink);
         registerButton.setOnClickListener(v -> Objects.requireNonNull((MainActivity)getActivity()).loadFragment(new RegisterFragment(), false));
 
         final ImageButton loginButton = rootView.findViewById(R.id.loginButton);
         loginButton.setOnClickListener(v -> {
-            if (Helper.getInstance().getUser() != null) {
-                Toast.makeText(getContext(), "Olet jo kirjautunut sisään", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
             final EditText userField = rootView.findViewById(R.id.loginUsername);
             final EditText passField = rootView.findViewById(R.id.loginPassword);
 

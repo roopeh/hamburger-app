@@ -14,12 +14,20 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Objects;
+
 import androidx.fragment.app.Fragment;
 
 public class RegisterFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_register, container, false);
+
+        // User could end up here when navigating with back button so make sure user is not logged in
+        if (Helper.getInstance().getUser() != null) {
+            Objects.requireNonNull((MainActivity)getActivity()).returnToPreviousFragment(false);
+            return null;
+        }
 
         CheckBox showPassword = rootView.findViewById(R.id.registerShowPass);
         showPassword.setOnCheckedChangeListener((buttonView, isChecked) -> {
