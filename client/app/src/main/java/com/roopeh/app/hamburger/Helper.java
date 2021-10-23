@@ -5,6 +5,9 @@ import android.content.Context;
 import android.view.Gravity;
 import android.widget.TextView;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -40,6 +43,8 @@ public class Helper {
     private List<Restaurant> _restaurants = null;
     private List<Product> _products = null;
 
+    final private byte[] HEX_ARRAY = "0123456789ABCDEF".getBytes(StandardCharsets.UTF_8);
+
     private Helper() {}
 
     public static Helper getInstance() {
@@ -63,6 +68,31 @@ public class Helper {
         msgView.setGravity(Gravity.CENTER);
 
         return dialog;
+    }
+
+    final public String encryptPasswordReturnInHex(final String password) {
+        try {
+            // Encrypt password with SHA-256
+            final MessageDigest digester = MessageDigest.getInstance("SHA-256");
+            final byte[] passBytes = password.getBytes(StandardCharsets.UTF_8);
+            digester.update(passBytes, 0, passBytes.length);
+            final byte[] hash = digester.digest();
+
+            // Convert it to hex
+            // Credits to https://stackoverflow.com/a/9855338
+            final byte[] hexChars = new byte[hash.length * 2];
+            for (int i = 0; i < hash.length; ++i) {
+                final int b = hash[i] & 0xFF;
+                hexChars[i * 2] = HEX_ARRAY[b >>> 4];
+                hexChars[i * 2 + 1] = HEX_ARRAY[b & 0x0F];
+            }
+
+            return new String(hexChars, StandardCharsets.UTF_8);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        return password;
     }
 
     /*

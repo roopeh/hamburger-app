@@ -171,7 +171,7 @@ class HomeGridAdapter extends RecyclerView.Adapter<HomeGridAdapter.ViewHolder> {
 
                 holder.getDevButton().setOnClickListener(v -> {
                     if (_list.get(position) == HomeFragment.TYPE_LOGIN)
-                        new ApiConnector(_frag).login(_frag.getContext(), "TESTI", "testi");
+                        new ApiConnector(_frag).login(_frag.getContext(), "TESTI", Helper.getInstance().encryptPasswordReturnInHex("testi"));
                     else
                         Helper.getInstance().logoutUser();
                 });
