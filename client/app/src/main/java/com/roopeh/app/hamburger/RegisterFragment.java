@@ -105,7 +105,7 @@ public class RegisterFragment extends Fragment implements ApiResponseInterface {
 
         if (bundle.getString("result").equals("true")) {
             Toast.makeText(getContext(), "Käyttäjätunnus rekisteröity!", Toast.LENGTH_SHORT).show();
-            Objects.requireNonNull((MainActivity)getActivity()).loadFragment(new UserFragment(), false);
+            Objects.requireNonNull((MainActivity)getActivity()).loadFragment(new LoginFragment(), false);
         }
     }
 }

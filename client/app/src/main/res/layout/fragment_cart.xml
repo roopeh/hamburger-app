@@ -42,7 +42,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/background_padding_top"
         android:layout_below="@id/shopCartHeader"
-        android:visibility="invisible">
+        android:visibility="gone">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -69,7 +69,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/background_padding_top"
         android:layout_below="@id/shopCartHeader"
-        android:visibility="invisible">
+        android:visibility="gone">
 
         <RelativeLayout
             android:layout_width="match_parent"

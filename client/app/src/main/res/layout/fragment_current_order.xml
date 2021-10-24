@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginStart="@dimen/background_padding_side"
@@ -130,10 +131,21 @@
                 android:background="@color/defaultButtonBackground" />
 
             <TextView
-                android:id="@+id/currentOrderRestaurantInfo"
+                android:id="@+id/currentOrderRestaurantAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/currentOrderFourthLine"
+                app:autoSizeTextType="uniform"
+                app:autoSizeMinTextSize="14sp"
+                app:autoSizeMaxTextSize="20sp"
+                android:textColor="@color/black"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/currentOrderRestaurantHours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/currentOrderRestaurantAddress"
                 android:textColor="@color/black"
                 android:textSize="17sp" />
 
@@ -141,7 +153,7 @@
                 android:id="@+id/currentOrderRestaurantButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/currentOrderRestaurantInfo"
+                android:layout_below="@id/currentOrderRestaurantHours"
                 android:layout_marginTop="@dimen/background_padding_top"
                 android:layout_centerHorizontal="true"
                 android:backgroundTint="@color/defaultButtonBackground"

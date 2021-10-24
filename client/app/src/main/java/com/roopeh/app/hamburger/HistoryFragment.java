@@ -27,7 +27,10 @@ public class HistoryFragment extends Fragment {
 
         final User user = Helper.getInstance().getUser();
         // Check if user has previous purchases
-        if (user == null || user.getAllOrders().isEmpty()) {
+        if (user == null) {
+            Objects.requireNonNull((MainActivity)getActivity()).returnToPreviousFragment(false);
+            return null;
+        } else if (user.getAllOrders().isEmpty()) {
             layout.setVisibility(View.VISIBLE);
             return rootView;
         }

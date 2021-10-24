@@ -8,10 +8,12 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -46,11 +48,13 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         // Initialise menu
-        NavigationView mDrawerList = findViewById(R.id.navigationView);
+        final NavigationView mDrawerList = findViewById(R.id.navigationView);
         mTitle = getTitle();
         mDrawerLayout = findViewById(R.id.drawer);
-        ImageButton menuCloseButton = mDrawerList.getHeaderView(0).findViewById(R.id.menuCloseButton);
+        final ImageButton menuCloseButton = mDrawerList.getHeaderView(0).findViewById(R.id.menuCloseButton);
+
         initMenu();
+        initMenuToggle();
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -60,7 +64,6 @@ public class MainActivity extends AppCompatActivity
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         menuCloseButton.setOnClickListener(v -> mDrawerLayout.closeDrawers());
         mDrawerList.setNavigationItemSelectedListener(this);
-        initMenuToggle();
 
         // Load home fragment on startup
         loadFragment(new HomeFragment(), true);
@@ -83,36 +86,45 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    void initMenu() {
+    private void initMenu() {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 
-    void initMenuToggle() {
+    private void initMenuToggle() {
         mDrawerToggle = new androidx.appcompat.app.ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name, R.string.app_name);
         mDrawerToggle.syncState();
     }
 
-    void loadFragment(Fragment fragment, boolean onStartUp) {
-        // TODO: handle fragment transition in background thread
-        if (fragment != null) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            if (!onStartUp)
-                fragmentManager.beginTransaction().replace(R.id.toolbar_content_frame, fragment).addToBackStack(null).commit();
-            else
-                fragmentManager.beginTransaction().replace(R.id.toolbar_content_frame, fragment).commit();
-
-            mDrawerLayout.closeDrawers();
-        } else {
+    public void loadFragment(Fragment fragment, boolean onStartUp) {
+        if (fragment == null) {
             Log.d("DEBUG_TAG", "Error while creating a fragment");
+            return;
         }
+
+        if (onStartUp) {
+            final FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.toolbar_content_frame, fragment).commit();
+        } else {
+            // Send fragment in 200ms to allow the menu to close
+            // Cannot be done in onDrawerClosed method because i.e. shopping cart is opened from outside the menu
+            // and that method would never trigger then
+            final Handler handler = new Handler();
+            handler.postDelayed(() -> {
+                final FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.toolbar_content_frame, fragment).addToBackStack(null).commit();
+            }, 200);
+        }
+
+        mDrawerLayout.closeDrawers();
     }
 
     final public boolean returnToPreviousFragment(boolean usingDefaultButton) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        final FragmentManager fragmentManager = getSupportFragmentManager();
         if (fragmentManager.getBackStackEntryCount() > 0 ) {
-            fragmentManager.popBackStackImmediate();
+            final Handler handler = new Handler();
+            handler.post(fragmentManager::popBackStackImmediate);
             return true;
         }
 

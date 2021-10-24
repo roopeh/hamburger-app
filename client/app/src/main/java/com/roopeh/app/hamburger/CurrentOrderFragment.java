@@ -31,7 +31,7 @@ public class CurrentOrderFragment extends Fragment {
         // It's possible to end up here without current order when navigating with back button
         // so let's avoid crashes
         if (user == null || user.getCurrentOrder() == null) {
-            handleReturnInBackgroundThread();
+            Objects.requireNonNull((MainActivity)getActivity()).returnToPreviousFragment(false);
             return null;
         }
 
@@ -39,7 +39,8 @@ public class CurrentOrderFragment extends Fragment {
         final RecyclerView productsList = rootView.findViewById(R.id.currentOrderProducts);
         final TextView paymentStatus = rootView.findViewById(R.id.currentOrderPaymentStatus);
         final TextView orderStatus = rootView.findViewById(R.id.currentOrderStatus);
-        final TextView restaurantInfo = rootView.findViewById(R.id.currentOrderRestaurantInfo);
+        final TextView restaurantAddress = rootView.findViewById(R.id.currentOrderRestaurantAddress);
+        final TextView restaurantHours = rootView.findViewById(R.id.currentOrderRestaurantHours);
         final Button restaurantButton = rootView.findViewById(R.id.currentOrderRestaurantButton);
         final Order currentOrder = user.getCurrentOrder();
 
@@ -47,7 +48,7 @@ public class CurrentOrderFragment extends Fragment {
         // i.e. if using back button to return to fragment
         if (currentOrder.isOrderReady()) {
             user.setCurrentOrder(null);
-            handleReturnInBackgroundThread();
+            Objects.requireNonNull((MainActivity)getActivity()).returnToPreviousFragment(false);
             return null;
         }
 
@@ -84,15 +85,17 @@ public class CurrentOrderFragment extends Fragment {
             }
         }.start();
 
-        // Restaurant info
+        // Restaurant address
         final Restaurant restaurant = currentOrder.getRestaurant();
+        restaurantAddress.setText(restaurant.getName() + ", " + restaurant.getAddress());
+
+        // Restaurant shop hours
         final RestaurantDates dates = restaurant.getDates();
         final Calendar now = Calendar.getInstance();
         final String restaurantString =
-                restaurant.getName() + ", " + restaurant.getAddress() + "\n" +
                 "Auki tänään: " + String.format(Locale.getDefault(), "%02d", dates.getStartHoursForDay(now.get(Calendar.DAY_OF_WEEK))) +
                 " - " + String.format(Locale.getDefault(), "%02d", dates.getEndHoursForDay(now.get(Calendar.DAY_OF_WEEK)));
-        restaurantInfo.setText(restaurantString);
+        restaurantHours.setText(restaurantString);
 
         restaurantButton.setOnClickListener(v -> Objects.requireNonNull((MainActivity)getActivity()).loadFragment(new RestaurantInfoFragment(restaurant), false));
 
@@ -115,12 +118,5 @@ public class CurrentOrderFragment extends Fragment {
             _orderTimer.cancel();
             _orderTimer = null;
         }
-    }
-
-    private void handleReturnInBackgroundThread() {
-        // Return must be handled in background thread to prevent a crash:
-        // java.lang.IllegalStateException: FragmentManager is already executing transactions
-        Handler handler = new Handler();
-        handler.post(() -> Objects.requireNonNull((MainActivity)getActivity()).returnToPreviousFragment(false));
     }
 }

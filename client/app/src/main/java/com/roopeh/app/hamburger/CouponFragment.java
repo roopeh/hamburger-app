@@ -8,6 +8,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -23,7 +24,10 @@ public class CouponFragment extends Fragment {
 
         final User user = Helper.getInstance().getUser();
         // Check if user has any coupons
-        if (user == null || user.getCoupons().isEmpty()) {
+        if (user == null) {
+            Objects.requireNonNull((MainActivity)getActivity()).returnToPreviousFragment(false);
+            return null;
+        } else if (user.getCoupons().isEmpty()) {
             layout.setVisibility(View.VISIBLE);
             return rootView;
         }
