@@ -1,7 +1,5 @@
 package com.roopeh.app.hamburger;
 
-import android.content.Context;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

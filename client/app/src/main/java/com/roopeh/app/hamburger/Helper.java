@@ -33,6 +33,7 @@ public class Helper {
     public enum ApiResponseType {
         RESTAURANTS,
         PRODUCTS,
+        REGISTER,
         LOGIN,
         SAVE_ORDER
     }

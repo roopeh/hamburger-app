@@ -20,12 +20,15 @@ public class ApiJsonParser {
     public static void parseDatabaseData(Context context, Helper.ApiResponseType apiResponse, Bundle bundle) {
         final String response = bundle.getString("result");
 
+        final boolean hasErrorInGetResponse = response == null || response.isEmpty() || !response.equals("true");
+        final boolean hasErrorInPostResponse = response == null || response.isEmpty() || response.equals("error");
+
         switch (apiResponse) {
             /*
              * RESTAURANTS
              */
             case RESTAURANTS: {
-                if (response == null || response.isEmpty() || !response.equals("true")) {
+                if (hasErrorInGetResponse) {
                     Toast.makeText(context, "Error when loading restaurants", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -69,7 +72,7 @@ public class ApiJsonParser {
              * PRODUCTS
              */
             case PRODUCTS: {
-                if (response == null || response.isEmpty() || !response.equals("true")) {
+                if (hasErrorInGetResponse) {
                     Toast.makeText(context, "Error when loading products", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -98,10 +101,46 @@ public class ApiJsonParser {
 
             } break;
             /*
+             * REGISTER
+             */
+            case REGISTER: {
+                if (hasErrorInPostResponse) {
+                    // API error
+                    Toast.makeText(context, "Error in the API", Toast.LENGTH_SHORT).show();
+                    return;
+                } else if (response.equals("false")) {
+                    final String toastString;
+                    switch (Integer.parseInt(bundle.getString("status"))) {
+                        // Duplicate username
+                        case 1:
+                            toastString = "Käyttäjätunnus on jo käytössä";
+                            break;
+                        // Duplicate email address
+                        case 2:
+                            toastString = "Sähköpostiosoite on jo käytössä";
+                            break;
+                        // Duplicate phone number
+                        case 3:
+                            toastString = "Puhelinnumero on jo käytössä";
+                            break;
+                        // Database error
+                        default:
+                            toastString = "Error in the database";
+                            Log.d("DEBUG_TAG", "Database error: " + bundle.getString("error_text"));
+                            break;
+                    }
+
+                    Toast.makeText(context, toastString, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // No need to do anything else here
+            } break;
+            /*
              * LOGIN
              */
             case LOGIN: {
-                if (response == null || response.isEmpty() || response.equals("error")) {
+                if (hasErrorInPostResponse) {
                     Toast.makeText(context, "Error in the API", Toast.LENGTH_SHORT).show();
                     return;
                 } else if (response.equals("false")) {
@@ -187,8 +226,11 @@ public class ApiJsonParser {
                     e.printStackTrace();
                 }
             } break;
+            /*
+             * SAVE ORDER
+             */
             case SAVE_ORDER: {
-                if (response == null || response.isEmpty() || response.equals("error")) {
+                if (hasErrorInPostResponse) {
                     // API error
                     Toast.makeText(context, "Error in the API", Toast.LENGTH_SHORT).show();
                     return;

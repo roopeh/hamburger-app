@@ -14,14 +14,16 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import androidx.fragment.app.Fragment;
 
-public class RegisterFragment extends Fragment {
+public class RegisterFragment extends Fragment implements ApiResponseInterface {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_register, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_register, container, false);
 
         // User could end up here when navigating with back button so make sure user is not logged in
         if (Helper.getInstance().getUser() != null) {
@@ -29,10 +31,10 @@ public class RegisterFragment extends Fragment {
             return null;
         }
 
-        CheckBox showPassword = rootView.findViewById(R.id.registerShowPass);
+        final CheckBox showPassword = rootView.findViewById(R.id.registerShowPass);
         showPassword.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            EditText pass1 = rootView.findViewById(R.id.registerPass1);
-            EditText pass2 = rootView.findViewById(R.id.registerPass2);
+            final EditText pass1 = rootView.findViewById(R.id.registerPass1);
+            final EditText pass2 = rootView.findViewById(R.id.registerPass2);
             if (!isChecked) {
                 pass1.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 pass2.setTransformationMethod(PasswordTransformationMethod.getInstance());
@@ -42,24 +44,24 @@ public class RegisterFragment extends Fragment {
             }
         });
 
-        ImageButton registerButton = rootView.findViewById(R.id.registerButton);
+        final ImageButton registerButton = rootView.findViewById(R.id.registerButton);
         registerButton.setOnClickListener(v -> handleRegister(rootView));
 
         // Make the text under register button also clickable
-        TextView registerButtonText = rootView.findViewById(R.id.registerButtonText);
+        final TextView registerButtonText = rootView.findViewById(R.id.registerButtonText);
         registerButtonText.setOnClickListener(v -> handleRegister(rootView));
 
         return rootView;
     }
 
     private void handleRegister(View rootView) {
-        EditText user = rootView.findViewById(R.id.registerUsername);
-        EditText firstName = rootView.findViewById(R.id.registerFirstname);
-        EditText lastName = rootView.findViewById(R.id.registerLastname);
-        EditText email = rootView.findViewById(R.id.registerEmail);
-        EditText phone = rootView.findViewById(R.id.registerNumber);
-        EditText pass1 = rootView.findViewById(R.id.registerPass1);
-        EditText pass2 = rootView.findViewById(R.id.registerPass2);
+        final EditText user = rootView.findViewById(R.id.registerUsername);
+        final EditText firstName = rootView.findViewById(R.id.registerFirstname);
+        final EditText lastName = rootView.findViewById(R.id.registerLastname);
+        final EditText email = rootView.findViewById(R.id.registerEmail);
+        final EditText phone = rootView.findViewById(R.id.registerNumber);
+        final EditText pass1 = rootView.findViewById(R.id.registerPass1);
+        final EditText pass2 = rootView.findViewById(R.id.registerPass2);
 
         // Check that all fields are filled
         if (TextUtils.isEmpty(user.getText()) || TextUtils.isEmpty(firstName.getText()) || TextUtils.isEmpty(lastName.getText()) || TextUtils.isEmpty(email.getText())
@@ -86,7 +88,24 @@ public class RegisterFragment extends Fragment {
             return;
         }
 
-        // todo: api call
-        Toast.makeText(getContext(), "Success", Toast.LENGTH_SHORT).show();
+        final Map<String, String> userData = new HashMap<>();
+        userData.put("username", user.getText().toString().toUpperCase());
+        userData.put("password", Helper.getInstance().encryptPasswordReturnInHex(pass1.getText().toString()));
+        userData.put("first_name", firstName.getText().toString());
+        userData.put("last_name", lastName.getText().toString());
+        userData.put("email", email.getText().toString());
+        userData.put("phone", phone.getText().toString());
+
+        new ApiConnector(this).register(getContext(), userData);
+    }
+
+    @Override
+    public void onResponse(Helper.ApiResponseType apiResponse, Bundle bundle) {
+        ApiJsonParser.parseDatabaseData(getContext(), apiResponse, bundle);
+
+        if (bundle.getString("result").equals("true")) {
+            Toast.makeText(getContext(), "Käyttäjätunnus rekisteröity!", Toast.LENGTH_SHORT).show();
+            Objects.requireNonNull((MainActivity)getActivity()).loadFragment(new UserFragment(), false);
+        }
     }
 }

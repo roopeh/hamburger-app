@@ -92,6 +92,41 @@ public class ApiConnector {
         ApplicationController.getInstance().addToRequestQueue(request);
     }
 
+    public void register(Context context, final Map<String, String> params) {
+        final String urlStr = Helper.Constants.API_LINK + "/register.php";
+        final Bundle bundle = new Bundle();
+
+        // Show alert dialog
+        final AlertDialog dialog = Helper.getInstance().createAlertDialog(context, "Creating account...");
+
+        final ApiPostRequest request = new ApiPostRequest(urlStr, params,
+            response -> {
+                Log.d("DEBUG_TAG", "Successful response via StringRequest: " + response);
+                try {
+                    final JSONObject result = new JSONObject(response);
+
+                    final boolean success = Boolean.parseBoolean(result.getString("result"));
+                    if (!success) {
+                        bundle.putString("status", result.getString("status"));
+                        bundle.putString("error_text", result.getString("query_status"));
+                    }
+
+                    bundle.putString("result", result.getString("result"));
+                } catch (JSONException e) {
+                    bundle.putString("result", "error");
+                    e.printStackTrace();
+                }
+
+                dialog.dismiss();
+                _apiResponse.onResponse(Helper.ApiResponseType.REGISTER, bundle);
+            }, error -> {
+                dialog.dismiss();
+                ApiRequest.handleErrorInRequest(_apiResponse, Helper.ApiResponseType.REGISTER, bundle, error);
+        });
+
+        ApplicationController.getInstance().addToRequestQueue(request);
+    }
+
     public void login(Context context, String username, String pass) {
         final String urlStr = Helper.Constants.API_LINK + "/login.php";
         final Bundle bundle = new Bundle();
