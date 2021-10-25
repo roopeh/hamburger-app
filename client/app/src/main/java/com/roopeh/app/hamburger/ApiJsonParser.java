@@ -29,7 +29,7 @@ public class ApiJsonParser {
              */
             case RESTAURANTS: {
                 if (hasErrorInGetResponse) {
-                    Toast.makeText(context, "Error when loading restaurants", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.apiRestaurantError, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -64,7 +64,7 @@ public class ApiJsonParser {
 
                     Helper.getInstance().initializeRestaurants(restaurants);
                 } catch (JSONException e) {
-                    Toast.makeText(context, "Error when loading restaurants", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.apiRestaurantError, Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
             } break;
@@ -73,7 +73,7 @@ public class ApiJsonParser {
              */
             case PRODUCTS: {
                 if (hasErrorInGetResponse) {
-                    Toast.makeText(context, "Error when loading products", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.apiProductsError, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -96,7 +96,7 @@ public class ApiJsonParser {
 
                     Helper.getInstance().initializeProducts(products);
                 } catch (JSONException e) {
-                    Toast.makeText(context, "Error when loading products", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.apiProductsError, Toast.LENGTH_SHORT).show();
                 }
 
             } break;
@@ -106,31 +106,31 @@ public class ApiJsonParser {
             case REGISTER: {
                 if (hasErrorInPostResponse) {
                     // API error
-                    Toast.makeText(context, "Error in the API", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.apiError, Toast.LENGTH_SHORT).show();
                     return;
                 } else if (response.equals("false")) {
-                    final String toastString;
+                    final int toastStringId;
                     switch (Integer.parseInt(bundle.getString("status"))) {
                         // Duplicate username
                         case 1:
-                            toastString = "Käyttäjätunnus on jo käytössä";
+                            toastStringId = R.string.apiRegisterDuplicateUser;
                             break;
                         // Duplicate email address
                         case 2:
-                            toastString = "Sähköpostiosoite on jo käytössä";
+                            toastStringId = R.string.apiRegisterDuplicateEmail;
                             break;
                         // Duplicate phone number
                         case 3:
-                            toastString = "Puhelinnumero on jo käytössä";
+                            toastStringId = R.string.apiRegisterDuplicatePhone;
                             break;
                         // Database error
                         default:
-                            toastString = "Error in the database";
+                            toastStringId = R.string.apiDatabaseError;
                             Log.d("DEBUG_TAG", "Database error: " + bundle.getString("error_text"));
                             break;
                     }
 
-                    Toast.makeText(context, toastString, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, toastStringId, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -141,16 +141,17 @@ public class ApiJsonParser {
              */
             case LOGIN: {
                 if (hasErrorInPostResponse) {
-                    Toast.makeText(context, "Error in the API", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.apiError, Toast.LENGTH_SHORT).show();
                     return;
                 } else if (response.equals("false")) {
-                    Toast.makeText(context, "Virheellinen käyttäjätunnus tai salasana", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.apiLoginWrongInfo, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 // Parse user info
                 final int id = Integer.parseInt(bundle.getString("id"));
                 final User user = new User(id, bundle.getString("username"));
+                user.setFirstLogin(Integer.parseInt(bundle.getString("first_login")) != 0);
                 user.setFirstName(bundle.getString("first_name"));
                 user.setLastName(bundle.getString("last_name"));
                 user.setEmail(bundle.getString("email"));
@@ -158,11 +159,19 @@ public class ApiJsonParser {
 
                 try {
                     if (bundle.containsKey("coupons-json")) {
+                        final long dateNow = System.currentTimeMillis() / 1000;
+
                         // Parse raw coupon JSON data
                         final JSONArray couponData = new JSONArray(bundle.getString("coupons-json"));
                         for (int i = 0; i < couponData.length(); ++i) {
                             final JSONObject couponObj = couponData.getJSONObject(i);
-                            user.addCoupon(new Coupon(couponObj.getInt("coupon_type"), couponObj.getLong("expiry_date")));
+
+                            final Coupon coupon = new Coupon(couponObj.getInt("coupon_type"), couponObj.getLong("expiry_date"));
+                            // Check if the coupon has expired
+                            if (coupon.isValidAnymore(dateNow))
+                                continue;
+
+                            user.addCoupon(coupon);
                         }
                     }
 
@@ -219,24 +228,25 @@ public class ApiJsonParser {
                     user.sortOrders();
 
                     // All done
-                    Toast.makeText(context, "Hei, " + user.getFirstName() + "!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, context.getString(R.string.apiLoginHello, user.getFirstName()), Toast.LENGTH_SHORT).show();
                     Helper.getInstance().setUser(user);
                 } catch (JSONException e) {
-                    Toast.makeText(context, "Error in the API", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.apiError, Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
             } break;
             /*
-             * SAVE ORDER
+             * SAVE ORDER, LOGOUT
              */
-            case SAVE_ORDER: {
+            case SAVE_ORDER:
+            case LOGOUT: {
                 if (hasErrorInPostResponse) {
                     // API error
-                    Toast.makeText(context, "Error in the API", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.apiError, Toast.LENGTH_SHORT).show();
                     return;
                 } else if (response.equals("false")) {
                     // Database error
-                    Toast.makeText(context, "Error in the database", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.apiDatabaseError, Toast.LENGTH_SHORT).show();
                     Log.d("DEBUG_TAG", "Database error: " + bundle.getString("error_text"));
                     return;
                 }

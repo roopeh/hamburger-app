@@ -35,7 +35,8 @@ public class Helper {
         PRODUCTS,
         REGISTER,
         LOGIN,
-        SAVE_ORDER
+        SAVE_ORDER,
+        LOGOUT
     }
 
     private static Helper mInstance = null;
@@ -62,10 +63,10 @@ public class Helper {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(message).setCancelable(false);
 
-        AlertDialog dialog = builder.create();
+        final AlertDialog dialog = builder.create();
         dialog.show();
 
-        TextView msgView = dialog.findViewById(android.R.id.message);
+        final TextView msgView = dialog.findViewById(android.R.id.message);
         msgView.setGravity(Gravity.CENTER);
 
         return dialog;
@@ -104,15 +105,6 @@ public class Helper {
             return;
 
         _user = user;
-
-        // todo: dummy content (coupons)
-        for (int i = 1; i <= 10; ++i) {
-            int num = i;
-            while (num > 3) {
-                num -= 3;
-            }
-            _user.addCoupon(new Coupon(num, 1650995521));
-        }
     }
 
     final public User getUser() {

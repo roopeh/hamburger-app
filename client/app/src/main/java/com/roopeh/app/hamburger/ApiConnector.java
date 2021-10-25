@@ -27,7 +27,7 @@ public class ApiConnector {
 
     // Api methods
     public void initRestaurantsAndProducts(Context context) {
-        _initLoadDialog = Helper.getInstance().createAlertDialog(context, "Loading...");
+        _initLoadDialog = Helper.getInstance().createAlertDialog(context, context.getString(R.string.apiInitialLoad));
         loadRestaurants();
         loadProducts();
     }
@@ -44,7 +44,7 @@ public class ApiConnector {
 
                     final boolean success = Boolean.parseBoolean(result.getString("result"));
                     if (success) {
-                        final JSONArray restaurantData = result.getJSONArray("restaurantdata");
+                        final JSONArray restaurantData = result.getJSONArray("restaurant_data");
                         bundle.putString("restaurants-json", restaurantData.toString());
                     }
 
@@ -72,8 +72,8 @@ public class ApiConnector {
 
                     final boolean success = Boolean.parseBoolean(result.getString("result"));
                     if (success) {
-                        final JSONArray productdata = result.getJSONArray("productdata");
-                        bundle.putString("products-json", productdata.toString());
+                        final JSONArray productData = result.getJSONArray("product_data");
+                        bundle.putString("products-json", productData.toString());
                     }
 
                     bundle.putString("result", result.getString("result"));
@@ -97,7 +97,7 @@ public class ApiConnector {
         final Bundle bundle = new Bundle();
 
         // Show alert dialog
-        final AlertDialog dialog = Helper.getInstance().createAlertDialog(context, "Creating account...");
+        final AlertDialog dialog = Helper.getInstance().createAlertDialog(context, context.getString(R.string.apiRegister));
 
         final ApiPostRequest request = new ApiPostRequest(urlStr, params,
             response -> {
@@ -128,6 +128,9 @@ public class ApiConnector {
     }
 
     public void login(Context context, String username, String pass) {
+        if (Helper.getInstance().getUser() != null)
+            return;
+
         final String urlStr = Helper.Constants.API_LINK + "/login.php";
         final Bundle bundle = new Bundle();
 
@@ -136,7 +139,7 @@ public class ApiConnector {
         params.put("password", pass);
 
         // Show alert dialog
-        final AlertDialog dialog = Helper.getInstance().createAlertDialog(context, "Logging in...");
+        final AlertDialog dialog = Helper.getInstance().createAlertDialog(context, context.getString(R.string.apiLogin));
 
         final ApiPostRequest request = new ApiPostRequest(urlStr, params,
             response -> {
@@ -247,7 +250,7 @@ public class ApiConnector {
         params.put("order_items", allItemObj.toString());
 
         // Create alert dialog
-        final AlertDialog dialog = Helper.getInstance().createAlertDialog(context, "Creating order...");
+        final AlertDialog dialog = Helper.getInstance().createAlertDialog(context, context.getString(R.string.apiCreateOrder));
 
         final ApiPostRequest request = new ApiPostRequest(urlStr, params,
             response -> {
@@ -279,6 +282,73 @@ public class ApiConnector {
         ApplicationController.getInstance().addToRequestQueue(request);
     }
 
+    public void logout(Context context) {
+        final User user = Helper.getInstance().getUser();
+        if (user == null)
+            return;
+
+        final String urlStr = Helper.Constants.API_LINK + "/logout.php";
+        final Bundle bundle = new Bundle();
+
+        final Map<String, String> params = new HashMap<>();
+        params.put("user_id", String.valueOf(user.getUserId()));
+        params.put("coupon_size", String.valueOf(user.getCoupons().size()));
+
+        // Save coupons
+        final JSONArray allCouponsObj = new JSONArray();
+        boolean dataCreated = true;
+        for (int i = 0; i < user.getCoupons().size(); ++i) {
+            try {
+                final JSONObject couponObj = new JSONObject();
+                final Coupon coupon = user.getCoupons().get(i);
+                couponObj.put("type", String.valueOf(coupon.getType()));
+                couponObj.put("expiry_date", String.valueOf(coupon.getExpiryDateRaw()));
+
+                allCouponsObj.put(couponObj);
+            } catch (JSONException e) {
+                e.printStackTrace();
+                dataCreated = false;
+                break;
+            }
+        }
+
+        if (!dataCreated) {
+            bundle.putString("result", "error");
+            _apiResponse.onResponse(Helper.ApiResponseType.LOGOUT, bundle);
+            return;
+        }
+
+        params.put("coupons", allCouponsObj.toString());
+
+        // Show alert dialog
+        final AlertDialog dialog = Helper.getInstance().createAlertDialog(context, context.getString(R.string.apiLogout));
+
+        final ApiPostRequest request = new ApiPostRequest(urlStr, params,
+            response -> {
+                Log.d("DEBUG_TAG", "Successful response via StringRequest: " + response);
+                try {
+                    final JSONObject result = new JSONObject(response);
+
+                    final boolean success = Boolean.parseBoolean(result.getString("result"));
+                    if (!success)
+                        bundle.putString("error_text", result.getString("query_status"));
+
+                    bundle.putString("result", result.getString("result"));
+                } catch (JSONException e) {
+                    bundle.putString("result", "error");
+                    e.printStackTrace();
+                }
+
+                dialog.dismiss();
+                _apiResponse.onResponse(Helper.ApiResponseType.LOGOUT, bundle);
+            }, error -> {
+                dialog.dismiss();
+                ApiRequest.handleErrorInRequest(_apiResponse, Helper.ApiResponseType.LOGOUT, bundle, error);
+        });
+
+        ApplicationController.getInstance().addToRequestQueue(request);
+    }
+
     // Get method
     private static class ApiGetRequest extends ApiRequest {
         public ApiGetRequest(String url, Map<String, String> params, Response.Listener<String> listener, Response.ErrorListener error) {
@@ -293,8 +363,8 @@ public class ApiConnector {
         }
 
         @Override
-        public Map<String, String> getHeaders() {
-            HashMap<String, String> headers = new HashMap<>();
+        final public Map<String, String> getHeaders() {
+            final HashMap<String, String> headers = new HashMap<>();
             headers.put("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
             return headers;
         }

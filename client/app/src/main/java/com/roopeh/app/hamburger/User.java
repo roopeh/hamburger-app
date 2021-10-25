@@ -18,6 +18,8 @@ public class User {
     private Order _currentOrder = null;
     final private List<Order> _allOrders;
 
+    private boolean _firstLogin = false;
+
     public User(int userId, String username) {
         _userId = userId;
         _userName = username;
@@ -104,6 +106,14 @@ public class User {
 
     final public List<Order> getAllOrders() {
         return _allOrders;
+    }
+
+    public void setFirstLogin(boolean login) {
+        _firstLogin = login;
+    }
+
+    final public boolean isFirstLogin() {
+        return _firstLogin;
     }
 
     // Only on db load

@@ -16,7 +16,7 @@ import java.util.Objects;
 
 import androidx.fragment.app.Fragment;
 
-public class UserFragment extends Fragment {
+public class UserFragment extends Fragment implements ApiResponseInterface {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_user, container, false);
@@ -40,8 +40,7 @@ public class UserFragment extends Fragment {
 
         // Logout button
         logoutButton.setOnClickListener(v -> {
-            Helper.getInstance().logoutUser();
-            Objects.requireNonNull((MainActivity)getActivity()).loadFragment(new HomeFragment(), false);
+            new ApiConnector(this).logout(getContext());
         });
 
         // Show passwords?
@@ -70,5 +69,12 @@ public class UserFragment extends Fragment {
 
         // todo: api call
         Toast.makeText(getContext(), "Success!", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onResponse(Helper.ApiResponseType apiResponse, Bundle bundle) {
+        ApiJsonParser.parseDatabaseData(getContext(), apiResponse, bundle);
+        Helper.getInstance().logoutUser();
+        Objects.requireNonNull((MainActivity)getActivity()).loadFragment(new HomeFragment(), false);
     }
 }

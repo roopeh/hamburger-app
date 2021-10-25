@@ -1,5 +1,8 @@
 package com.roopeh.app.hamburger;
 
+import android.content.Context;
+import android.os.Build;
+
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -21,44 +24,56 @@ public class Coupon {
     }
 
     public final String getExpiryDate() {
-        // API 26+
-        /*final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        return Instant.ofEpochSecond(_expiryDate).atZone(ZoneId.of("GMT+3")).format(formatter);*/
-        // For older APIs
-        final SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-        format.setTimeZone(TimeZone.getTimeZone("GMT+3"));
-        return format.format(_expiryDate * 1000);
-    }
-
-    // TODO: put to strings resource file
-    public final String getName() {
-        switch (_type) {
-            case Helper.Constants.COUPON_TYPE_FREE_LARGE_DRINK:
-                return "Large drink";
-            case Helper.Constants.COUPON_TYPE_FREE_LARGE_EXTRAS:
-                return "Large extras";
-            case Helper.Constants.COUPON_TYPE_50_OFF:
-                return "50% off";
-            case Helper.Constants.COUPON_TYPE_EMPTY_COUPON:
-                return "No coupon";
-            default:
-                return "Unknown coupon type";
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // API 26+
+            final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+            return Instant.ofEpochSecond(_expiryDate).atZone(ZoneId.of("GMT+3")).format(formatter);
+        } else {
+            // For older APIs
+            final SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+            format.setTimeZone(TimeZone.getTimeZone("GMT+3"));
+            return format.format(_expiryDate * 1000);
         }
     }
 
-    public final String getDescription() {
+    final public long getExpiryDateRaw() {
+        return _expiryDate;
+    }
+
+    public final String getName(final Context context) {
         switch (_type) {
             case Helper.Constants.COUPON_TYPE_FREE_LARGE_DRINK:
-                return "Large drink for free";
+                return context.getString(R.string.couponNameLargeDrink);
             case Helper.Constants.COUPON_TYPE_FREE_LARGE_EXTRAS:
-                return "Large extras for free";
+                return context.getString(R.string.couponNameLargeExtra);
             case Helper.Constants.COUPON_TYPE_50_OFF:
-                return "50% cheaper!";
+                return context.getString(R.string.couponName50off);
             case Helper.Constants.COUPON_TYPE_EMPTY_COUPON:
-                return "No coupon";
+                return context.getString(R.string.couponEmpty);
             default:
-                return "Unknown coupon type";
+                return context.getString(R.string.couponUnk);
         }
+    }
+
+    public final String getDescription(final Context context) {
+        switch (_type) {
+            case Helper.Constants.COUPON_TYPE_FREE_LARGE_DRINK:
+                return context.getString(R.string.couponDescLargeDrink);
+            case Helper.Constants.COUPON_TYPE_FREE_LARGE_EXTRAS:
+                return context.getString(R.string.couponDescLargeExtra);
+            case Helper.Constants.COUPON_TYPE_50_OFF:
+                return context.getString(R.string.couponDesc50off);
+            case Helper.Constants.COUPON_TYPE_EMPTY_COUPON:
+                return context.getString(R.string.couponEmpty);
+            default:
+                return context.getString(R.string.couponUnk);
+        }
+    }
+
+    final public boolean isValidAnymore(final long dateNow) {
+        final SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+        formatter.setTimeZone(TimeZone.getTimeZone("GMT+3"));
+        return dateNow > _expiryDate && !formatter.format(dateNow * 1000).equals(formatter.format(_expiryDate * 1000));
     }
 
     /*
@@ -80,27 +95,27 @@ public class Coupon {
     public static boolean isCouponAvailableForCart(final int couponType) {
         switch (couponType) {
             case Helper.Constants.COUPON_TYPE_FREE_LARGE_DRINK: {
-                for (final ShoppingItem item : Helper.getInstance().getUser().getCart().getItems()) {
-                    if (!item.getProduct().isMeal())
+                for (final ShoppingItem meal : Helper.getInstance().getUser().getCart().getItems()) {
+                    if (!meal.getProduct().isMeal())
                         continue;
 
-                    if (item.getMealDrink() == 0)
+                    if (meal.getMealDrink() == 0)
                         continue;
 
-                    if (item.isLargeDrink()) {
+                    if (meal.isLargeDrink()) {
                         return true;
                     }
                 }
             } break;
             case Helper.Constants.COUPON_TYPE_FREE_LARGE_EXTRAS: {
-                for (final ShoppingItem item : Helper.getInstance().getUser().getCart().getItems()) {
-                    if (!item.getProduct().isMeal())
+                for (final ShoppingItem meal : Helper.getInstance().getUser().getCart().getItems()) {
+                    if (!meal.getProduct().isMeal())
                         continue;
 
-                    if (item.getMealExtra() == 0)
+                    if (meal.getMealExtra() == 0)
                         continue;
 
-                    if (item.isLargeExtra()) {
+                    if (meal.isLargeExtra()) {
                         return true;
                     }
                 }

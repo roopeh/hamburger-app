@@ -81,10 +81,11 @@ public class HomeFragment extends Fragment implements ApiResponseInterface {
     @Override
     public void onResponse(Helper.ApiResponseType apiResponse, Bundle bundle) {
         ApiJsonParser.parseDatabaseData(getContext(), apiResponse, bundle);
-
-        // Check for possible current order
-        if (Helper.getInstance().getUser() != null)
-            Helper.getInstance().getUser().checkForCurrentOrder(Objects.requireNonNull((MainActivity)getActivity()));
+        if (apiResponse == Helper.ApiResponseType.LOGIN) {
+            LoginFragment.onPostLogin(Objects.requireNonNull((MainActivity)getActivity()));
+        } else if (apiResponse == Helper.ApiResponseType.LOGOUT) {
+            Helper.getInstance().logoutUser();
+        }
     }
 }
 
@@ -173,7 +174,7 @@ class HomeGridAdapter extends RecyclerView.Adapter<HomeGridAdapter.ViewHolder> {
                     if (_list.get(position) == HomeFragment.TYPE_LOGIN)
                         new ApiConnector(_frag).login(_frag.getContext(), "TESTI", Helper.getInstance().encryptPasswordReturnInHex("testi"));
                     else
-                        Helper.getInstance().logoutUser();
+                        new ApiConnector(_frag).logout(_frag.getContext());
                 });
             } break;
             default: break;
