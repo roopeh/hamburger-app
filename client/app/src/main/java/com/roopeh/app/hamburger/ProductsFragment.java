@@ -1,5 +1,6 @@
 package com.roopeh.app.hamburger;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,11 +19,11 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ProductsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_products, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_products, container, false);
 
-        List<String> content = new ArrayList<>();
-        content.add("Ateriat");
-        content.add("Hampurilaiset");
+        final List<String> content = new ArrayList<>();
+        content.add(getString(R.string.productsMeals));
+        content.add(getString(R.string.productsHamburgers));
 
         final RecyclerView grid = rootView.findViewById(R.id.productsMainGrid);
         final ProductsMainGridAdapter adapter = new ProductsMainGridAdapter(content, this);
@@ -41,12 +42,12 @@ class ProductsMainGridAdapter extends RecyclerView.Adapter<ProductsMainGridAdapt
     public static class ViewHolder extends RecyclerView.ViewHolder {
         final private TextView name;
 
-        public ViewHolder(@NonNull View itemView, List<String> list, ProductsFragment fragment) {
+        public ViewHolder(@NonNull View itemView, List<String> list, ProductsFragment fragment, Context context) {
             super(itemView);
 
             itemView.setOnClickListener(v -> {
                 final String item = list.get(getAdapterPosition());
-                final int category = item.equals("Ateriat") ? Helper.Constants.PRODUCT_CATEGORY_MEAL : Helper.Constants.PRODUCT_CATEGORY_HAMBURGER;
+                final int category = item.equals(context.getString(R.string.productsMeals)) ? Helper.Constants.PRODUCT_CATEGORY_MEAL : Helper.Constants.PRODUCT_CATEGORY_HAMBURGER;
                 Objects.requireNonNull((MainActivity)fragment.getActivity()).loadFragment(new ProductsListFragment(category), false);
             });
 
@@ -68,7 +69,7 @@ class ProductsMainGridAdapter extends RecyclerView.Adapter<ProductsMainGridAdapt
     public ProductsMainGridAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final View listItem = inflater.inflate(R.layout.grid_products_main, parent, false);
-        return new ViewHolder(listItem, _list, _frag);
+        return new ViewHolder(listItem, _list, _frag, _frag.getContext());
     }
 
     @Override

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -12,134 +12,129 @@
     android:paddingBottom="@dimen/content_padding_bottom"
     android:background="@drawable/rounded_main">
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/content_padding_side"
+        android:paddingEnd="@dimen/content_padding_side"
+        android:paddingTop="@dimen/content_padding_top"
+        android:paddingBottom="@dimen/content_padding_bottom"
+        android:background="@drawable/rounded_inner_main">
 
-        <RelativeLayout
+        <ImageButton
+            android:id="@+id/restaurantInfoBackButton"
+            android:background="@android:color/transparent"
+            android:src="@drawable/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:maxWidth="40dp"
+            android:maxHeight="40dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:contentDescription="@string/layoutReturnButtonDescription" />
+
+        <TextView
+            android:id="@+id/restaurantInfoName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="14sp"
+            app:autoSizeMaxTextSize="20sp"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/restaurantInfoStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/restaurantInfoName"
+            android:textSize="15sp"
+            android:textColor="@color/black" />
+
+        <View
+            android:id="@+id/restaurantInfoFirstLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/line_padding_top"
+            android:layout_marginBottom="@dimen/line_padding_bottom"
+            android:layout_below="@id/restaurantInfoStatus"
+            android:background="@color/backgroundInner" />
+
+        <LinearLayout
+            android:id="@+id/restaurantInfoHours"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="@dimen/content_padding_side"
-            android:paddingEnd="@dimen/content_padding_side"
-            android:paddingTop="@dimen/content_padding_top"
-            android:paddingBottom="@dimen/content_padding_bottom"
-            android:background="@drawable/rounded_inner_main">
-
-            <ImageButton
-                android:id="@+id/restaurantInfoBackButton"
-                android:background="@android:color/transparent"
-                android:src="@drawable/back_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:maxWidth="40dp"
-                android:maxHeight="40dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:contentDescription="Return" />
+            android:layout_below="@+id/restaurantInfoFirstLine"
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/restaurantInfoName"
-                android:layout_width="wrap_content"
+                android:id="@+id/restaurantInfoLeftHours"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                app:autoSizeTextType="uniform"
-                app:autoSizeMinTextSize="14sp"
-                app:autoSizeMaxTextSize="20sp"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/restaurantInfoMiddleHours"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="15sp"
                 android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textAlignment="center" />
 
             <TextView
-                android:id="@+id/restaurantInfoStatus"
-                android:layout_width="wrap_content"
+                android:id="@+id/restaurantInfoRightHours"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@id/restaurantInfoName"
+                android:layout_weight="1"
                 android:textSize="15sp"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textAlignment="textEnd" />
+        </LinearLayout>
 
-            <View
-                android:id="@+id/restaurantInfoFirstLine"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/line_padding_top"
-                android:layout_marginBottom="@dimen/line_padding_bottom"
-                android:layout_below="@id/restaurantInfoStatus"
-                android:background="@color/backgroundInner" />
+        <View
+            android:id="@+id/restaurantInfoSecondLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/line_padding_top"
+            android:layout_marginBottom="@dimen/line_padding_bottom"
+            android:layout_below="@id/restaurantInfoHours"
+            android:background="@color/backgroundInner" />
 
-            <LinearLayout
-                android:id="@+id/restaurantInfoHours"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/restaurantInfoFirstLine"
-                android:orientation="horizontal">
+        <TextView
+            android:id="@+id/restaurantInfoAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/restaurantInfoSecondLine"
+            android:textSize="15sp"
+            android:textColor="@color/black" />
 
-                <TextView
-                    android:id="@+id/restaurantInfoLeftHours"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="15sp"
-                    android:textColor="@color/black" />
+        <TextView
+            android:id="@+id/restaurantInfoPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/restaurantInfoAddress"
+            android:textSize="15sp"
+            android:textColor="@color/black" />
 
-                <TextView
-                    android:id="@+id/restaurantInfoMiddleHours"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="15sp"
-                    android:textColor="@color/black"
-                    android:textAlignment="center" />
-
-                <TextView
-                    android:id="@+id/restaurantInfoRightHours"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="15sp"
-                    android:textColor="@color/black"
-                    android:textAlignment="textEnd" />
-            </LinearLayout>
-
-            <View
-                android:id="@+id/restaurantInfoSecondLine"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/line_padding_top"
-                android:layout_marginBottom="@dimen/line_padding_bottom"
-                android:layout_below="@id/restaurantInfoHours"
-                android:background="@color/backgroundInner" />
-
-            <TextView
-                android:id="@+id/restaurantInfoAddress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@id/restaurantInfoSecondLine"
-                android:textSize="15sp"
-                android:textColor="@color/black" />
-
-            <TextView
-                android:id="@+id/restaurantInfoPhone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@id/restaurantInfoAddress"
-                android:textSize="15sp"
-                android:textColor="@color/black" />
-
-            <ImageView
-                android:id="@+id/restaurantInfoMaps"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/content_padding_top"
-                android:layout_below="@id/restaurantInfoPhone"
-                android:src="@drawable/maps"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:visibility="invisible"
-                android:contentDescription="Google Maps" />
-        </RelativeLayout>
-    </ScrollView>
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/restaurantInfoMaps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/content_padding_top"
+            android:layout_below="@id/restaurantInfoPhone"
+            android:src="@drawable/maps"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:visibility="invisible"
+            android:contentDescription="@string/restaurantMaps" />
+    </RelativeLayout>
+</ScrollView>

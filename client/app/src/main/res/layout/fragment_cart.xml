@@ -23,7 +23,7 @@
         android:maxHeight="40dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:contentDescription="Return" />
+        android:contentDescription="@string/layoutReturnButtonDescription" />
 
     <TextView
         android:id="@+id/shopCartHeader"
@@ -33,7 +33,7 @@
         android:layout_marginTop="4dp"
         android:layout_toEndOf="@id/shopCartBackButton"
         android:theme="@style/DefaultHeaderStyle"
-        android:text="Shopping Cart" />
+        android:text="@string/cartLayoutTitle" />
 
     <!-- "Empty shopping cart" view -->
     <ScrollView
@@ -58,7 +58,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="17sp"
-                android:text="Ostoskorisi on tyhjä!" />
+                android:text="@string/cartEmpty" />
         </RelativeLayout>
     </ScrollView>
 
@@ -92,7 +92,7 @@
                 android:layout_below="@id/shopCartFirstLine"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                android:text="Tuotteet" />
+                android:text="@string/cartLayoutProducts" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/shopCartProducts"
@@ -118,7 +118,7 @@
                 android:layout_below="@id/shopCartSecondLine"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                android:text="Alennuskuponki" />
+                android:text="@string/cartLayoutCoupon" />
 
             <FrameLayout
                 android:id="@+id/shopCartCouponsLayout"
@@ -150,7 +150,7 @@
                 android:layout_below="@id/shopCartThirdLine"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                android:text="Summa" />
+                android:text="@string/cartLayoutSum" />
 
             <TextView
                 android:id="@+id/shopCartPriceListed"
@@ -172,7 +172,7 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:text="Summa yhteensä" />
+                android:text="@string/cartLayoutSumTotal" />
 
             <TextView
                 android:id="@+id/shopCartPriceSum"
@@ -201,7 +201,7 @@
                 android:layout_below="@id/shopCartFourthLine"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                android:text="Ravintola" />
+                android:text="@string/cartLayoutRestaurant" />
 
             <FrameLayout
                 android:id="@+id/shopCartRestaurantsLayout"
@@ -233,7 +233,7 @@
                 android:layout_below="@id/shopCartFifthLine"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                android:text="Maksu" />
+                android:text="@string/cartLayoutPayment" />
 
             <RadioGroup
                 android:id="@+id/shopCartPaymentChoose"
@@ -247,7 +247,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/white"
-                    android:text="Maksa kortilla" />
+                    android:text="@string/cartLayoutPayCard" />
 
                 <RadioButton
                     android:id="@+id/shopCartPaymentRestaurant"
@@ -255,7 +255,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="-10dp"
                     android:buttonTint="@color/white"
-                    android:text="Maksa ravintolassa" />
+                    android:text="@string/cartLayoutPayRestaurant" />
             </RadioGroup>
 
             <Button
@@ -267,7 +267,7 @@
                 android:layout_centerHorizontal="true"
                 android:backgroundTint="@color/defaultButtonBackground"
                 android:textColor="@color/defaultButtonFont"
-                android:text="Tee tilaus" />
+                android:text="@string/cartLayoutCreate" />
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

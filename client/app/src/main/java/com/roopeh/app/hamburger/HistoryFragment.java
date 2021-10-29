@@ -1,5 +1,6 @@
 package com.roopeh.app.hamburger;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,6 +50,7 @@ public class HistoryFragment extends Fragment {
 class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.ViewHolder> {
     final private List<Order> _list;
     final private HistoryFragment _frag;
+    final private Context _context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         final private TextView name;
@@ -90,6 +92,7 @@ class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.ViewHol
     public HistoryListAdapter(List<Order> list, HistoryFragment frag) {
         _list = list;
         _frag = frag;
+        _context = _frag.getContext();
     }
 
     @NonNull
@@ -112,14 +115,14 @@ class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.ViewHol
         final StringBuilder productsString = new StringBuilder();
         for (int i = 0; i < order.getItems().size(); ++i) {
             final ShoppingItem item = order.getItems().get(i);
-            productsString.append("- ").append(item.getProduct().getName());
+            productsString.append(_context.getString(R.string.orderItem, item.getProduct().getName()));
             // No new line at final row
             if (i < (order.getItems().size() - 1))
                 productsString.append("\n");
         }
         holder.getProducts().setText(productsString.toString());
 
-        holder.getPrice().setText(String.format(Locale.getDefault(), "%.2f", order.getTotalPrice()) + " €");
+        holder.getPrice().setText(_context.getString(R.string.orderEuroAmount, order.getTotalPrice()));
     }
 
     @Override

@@ -1,9 +1,7 @@
 package com.roopeh.app.hamburger;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Random;
 
 public class Order implements Comparable<Order> {
     private int _id;

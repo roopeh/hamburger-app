@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,224 +11,216 @@
     android:paddingBottom="@dimen/content_padding_bottom"
     android:background="@drawable/rounded_main">
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:padding="@dimen/background_padding_side"
+        android:background="@drawable/rounded_inner_main">
 
-        <RelativeLayout
+        <ImageButton
+            android:id="@+id/productsInfoBackButton"
+            android:background="@android:color/transparent"
+            android:src="@drawable/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="-4dp"
+            android:maxWidth="40dp"
+            android:maxHeight="40dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:contentDescription="@string/layoutReturnButtonDescription" />
+
+        <TextView
+            android:id="@+id/productsInfoName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/background_padding_side"
-            android:background="@drawable/rounded_inner_main">
+            android:textAlignment="center"
+            android:theme="@style/DefaultHeaderStyle" />
 
-            <ImageButton
-                android:id="@+id/productsInfoBackButton"
-                android:background="@android:color/transparent"
-                android:src="@drawable/back_button"
+        <ImageView
+            android:id="@+id/productsInfoImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/productsInfoName"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/ic_launcher_background"
+            android:contentDescription="@null" />
+
+        <TextView
+            android:id="@+id/productsInfoPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/productsInfoImage"
+            android:textAlignment="center"
+            android:textSize="17sp"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <FrameLayout
+            android:id="@+id/productsInfoDrinkLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/content_padding_top"
+            android:layout_below="@id/productsInfoPrice"
+            android:background="@drawable/products_info_spinner"
+            android:visibility="invisible">
+
+            <Spinner
+                android:id="@+id/productsInfoDrink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </FrameLayout>
+
+        <CheckBox
+            android:id="@+id/productsInfoDrinkLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/background_padding_side"
+            android:layout_below="@id/productsInfoDrinkLayout"
+            android:buttonTint="@color/white"
+            android:visibility="invisible"
+            android:text="@string/productsLarge" />
+
+        <FrameLayout
+            android:id="@+id/productsInfoExtraLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/productsInfoDrinkLarge"
+            android:background="@drawable/products_info_spinner"
+            android:visibility="invisible">
+
+            <Spinner
+                android:id="@+id/productsInfoExtra"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </FrameLayout>
+
+        <CheckBox
+            android:id="@+id/productsInfoExtraLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/background_padding_side"
+            android:layout_below="@id/productsInfoExtraLayout"
+            android:buttonTint="@color/white"
+            android:visibility="invisible"
+            android:text="@string/productsLarge" />
+
+        <LinearLayout
+            android:id="@+id/productsInfoAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/productsInfoPrice"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/productsInfoAmountText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="-4dp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="40dp"
+                android:textSize="17sp"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/productsInfoAmountIncrease"
+                android:background="@android:color/transparent"
+                android:src="@drawable/menu_close_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:maxWidth="40dp"
                 android:maxHeight="40dp"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
-                android:contentDescription="Return" />
+                android:contentDescription="@string/productsQuantityIncrease" />
 
-            <TextView
-                android:id="@+id/productsInfoName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:theme="@style/DefaultHeaderStyle" />
-
-            <ImageView
-                android:id="@+id/productsInfoImage"
+            <ImageButton
+                android:id="@+id/productsInfoAmountDecrease"
+                android:background="@android:color/transparent"
+                android:src="@drawable/menu_close_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/productsInfoName"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="10dp"
-                android:src="@drawable/ic_launcher_background" />
+                android:layout_marginStart="5dp"
+                android:maxWidth="40dp"
+                android:maxHeight="40dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:contentDescription="@string/productsQuantityDecrease" />
+        </LinearLayout>
 
-            <TextView
-                android:id="@+id/productsInfoPrice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/productsInfoImage"
-                android:textAlignment="center"
-                android:textSize="17sp"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                />
+        <Button
+            android:id="@+id/productsInfoBuyButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/productsInfoAmount"
+            android:layout_marginTop="20dp"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            android:layout_centerHorizontal="true"
+            android:backgroundTint="@color/defaultButtonBackground"
+            android:textColor="@color/defaultButtonFont"
+            android:text="@string/productsAddCart" />
 
-            <FrameLayout
-                android:id="@+id/productsInfoDrinkLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/content_padding_top"
-                android:layout_below="@id/productsInfoPrice"
-                android:background="@drawable/products_info_spinner"
-                android:visibility="invisible">
+        <View
+            android:id="@+id/productsInfoFirstLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="@dimen/line_padding_bottom"
+            android:layout_below="@id/productsInfoBuyButton"
+            android:background="@color/defaultButtonBackground" />
 
-                <Spinner
-                    android:id="@+id/productsInfoDrink"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </FrameLayout>
+        <TextView
+            android:id="@+id/productsInfoKoostumusHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/productsInfoFirstLine"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="@string/productsComposition" />
 
-            <CheckBox
-                android:id="@+id/productsInfoDrinkLarge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/background_padding_side"
-                android:layout_below="@id/productsInfoDrinkLayout"
-                android:buttonTint="@color/white"
-                android:visibility="invisible"
-                android:text="Large" />
+        <TextView
+            android:id="@+id/productsInfoKoostumus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/productsInfoKoostumusHeader"
+            android:layout_marginStart="@dimen/background_padding_side"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
 
-            <FrameLayout
-                android:id="@+id/productsInfoExtraLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/productsInfoDrinkLarge"
-                android:background="@drawable/products_info_spinner"
-                android:visibility="invisible">
+        <View
+            android:id="@+id/productsInfoSecondLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="@dimen/line_padding_bottom"
+            android:layout_below="@id/productsInfoKoostumus"
+            android:background="@color/defaultButtonBackground" />
 
-                <Spinner
-                    android:id="@+id/productsInfoExtra"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </FrameLayout>
+        <TextView
+            android:id="@+id/productsInfoSisaltoHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/productsInfoSecondLine"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="@string/productsNutritionalContent" />
 
-            <CheckBox
-                android:id="@+id/productsInfoExtraLarge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/background_padding_side"
-                android:layout_below="@id/productsInfoExtraLayout"
-                android:buttonTint="@color/white"
-                android:visibility="invisible"
-                android:text="Large" />
-
-            <LinearLayout
-                android:id="@+id/productsInfoAmount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/productsInfoPrice"
-                android:layout_marginTop="20dp"
-                android:layout_centerHorizontal="true"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/productsInfoAmountText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="40dp"
-                    android:textSize="17sp"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
-
-                <ImageButton
-                    android:id="@+id/productsInfoAmountIncrease"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/menu_close_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxWidth="40dp"
-                    android:maxHeight="40dp"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitCenter"
-                    android:contentDescription="Increase amount" />
-
-                <ImageButton
-                    android:id="@+id/productsInfoAmountDecrease"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/menu_close_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:maxWidth="40dp"
-                    android:maxHeight="40dp"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitCenter"
-                    android:contentDescription="Decrease amount" />
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/productsInfoBuyButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/productsInfoAmount"
-                android:layout_marginTop="20dp"
-                android:paddingStart="30dp"
-                android:paddingEnd="30dp"
-                android:layout_centerHorizontal="true"
-                android:backgroundTint="@color/defaultButtonBackground"
-                android:textColor="@color/defaultButtonFont"
-                android:text="Add to Cart"
-                />
-
-            <View
-                android:id="@+id/productsInfoFirstLine"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="50dp"
-                android:layout_marginBottom="@dimen/line_padding_bottom"
-                android:layout_below="@id/productsInfoBuyButton"
-                android:background="@color/defaultButtonBackground" />
-
-            <TextView
-                android:id="@+id/productsInfoKoostumusHeader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/productsInfoFirstLine"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:text="Koostumus:" />
-
-            <TextView
-                android:id="@+id/productsInfoKoostumus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/productsInfoKoostumusHeader"
-                android:layout_marginStart="@dimen/background_padding_side"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                android:text="- Koostumus..." />
-
-            <View
-                android:id="@+id/productsInfoSecondLine"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="@dimen/line_padding_bottom"
-                android:layout_below="@id/productsInfoKoostumus"
-                android:background="@color/defaultButtonBackground" />
-
-            <TextView
-                android:id="@+id/productsInfoSisaltoHeader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/productsInfoSecondLine"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:text="Ravintosisältö:" />
-
-            <TextView
-                android:id="@+id/productsInfoSisalto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/productsInfoSisaltoHeader"
-                android:layout_marginStart="@dimen/background_padding_side"
-                android:layout_marginBottom="@dimen/content_padding_bottom"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                android:text="- Ravintosisältö..." />
-        </RelativeLayout>
-    </ScrollView>
-</RelativeLayout>
+        <TextView
+            android:id="@+id/productsInfoSisalto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/productsInfoSisaltoHeader"
+            android:layout_marginStart="@dimen/background_padding_side"
+            android:layout_marginBottom="@dimen/content_padding_bottom"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+    </RelativeLayout>
+</ScrollView>

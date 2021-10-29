@@ -1,5 +1,6 @@
 package com.roopeh.app.hamburger;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +35,7 @@ public class CouponFragment extends Fragment {
 
         couponList.setVisibility(View.VISIBLE);
 
-        final CouponListAdapter adapter = new CouponListAdapter(user.getCoupons());
+        final CouponListAdapter adapter = new CouponListAdapter(getContext(), user.getCoupons());
         couponList.setLayoutManager(new LinearLayoutManager(getContext()));
         couponList.addItemDecoration(new RecyclerViewDivider(Helper.Constants.GRID_DIVIDER));
         couponList.setAdapter(adapter);
@@ -44,18 +45,19 @@ public class CouponFragment extends Fragment {
 }
 
 class CouponListAdapter extends RecyclerView.Adapter<CouponListAdapter.ViewHolder> {
+    final private Context _context;
     final private List<Coupon> _list;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         final private TextView name;
-        final private TextView descr;
+        final private TextView description;
         final private TextView date;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             name = itemView.findViewById(R.id.couponsName);
-            descr = itemView.findViewById(R.id.couponsDescription);
+            description = itemView.findViewById(R.id.couponsDescription);
             date = itemView.findViewById(R.id.couponsDate);
         }
 
@@ -64,7 +66,7 @@ class CouponListAdapter extends RecyclerView.Adapter<CouponListAdapter.ViewHolde
         }
 
         final public TextView getCouponDescription() {
-            return descr;
+            return description;
         }
 
         final public TextView getCouponDate() {
@@ -72,7 +74,8 @@ class CouponListAdapter extends RecyclerView.Adapter<CouponListAdapter.ViewHolde
         }
     }
 
-    public CouponListAdapter(List<Coupon> list) {
+    public CouponListAdapter(Context context, List<Coupon> list) {
+        _context = context;
         _list = list;
     }
 
@@ -87,9 +90,9 @@ class CouponListAdapter extends RecyclerView.Adapter<CouponListAdapter.ViewHolde
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Coupon coupon = _list.get(position);
-        holder.getCouponName().setText(coupon.getName());
-        holder.getCouponDescription().setText(coupon.getDescription());
-        holder.getCouponDate().setText("Voimassa " + coupon.getExpiryDate() + " asti");
+        holder.getCouponName().setText(coupon.getName(_context));
+        holder.getCouponDescription().setText(coupon.getDescription(_context));
+        holder.getCouponDate().setText(_context.getString(R.string.couponExpiryDate, coupon.getExpiryDate()));
     }
 
     @Override

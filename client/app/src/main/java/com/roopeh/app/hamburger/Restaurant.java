@@ -44,7 +44,7 @@ public class Restaurant {
 
     final public boolean isRestaurantOpen() {
         // TODO: does not work correctly if end hours are in the next day
-        Calendar now = Calendar.getInstance();
+        final Calendar now = Calendar.getInstance();
         final int start = dates.getStartHoursForDay(now.get(Calendar.DAY_OF_WEEK));
         final int end = dates.getEndHoursForDay(now.get(Calendar.DAY_OF_WEEK));
         if (start == -1 || end == -1)

@@ -36,12 +36,10 @@ public class UserFragment extends Fragment implements ApiResponseInterface {
 
         final User user = Helper.getInstance().getUser();
 
-        userName.setText("Hei, " + user.getFirstName() + " " + user.getLastName() + "!");
+        userName.setText(getString(R.string.userPageHello, user.getFirstName(), user.getLastName()));
 
         // Logout button
-        logoutButton.setOnClickListener(v -> {
-            new ApiConnector(this).logout(getContext());
-        });
+        logoutButton.setOnClickListener(v -> new ApiConnector(this).logout(getContext()));
 
         // Show passwords?
         checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -63,12 +61,12 @@ public class UserFragment extends Fragment implements ApiResponseInterface {
     private void handlePassChange(String pass1, String pass2) {
         // Check that password fields match
         if (!pass1.equals(pass2)) {
-            Toast.makeText(getContext(), "Salasanat eivät täsmää", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), getString(R.string.registerPasswordError), Toast.LENGTH_SHORT).show();
             return;
         }
 
         // todo: api call
-        Toast.makeText(getContext(), "Success!", Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), getString(R.string.userPassChangeSuccess), Toast.LENGTH_LONG).show();
     }
 
     @Override

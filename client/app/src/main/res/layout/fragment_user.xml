@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="LabelFor"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginStart="@dimen/background_padding_side"
@@ -15,7 +17,7 @@
         android:id="@+id/userHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Your account"
+        android:text="@string/userAccount"
         android:theme="@style/DefaultHeaderStyle" />
 
     <RelativeLayout
@@ -46,7 +48,7 @@
             android:layout_below="@id/userHelloText"
             android:backgroundTint="@color/defaultButtonBackground"
             android:textColor="@color/defaultButtonFont"
-            android:text="Kirjaudu ulos" />
+            android:text="@string/userLogout" />
 
         <View
             android:id="@+id/userFirstLine"
@@ -63,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/userFirstLine"
             android:textColor="@color/black"
-            android:text="Vaihda salasanasi" />
+            android:text="@string/userPassChange" />
 
         <TextView
             android:id="@+id/userPasswordFirstHeader"
@@ -73,7 +75,7 @@
             android:layout_marginTop="@dimen/background_padding_top"
             android:layout_below="@id/userPasswordHeader"
             android:textColor="@color/black"
-            android:text="Uusi salasanasi" />
+            android:text="@string/userPassNew" />
 
         <EditText
             android:id="@+id/userPasswordFirst"
@@ -82,6 +84,7 @@
             android:layout_below="@id/userPasswordFirstHeader"
             android:layout_marginTop="5dp"
             android:inputType="textPassword"
+            android:autofillHints="password"
             android:background="@color/white" />
 
         <TextView
@@ -92,7 +95,7 @@
             android:layout_marginTop="@dimen/content_padding_side"
             android:layout_marginStart="@dimen/background_padding_side"
             android:textColor="@color/black"
-            android:text="Toista salasanasi" />
+            android:text="@string/userPassConfirm" />
 
         <EditText
             android:id="@+id/userPasswordSecond"
@@ -101,6 +104,7 @@
             android:layout_below="@id/userPasswordSecondHeader"
             android:layout_marginTop="5dp"
             android:inputType="textPassword"
+            android:autofillHints="password"
             android:background="@color/white" />
 
         <CheckBox
@@ -110,7 +114,7 @@
             android:layout_below="@id/userPasswordSecond"
             android:layout_marginStart="5dp"
             android:buttonTint="@color/white"
-            android:text="Näytä salasanat" />
+            android:text="@string/registerPassShow" />
 
         <Button
             android:id="@+id/userPasswordButton"
@@ -121,6 +125,6 @@
             android:layout_marginTop="@dimen/content_padding_top"
             android:backgroundTint="@color/defaultButtonBackground"
             android:textColor="@color/defaultButtonFont"
-            android:text="Vaihda salasana" />
+            android:text="@string/userPassButton" />
     </RelativeLayout>
 </RelativeLayout>

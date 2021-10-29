@@ -1,18 +1,13 @@
 package com.roopeh.app.hamburger;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +29,7 @@ public class HomeFragment extends Fragment implements ApiResponseInterface {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
         final Button orderButton = rootView.findViewById(R.id.homeOrderButton);
         final RecyclerView grid = rootView.findViewById(R.id.homeGrid);
@@ -92,6 +87,7 @@ public class HomeFragment extends Fragment implements ApiResponseInterface {
 class HomeGridAdapter extends RecyclerView.Adapter<HomeGridAdapter.ViewHolder> {
     final private List<Integer> _list;
     final private HomeFragment _frag;
+    final private Context _context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         final private TextView defaultText;
@@ -134,6 +130,7 @@ class HomeGridAdapter extends RecyclerView.Adapter<HomeGridAdapter.ViewHolder> {
     public HomeGridAdapter(List<Integer> list, HomeFragment frag) {
         _list = list;
         _frag = frag;
+        _context = _frag.getContext();
     }
 
     @NonNull
@@ -166,9 +163,9 @@ class HomeGridAdapter extends RecyclerView.Adapter<HomeGridAdapter.ViewHolder> {
                 holder.getDevButton().setVisibility(View.VISIBLE);
 
                 if (_list.get(position) == HomeFragment.TYPE_LOGIN)
-                    holder.getDevButton().setText("Login");
+                    holder.getDevButton().setText(_context.getString(R.string.userLogin));
                 else
-                    holder.getDevButton().setText("Logout");
+                    holder.getDevButton().setText(_context.getString(R.string.userLogout));
 
                 holder.getDevButton().setOnClickListener(v -> {
                     if (_list.get(position) == HomeFragment.TYPE_LOGIN)

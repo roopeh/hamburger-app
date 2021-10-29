@@ -1,23 +1,20 @@
 package com.roopeh.app.hamburger;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.TimeZone;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class HistoryInfoFragment extends Fragment {
     final private Order _order;
@@ -51,15 +48,15 @@ public class HistoryInfoFragment extends Fragment {
         restaurantName.setText(_order.getRestaurant().getName());
 
         // Restaurant address
-        restaurantAddress.setText("Ravintolan osoite: " + _order.getRestaurant().getLocationString());
+        restaurantAddress.setText(getString(R.string.orderRestaurantAddress, _order.getRestaurant().getLocationString()));
 
         // Restaurant phone number
-        restaurantPhone.setText("Ravintolan puh. nro: " + _order.getRestaurant().getPhoneNumber());
+        restaurantPhone.setText(getString(R.string.orderRestaurantPhone, _order.getRestaurant().getPhoneNumber()));
 
         // Order date
         final SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault());
         format.setTimeZone(TimeZone.getTimeZone("GMT+3"));
-        orderDate.setText("Tilaus tehty: " + format.format(_order.getOrderDate() * 1000));
+        orderDate.setText(getString(R.string.orderCreationDate, format.format(_order.getOrderDate() * 1000)));
 
         // Products
         final ProductsListAdapter adapter = new ProductsListAdapter(getContext(), _order);
@@ -68,15 +65,14 @@ public class HistoryInfoFragment extends Fragment {
         products.setAdapter(adapter);
 
         // Price
-        String priceStr = "Välisumma " + String.format(Locale.getDefault(), "%.2f", _order.getOriginalPrice()) + " €";
+        String priceStr = getString(R.string.orderPriceSubtotal, _order.getOriginalPrice());
         if (_order.getDiscountPrice() > 0) {
-            priceStr += "\n";
-            priceStr += "Alennuskuponki -" + String.format(Locale.getDefault(), "%.2f", _order.getDiscountPrice()) + " €";
+            priceStr += "\n" + getString(R.string.orderPriceDiscount, _order.getDiscountPrice());
         }
         priceListed.setText(priceStr);
 
         // Total price
-        priceTotal.setText(String.format(Locale.getDefault(), "%.2f", _order.getTotalPrice()) + " €");
+        priceTotal.setText(getString(R.string.orderEuroAmount, _order.getTotalPrice()));
 
         return rootView;
     }

@@ -15,7 +15,7 @@
         android:id="@+id/couponsHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Alennuskupongit"
+        android:text="@string/couponLayoutTitle"
         android:theme="@style/DefaultHeaderStyle" />
 
     <RelativeLayout
@@ -36,7 +36,7 @@
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="17sp"
-            android:text="Sinulla ei ole alennuskuponkeja!" />
+            android:text="@string/couponLayoutEmpty" />
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView

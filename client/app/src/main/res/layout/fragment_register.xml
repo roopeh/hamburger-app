@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="LabelFor"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -18,7 +21,7 @@
             android:id="@+id/registerHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Rekisteröidy"
+            android:text="@string/registerTitle"
             android:theme="@style/DefaultHeaderStyle" />
 
         <RelativeLayout
@@ -38,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/background_padding_side"
                 android:textColor="@color/black"
-                android:text="Käyttäjätunnus" />
+                android:text="@string/loginLayoutUser" />
 
             <EditText
                 android:id="@+id/registerUsername"
@@ -46,6 +49,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/registerUsernameText"
                 android:layout_marginTop="5dp"
+                android:inputType="text"
+                android:autofillHints="username"
                 android:background="@color/white" />
 
             <TextView
@@ -56,7 +61,7 @@
                 android:layout_marginStart="@dimen/background_padding_side"
                 android:layout_below="@id/registerUsername"
                 android:textColor="@color/black"
-                android:text="Etunimi" />
+                android:text="@string/registerFirstName" />
 
             <EditText
                 android:id="@+id/registerFirstname"
@@ -64,6 +69,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/registerFirstnameText"
                 android:layout_marginTop="5dp"
+                android:inputType="textPersonName"
+                android:autofillHints="name"
                 android:background="@color/white" />
 
             <TextView
@@ -74,7 +81,7 @@
                 android:layout_marginStart="@dimen/background_padding_side"
                 android:layout_below="@id/registerFirstname"
                 android:textColor="@color/black"
-                android:text="Sukunimi" />
+                android:text="@string/registerLastName" />
 
             <EditText
                 android:id="@+id/registerLastname"
@@ -82,6 +89,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/registerLastnameText"
                 android:layout_marginTop="5dp"
+                android:inputType="textPersonName"
+                android:autofillHints="name"
                 android:background="@color/white" />
 
             <TextView
@@ -92,7 +101,7 @@
                 android:layout_marginStart="@dimen/background_padding_side"
                 android:layout_below="@id/registerLastname"
                 android:textColor="@color/black"
-                android:text="Sähköposti" />
+                android:text="@string/registerEmail" />
 
             <EditText
                 android:id="@+id/registerEmail"
@@ -100,6 +109,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/registerEmailText"
                 android:layout_marginTop="5dp"
+                android:inputType="textEmailAddress"
+                android:autofillHints="emailAddress"
                 android:background="@color/white" />
 
             <TextView
@@ -110,7 +121,7 @@
                 android:layout_marginStart="@dimen/background_padding_side"
                 android:layout_below="@id/registerEmail"
                 android:textColor="@color/black"
-                android:text="Puhelinnumero" />
+                android:text="@string/registerNumber" />
 
             <EditText
                 android:id="@+id/registerNumber"
@@ -118,6 +129,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/registerNumberText"
                 android:layout_marginTop="5dp"
+                android:inputType="phone"
+                android:autofillHints="phone"
                 android:background="@color/white" />
 
             <TextView
@@ -128,7 +141,7 @@
                 android:layout_marginStart="@dimen/background_padding_side"
                 android:layout_below="@id/registerNumber"
                 android:textColor="@color/black"
-                android:text="Salasana" />
+                android:text="@string/loginLayoutPass" />
 
             <EditText
                 android:id="@+id/registerPass1"
@@ -137,6 +150,7 @@
                 android:layout_below="@id/registerPass1Text"
                 android:layout_marginTop="5dp"
                 android:inputType="textPassword"
+                android:autofillHints="password"
                 android:background="@color/white" />
 
             <TextView
@@ -147,7 +161,7 @@
                 android:layout_marginStart="@dimen/background_padding_side"
                 android:layout_below="@id/registerPass1"
                 android:textColor="@color/black"
-                android:text="Vahvista salasana" />
+                android:text="@string/registerPassConfirm" />
 
             <EditText
                 android:id="@+id/registerPass2"
@@ -156,6 +170,7 @@
                 android:layout_below="@id/registerPass2Text"
                 android:layout_marginTop="5dp"
                 android:inputType="textPassword"
+                android:autofillHints="password"
                 android:background="@color/white" />
 
             <CheckBox
@@ -165,7 +180,7 @@
                 android:layout_below="@id/registerPass2"
                 android:layout_marginStart="5dp"
                 android:buttonTint="@color/white"
-                android:text="Näytä salasanat" />
+                android:text="@string/registerPassShow" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -186,7 +201,7 @@
                     android:adjustViewBounds="true"
                     android:scaleType="fitCenter"
                     android:background="@android:color/transparent"
-                    android:contentDescription="Register" />
+                    android:contentDescription="@string/registerTitle" />
 
                 <TextView
                     android:id="@+id/registerButtonText"
@@ -194,7 +209,7 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:text="Rekisteröidy" />
+                    android:text="@string/registerTitle" />
             </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>

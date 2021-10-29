@@ -21,7 +21,8 @@
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_launcher_background" />
+            android:src="@drawable/ic_launcher_background"
+            android:contentDescription="@string/homeMainImageDescription" />
 
         <Button
             android:id="@+id/homeOrderButton"
@@ -31,7 +32,7 @@
             android:layout_below="@id/homeMainImage"
             android:backgroundTint="@color/defaultButtonFont"
             android:textColor="@color/black"
-            android:text="Tarkastele tilaustasi" />
+            android:text="@string/orderCurrentButton" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/homeGrid"

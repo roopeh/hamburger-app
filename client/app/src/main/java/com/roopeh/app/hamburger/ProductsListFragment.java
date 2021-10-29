@@ -26,20 +26,20 @@ public class ProductsListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_products_list, container, false);
-        TextView header = rootView.findViewById(R.id.productsListHeader);
-        List<Product> content = new ArrayList<>();
+        final View rootView = inflater.inflate(R.layout.fragment_products_list, container, false);
+        final TextView header = rootView.findViewById(R.id.productsListHeader);
+        final List<Product> content = new ArrayList<>();
 
         // Populate list with correct products
         if (_category == Helper.Constants.PRODUCT_CATEGORY_MEAL) {
-            header.setText("Ateriat");
-            for (Product meal : Helper.getInstance().getProducts()) {
+            header.setText(getString(R.string.productsMeals));
+            for (final Product meal : Helper.getInstance().getProducts()) {
                 if (meal.isMeal())
                     content.add(meal);
             }
         } else {
-            header.setText("Hampurilaiset");
-            for (Product product : Helper.getInstance().getProducts()) {
+            header.setText(getString(R.string.productsHamburgers));
+            for (final Product product : Helper.getInstance().getProducts()) {
                 if (!product.isMeal()) {
                     content.add(product);
                 }
@@ -52,7 +52,7 @@ public class ProductsListFragment extends Fragment {
         grid.addItemDecoration(new RecyclerViewDivider(Helper.Constants.GRID_DIVIDER, Helper.Constants.GRID_DIVIDER, 2));
         grid.setAdapter(adapter);
 
-        ImageButton returnButton = rootView.findViewById(R.id.productsListBackButton);
+        final ImageButton returnButton = rootView.findViewById(R.id.productsListBackButton);
         returnButton.setOnClickListener(v -> Objects.requireNonNull((MainActivity)getActivity()).returnToPreviousFragment(false));
         return rootView;
     }

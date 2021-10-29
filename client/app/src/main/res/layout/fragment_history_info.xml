@@ -23,7 +23,7 @@
         android:maxHeight="40dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:contentDescription="Return" />
+        android:contentDescription="@string/layoutReturnButtonDescription" />
 
     <TextView
         android:id="@+id/historyInfoHeader"
@@ -33,7 +33,7 @@
         android:layout_marginTop="4dp"
         android:layout_toEndOf="@id/historyInfoBackButton"
         android:theme="@style/DefaultHeaderStyle"
-        android:text="Your order" />
+        android:text="@string/historyYourOrder" />
 
     <ScrollView
         android:id="@+id/historyInfoScrollView"
@@ -101,7 +101,7 @@
                 android:textColor="@color/black"
                 android:textSize="17sp"
                 android:textStyle="bold"
-                android:text="Tilaus:" />
+                android:text="@string/historyOrder" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/historyInfoProducts"
@@ -137,7 +137,7 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:text="Summa yhteensä" />
+                android:text="@string/cartLayoutSumTotal" />
 
             <TextView
                 android:id="@+id/historyInfoPriceSum"

@@ -15,7 +15,7 @@
         android:id="@+id/restaurantHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Restaurants"
+        android:text="@string/restaurantTitle"
         android:theme="@style/DefaultHeaderStyle" />
 
     <androidx.recyclerview.widget.RecyclerView

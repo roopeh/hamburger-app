@@ -2,6 +2,7 @@ package com.roopeh.app.hamburger;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.os.Build;
 import android.view.Gravity;
 import android.widget.TextView;
 
@@ -9,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
@@ -28,6 +30,10 @@ public class Helper {
         final public static int COUPON_TYPE_FREE_LARGE_EXTRAS = 2;
         final public static int COUPON_TYPE_50_OFF = 3;
         final public static int COUPON_TYPE_EMPTY_COUPON = 10;
+
+        // 0 = disabled, 1 = enabled
+        // On first login, generates some coupons with old date
+        final public static int TEST_COUPON_EXPIRY = 1;
     }
 
     public enum ApiResponseType {
@@ -123,15 +129,19 @@ public class Helper {
      */
     public void initializeProducts(List<Product> products) {
         _products = products;
-        // API 24+
-        //Collections.sort(_products, Comparator.comparing(Product::getName));
-        // For older APis
-        Collections.sort(_products, (prod1, prod2) -> prod1.getName().compareTo(prod2.getName()));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            // API 24+
+            Collections.sort(_products, Comparator.comparing(Product::getName));
+        } else {
+            // For older APis
+            Collections.sort(_products, (prod1, prod2) -> prod1.getName().compareTo(prod2.getName()));
+        }
+
     }
 
     // Generates test products with random price
     private Product generateTestProduct(String name, boolean meal) {
-        Product prod = meal ? new Meal(-1, name) : new Product(-1, name);
+        final Product prod = meal ? new Meal(-1, name) : new Product(-1, name);
 
         // Generates random price from 1 to 20 euros
         // also generates either .0, .25, .50 or .75 cents
@@ -160,11 +170,13 @@ public class Helper {
      */
     public void initializeRestaurants(List<Restaurant> restaurants) {
         _restaurants = restaurants;
-
-        // API 24+
-        //Collections.sort(_restaurants, Comparator.comparing(Product::getName));
-        // For older APIs
-        Collections.sort(_restaurants, (prod1, prod2) -> prod1.getName().compareTo(prod2.getName()));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            // API 24+
+            Collections.sort(_restaurants, Comparator.comparing(Restaurant::getName));
+        } else {
+            // For older APIs
+            Collections.sort(_restaurants, (res1, res2) -> res1.getName().compareTo(res2.getName()));
+        }
     }
 
     final public List<Restaurant> getRestaurants() {

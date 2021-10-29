@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:id="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item android:id="@+id/menuHome"
-            android:title="@string/stringHome" />
+            android:title="@string/menuHome" />
         <item android:id="@+id/menuProducts"
-            android:title="@string/stringProducts" />
+            android:title="@string/menuProducts" />
         <item android:id="@+id/menuRestaurants"
-            android:title="@string/stringRestaurants" />
+            android:title="@string/menuRestaurants" />
         <item android:id="@+id/menuCoupons"
-            android:title="@string/stringCoupons" />
+            android:title="@string/menuCoupons" />
         <item android:id="@+id/menuHistory"
-            android:title="@string/stringHistory" />
+            android:title="@string/menuHistory" />
         <item android:id="@+id/menuAccount"
-            android:title="@string/stringAccount" />
+            android:title="@string/menuAccount" />
     </group>
 </menu>

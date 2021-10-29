@@ -1,6 +1,5 @@
 package com.roopeh.app.hamburger;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,10 +37,10 @@ public class LoginFragment extends Fragment implements ApiResponseInterface {
             final String pass = passField.getText().toString();
 
             if (user.isEmpty()) {
-                Toast.makeText(getContext(), "Syötä käyttäjänimi", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.loginMissingUsername), Toast.LENGTH_SHORT).show();
                 return;
             } else if (pass.isEmpty()) {
-                Toast.makeText(getContext(), "Syötä salasana", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.loginMissingPassword), Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -83,12 +82,16 @@ public class LoginFragment extends Fragment implements ApiResponseInterface {
                     // Add two of each coupon
                     for (int i = 0; i < 2; ++i) {
                         long date = expiryDate;
-                        // For testing purposes, set some coupons with old expiry date
-                        if (i == 1) {
-                            final Calendar c = Calendar.getInstance();
-                            c.add(Calendar.DAY_OF_MONTH, -1);
-                            date = c.getTimeInMillis() / 1000;
+
+                        if (Helper.Constants.TEST_COUPON_EXPIRY == 1) {
+                            // For testing purposes, set some coupons with old expiry date
+                            if (i == 1) {
+                                final Calendar c = Calendar.getInstance();
+                                c.add(Calendar.DAY_OF_MONTH, -1);
+                                date = c.getTimeInMillis() / 1000;
+                            }
                         }
+
                         user.addCoupon(new Coupon(type, date));
                     }
 

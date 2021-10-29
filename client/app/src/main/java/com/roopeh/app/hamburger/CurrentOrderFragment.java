@@ -2,18 +2,14 @@ package com.roopeh.app.hamburger;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.Calendar;
-import java.util.Locale;
 import java.util.Objects;
 
 import androidx.fragment.app.Fragment;
@@ -62,9 +58,9 @@ public class CurrentOrderFragment extends Fragment {
 
         // Payment status
         if (currentOrder.isPaid())
-            paymentStatus.setText("Tilaus maksettu");
+            paymentStatus.setText(R.string.orderPaymentPaid);
         else
-            paymentStatus.setText("Tilaus maksetaan ravintolassa");
+            paymentStatus.setText(R.string.orderPaymentRestaurant);
 
         // Order status
         // Create a local countdown timer to update pickup time
@@ -74,7 +70,7 @@ public class CurrentOrderFragment extends Fragment {
             public void onTick(long millisUntilFinished) {
                 // Round minutes with explicit type cast
                 final int minUntilFinished = (int)(millisUntilFinished / 1000 / 60);
-                orderStatus.setText(minUntilFinished + " min");
+                orderStatus.setText(getString(R.string.orderTimer, minUntilFinished));
             }
 
             @Override
@@ -87,14 +83,15 @@ public class CurrentOrderFragment extends Fragment {
 
         // Restaurant address
         final Restaurant restaurant = currentOrder.getRestaurant();
-        restaurantAddress.setText(restaurant.getName() + ", " + restaurant.getAddress());
+        restaurantAddress.setText(getString(R.string.restaurantLocation, restaurant.getName(), restaurant.getAddress()));
 
         // Restaurant shop hours
         final RestaurantDates dates = restaurant.getDates();
         final Calendar now = Calendar.getInstance();
         final String restaurantString =
-                "Auki tänään: " + String.format(Locale.getDefault(), "%02d", dates.getStartHoursForDay(now.get(Calendar.DAY_OF_WEEK))) +
-                " - " + String.format(Locale.getDefault(), "%02d", dates.getEndHoursForDay(now.get(Calendar.DAY_OF_WEEK)));
+                getString(R.string.restaurantOpenToday) + " " +
+                getString(R.string.restaurantHours, dates.getStartHoursForDay(now.get(Calendar.DAY_OF_WEEK))) +
+                " - " + getString(R.string.restaurantHours, dates.getEndHoursForDay(now.get(Calendar.DAY_OF_WEEK)));
         restaurantHours.setText(restaurantString);
 
         restaurantButton.setOnClickListener(v -> Objects.requireNonNull((MainActivity)getActivity()).loadFragment(new RestaurantInfoFragment(restaurant), false));

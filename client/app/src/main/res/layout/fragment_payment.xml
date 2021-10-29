@@ -23,7 +23,7 @@
         android:maxHeight="40dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:contentDescription="Return" />
+        android:contentDescription="@string/layoutReturnButtonDescription" />
 
     <TextView
         android:id="@+id/paymentHeader"
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/background_padding_side"
         android:layout_toEndOf="@id/paymentReturn"
-        android:text="Payment"
+        android:text="@string/paymentTitle"
         android:theme="@style/DefaultHeaderStyle" />
 
     <RelativeLayout
@@ -53,7 +53,7 @@
             android:layout_centerHorizontal="true"
             android:backgroundTint="@color/defaultButtonBackground"
             android:textColor="@color/defaultButtonFont"
-            android:text="Suorita maksu" />
+            android:text="@string/paymentButtonText" />
 
         <TextView
             android:id="@+id/paymentSuccessText"
@@ -64,7 +64,7 @@
             android:layout_centerHorizontal="true"
             android:visibility="gone"
             android:textSize="17sp"
-            android:text="Maksu onnistunut!" />
+            android:text="@string/paymentSuccess" />
 
         <Button
             android:id="@+id/paymentSuccessReturn"
@@ -76,6 +76,6 @@
             android:layout_below="@id/paymentSuccessText"
             android:backgroundTint="@color/defaultButtonBackground"
             android:textColor="@color/defaultButtonFont"
-            android:text="Palaa aloitussivulle" />
+            android:text="@string/paymentReturn" />
     </RelativeLayout>
 </RelativeLayout>

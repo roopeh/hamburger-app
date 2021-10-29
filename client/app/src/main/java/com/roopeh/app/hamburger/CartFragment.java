@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
@@ -87,19 +86,19 @@ public class CartFragment extends Fragment implements ApiResponseInterface {
         orderButton.setOnClickListener(v -> {
             // If user already has an active order, new order cannot be made
             if (user.getCurrentOrder() != null) {
-                Toast.makeText(getContext(), "Sinulla on jo aktiivinen tilaus", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.cartOrderExists, Toast.LENGTH_SHORT).show();
                 return;
             }
 
             // Make sure payment method is selected
             if (paymentGroup.getCheckedRadioButtonId() == -1) {
-                Toast.makeText(getContext(), "Valitse maksutapasi", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.cartChoosePayment, Toast.LENGTH_SHORT).show();
                 return;
             }
 
             // Should not happen
             if (!paymentRestaurant.isChecked() && !paymentCard.isChecked()) {
-                Toast.makeText(getContext(), "Virhe maksussa", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.cartPaymentError, Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -163,9 +162,9 @@ public class CartFragment extends Fragment implements ApiResponseInterface {
 
         // If there is no open restaurants, order cannot be made
         if (restaurants.isEmpty()) {
-            restaurants.add(new Restaurant(-1, "Ei avoinna olevia ravintoloita"));
+            restaurants.add(new Restaurant(-1, getString(R.string.cartNoOpenRestaurants)));
 
-            orderButton.setText("Ei avoinna olevia ravintoloita");
+            orderButton.setText(R.string.cartNoOpenRestaurants);
             orderButton.setClickable(false);
         }
 
@@ -176,7 +175,7 @@ public class CartFragment extends Fragment implements ApiResponseInterface {
 
     private double getSum() {
         double result = 0.0f;
-        for (ShoppingItem item : Helper.getInstance().getUser().getCart().getItems())
+        for (final ShoppingItem item : Helper.getInstance().getUser().getCart().getItems())
             result += item.getPrice();
 
         return result;
@@ -187,22 +186,19 @@ public class CartFragment extends Fragment implements ApiResponseInterface {
         return Coupon.getDiscountFromCoupon(coupon.getType(), getSum());
     }
 
-    // TODO: to strings resources
     public void populatePrice() {
-        String price = "Välisumma" + " ";
-        price += String.format(Locale.getDefault(), "%.2f", getSum()) + " €";
+        String price = getString(R.string.orderPriceSubtotal, getSum());
 
         final double discount = getDiscount();
         if (discount != 0.0) {
-            price += "\n" + "Alennuskuponki" + " -";
-            price += String.format(Locale.getDefault(), "%.2f", discount) + " €";
+            price += "\n" + getString(R.string.orderPriceDiscount, discount);
         }
 
         listedPrice.setText(price);
     }
 
     public void populateFinalPrice() {
-        final String price = String.format(Locale.getDefault(), "%.2f", getSum() - getDiscount()) + " €";
+        final String price = getString(R.string.orderEuroAmount, getSum() - getDiscount());
         totalSum.setText(price);
     }
 
@@ -224,7 +220,7 @@ public class CartFragment extends Fragment implements ApiResponseInterface {
             user.setCurrentOrder(_order);
             _order = null;
 
-            Toast.makeText(getContext(), "Tilaus onnistui!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), R.string.cartOrderSuccess, Toast.LENGTH_LONG).show();
             Objects.requireNonNull((MainActivity)getActivity()).createOrderTimer();
             Objects.requireNonNull((MainActivity)getActivity()).loadFragment(new HomeFragment(), false);
         }
@@ -232,10 +228,12 @@ public class CartFragment extends Fragment implements ApiResponseInterface {
 }
 
 class CouponAdapter extends ArrayAdapter<Coupon> {
+    final private Context _context;
     final private List<Coupon> _content;
 
     public CouponAdapter(Context context, int resource, List<Coupon> content) {
         super(context, resource, content);
+        _context = context;
         _content = content;
     }
 
@@ -258,7 +256,7 @@ class CouponAdapter extends ArrayAdapter<Coupon> {
     public View getView(int position, View convertView, ViewGroup parent) {
         final TextView label = (TextView)super.getView(position, convertView, parent);
         label.setTextColor(Color.BLACK);
-        label.setText(_content.get(position).getName());
+        label.setText(_content.get(position).getName(_context));
 
         return label;
     }
@@ -267,7 +265,7 @@ class CouponAdapter extends ArrayAdapter<Coupon> {
     public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         final TextView label = (TextView)super.getDropDownView(position, convertView, parent);
         label.setTextColor(Color.BLACK);
-        label.setText(_content.get(position).getName());
+        label.setText(_content.get(position).getName(_context));
 
         return label;
     }

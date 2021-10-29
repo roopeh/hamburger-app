@@ -24,7 +24,7 @@
         android:maxHeight="40dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:contentDescription="Return" />
+        android:contentDescription="@string/layoutReturnButtonDescription" />
 
     <TextView
         android:id="@+id/currentOrderHeader"
@@ -34,7 +34,7 @@
         android:layout_marginTop="4dp"
         android:layout_toEndOf="@id/currentOrderBackButton"
         android:theme="@style/DefaultHeaderStyle"
-        android:text="Your current order" />
+        android:text="@string/orderCurrent" />
 
     <ScrollView
         android:id="@+id/currentOrderScrollView"
@@ -64,7 +64,7 @@
                 android:layout_below="@id/currentOrderFirstLine"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                android:text="Tuotteet" />
+                android:text="@string/cartLayoutProducts" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/currentOrderProducts"
@@ -109,7 +109,7 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:text="Arvioitu valmistumisaika:" />
+                android:text="@string/orderEstimatedTime" />
 
             <TextView
                 android:id="@+id/currentOrderStatus"
@@ -158,7 +158,7 @@
                 android:layout_centerHorizontal="true"
                 android:backgroundTint="@color/defaultButtonBackground"
                 android:textColor="@color/defaultButtonFont"
-                android:text="Katso ravintolan tiedot" />
+                android:text="@string/orderRestaurantInfo" />
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

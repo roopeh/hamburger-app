@@ -66,25 +66,25 @@ public class RegisterFragment extends Fragment implements ApiResponseInterface {
         // Check that all fields are filled
         if (TextUtils.isEmpty(user.getText()) || TextUtils.isEmpty(firstName.getText()) || TextUtils.isEmpty(lastName.getText()) || TextUtils.isEmpty(email.getText())
                 || TextUtils.isEmpty(phone.getText()) || TextUtils.isEmpty(pass1.getText()) || TextUtils.isEmpty(pass2.getText())) {
-            Toast.makeText(getContext(), "Kaikki kentät tulee täyttää", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), getString(R.string.registerFieldsEmpty), Toast.LENGTH_LONG).show();
             return;
         }
 
         // Check for valid email address
         if (!Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches()) {
-            Toast.makeText(getContext(), "Sähköpostiosoite on virheellinen", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), getString(R.string.registerEmailError), Toast.LENGTH_LONG).show();
             return;
         }
 
         // Check for valid phone number
         if (!Patterns.PHONE.matcher(phone.getText()).matches()) {
-            Toast.makeText(getContext(), "Puhelinnumero on virheellinen", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), getString(R.string.registerNumberError), Toast.LENGTH_LONG).show();
             return;
         }
 
         // Check that password fields match
         if (!pass1.getText().toString().equals(pass2.getText().toString())) {
-            Toast.makeText(getContext(), "Salasanat eivät täsmää", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), getString(R.string.registerPasswordError), Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -104,7 +104,7 @@ public class RegisterFragment extends Fragment implements ApiResponseInterface {
         ApiJsonParser.parseDatabaseData(getContext(), apiResponse, bundle);
 
         if (bundle.getString("result").equals("true")) {
-            Toast.makeText(getContext(), "Käyttäjätunnus rekisteröity!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.registerSuccess), Toast.LENGTH_SHORT).show();
             Objects.requireNonNull((MainActivity)getActivity()).loadFragment(new LoginFragment(), false);
         }
     }

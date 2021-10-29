@@ -13,7 +13,6 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -158,7 +157,7 @@ public class MainActivity extends AppCompatActivity
 
         if (item.getItemId() == R.id.shopping_cart_button) {
             if (Helper.getInstance().getUser() == null) {
-                Toast.makeText(this, "Sinun täytyy olla kirjautunut sisään", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.appRequireLogin), Toast.LENGTH_LONG).show();
                 loadFragment(new LoginFragment(), false);
             } else {
                 loadFragment(new CartFragment(), false);
@@ -183,41 +182,46 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Fragment fragment = null;
-        switch (item.getItemId()) {
-            case R.id.menuHome:
-                fragment = new HomeFragment();
-                break;
-            case R.id.menuProducts:
-                fragment = new ProductsFragment();
-                break;
-            case R.id.menuRestaurants:
-                fragment = new RestaurantFragment();
-                break;
-            case R.id.menuCoupons:
-                if (Helper.getInstance().getUser() == null) {
-                    Toast.makeText(this, "Sinun täytyy olla kirjautunut sisään", Toast.LENGTH_LONG).show();
-                    fragment = new LoginFragment();
-                } else {
-                    fragment = new CouponFragment();
-                }
-                break;
-            case R.id.menuHistory:
-                if (Helper.getInstance().getUser() == null) {
-                    Toast.makeText(this, "Sinun täytyy olla kirjautunut sisään", Toast.LENGTH_LONG).show();
-                    fragment = new LoginFragment();
-                } else {
-                    fragment = new HistoryFragment();
-                }
-                break;
-            case R.id.menuAccount:
-                if (Helper.getInstance().getUser() == null)
-                    fragment = new LoginFragment();
-                else
-                    fragment = new UserFragment();
-                break;
-            default:
-                break;
+
+        if (item.getItemId() == R.id.menuHome) {
+            fragment = new HomeFragment();
         }
+
+        if (item.getItemId() == R.id.menuProducts) {
+            fragment = new ProductsFragment();
+        }
+
+        if (item.getItemId() == R.id.menuRestaurants) {
+            fragment = new RestaurantFragment();
+        }
+
+        if (item.getItemId() == R.id.menuCoupons) {
+            if (Helper.getInstance().getUser() == null) {
+                Toast.makeText(this, getString(R.string.appRequireLogin), Toast.LENGTH_LONG).show();
+                fragment = new LoginFragment();
+            } else {
+                fragment = new CouponFragment();
+            }
+        }
+
+        if (item.getItemId() == R.id.menuHistory) {
+            if (Helper.getInstance().getUser() == null) {
+                Toast.makeText(this, getString(R.string.appRequireLogin), Toast.LENGTH_LONG).show();
+                fragment = new LoginFragment();
+            } else {
+                fragment = new HistoryFragment();
+            }
+        }
+
+        if (item.getItemId() == R.id.menuAccount) {
+            if (Helper.getInstance().getUser() == null)
+                fragment = new LoginFragment();
+            else
+                fragment = new UserFragment();
+        }
+
+        if (fragment == null)
+            return false;
 
         loadFragment(fragment, false);
         return false;
@@ -266,9 +270,8 @@ public class MainActivity extends AppCompatActivity
         final String _channelId = "123456";
         final NotificationCompat.Builder builder = new NotificationCompat.Builder(this, _channelId)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                // TODO: strings resource
-                .setContentTitle("Tilauksesi on noudettavissa!")
-                .setContentText("Tarkastale tilaustasi...")
+                .setContentTitle(getString(R.string.orderNotificationTitle))
+                .setContentText(getString(R.string.orderNotificationDescription))
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)

@@ -8,7 +8,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
@@ -102,15 +101,15 @@ class ProductsListAdapter extends RecyclerView.Adapter<ProductsListAdapter.ViewH
     @Override
     public void onBindViewHolder(@NonNull ProductsListAdapter.ViewHolder holder, int position) {
         final ShoppingItem item = _list.get(position);
-        holder.getName().setText("- " + item.getProduct().getName());
-        holder.getPrice().setText(String.format(Locale.getDefault(), "%.2f", item.getPrice()) + " €");
+        holder.getName().setText(_context.getString(R.string.orderItem, item.getProduct().getName()));
+        holder.getPrice().setText(_context.getString(R.string.orderEuroAmount, item.getPrice()));
 
         if (item.getProduct().isMeal()) {
             String extra = "";
             if (item.getMealDrink() > 0) {
                 extra += _context.getResources().getStringArray(R.array.stringMealDrinks)[item.getMealDrink()];
                 if (item.isLargeDrink())
-                    extra += " (Large)";
+                    extra += _context.getString(R.string.orderLarge);
 
                 extra += "\n";
             }
@@ -118,7 +117,7 @@ class ProductsListAdapter extends RecyclerView.Adapter<ProductsListAdapter.ViewH
             if (item.getMealExtra() > 0) {
                 extra += _context.getResources().getStringArray(R.array.stringMealExtras)[item.getMealExtra()];
                 if (item.isLargeExtra())
-                    extra += " (Large)";
+                    extra += _context.getString(R.string.orderLarge);
             }
 
             holder.getExtra().setVisibility(View.VISIBLE);

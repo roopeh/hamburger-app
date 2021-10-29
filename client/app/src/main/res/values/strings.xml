@@ -1,26 +1,190 @@
 <resources>
     <string name="app_name">Hamburger</string>
 
-    <!-- Menu content -->
-    <string name="stringHome">Koti</string>
-    <string name="stringProducts">Tuotteet</string>
-    <string name="stringRestaurants">Ravintolat</string>
-    <string name="stringCoupons">Alennuskupongit</string>
-    <string name="stringHistory">Tilaushistoria</string>
-    <string name="stringAccount">Käyttäjätili</string>
-
     <!-- Products -->
     <!-- Meal drinks -->
     <string-array name="stringMealDrinks">
-        <item>Ei valittu</item>
-        <item>Cola</item>
-        <item>Jaffa</item>
-        <item>Vesi</item>
+        <item>@string/extraNotChosen</item>
+        <item>@string/drinkCola</item>
+        <item>@string/drinkJaffa</item>
+        <item>@string/drinkWater</item>
     </string-array>
+    <string name="extraNotChosen">Not chosen</string>
+    <string name="drinkCola">Coca cola</string>
+    <string name="drinkJaffa">Jaffa</string>
+    <string name="drinkWater">Water</string>
     <!-- Meal extras -->
     <string-array name="stringMealExtras">
-        <item>Ei valittu</item>
-        <item>Ranskalaiset perunat</item>
-        <item>Bataattiranskalaiset</item>
+        <item>@string/extraNotChosen</item>
+        <item>@string/extraFrench</item>
+        <item>@string/extraSweet</item>
     </string-array>
+    <string name="extraFrench">French fries</string>
+    <string name="extraSweet">Sweet potato french fries</string>
+
+    <string name="appRequireLogin">You must be logged in</string>
+
+    <!-- Menu content -->
+    <string name="menuHome">Home</string>
+    <string name="menuProducts">Products</string>
+    <string name="menuRestaurants">Restaurants</string>
+    <string name="menuCoupons">Discount Coupons</string>
+    <string name="menuHistory">Order History</string>
+    <string name="menuAccount">Account</string>
+    <string name="menuClose">Close menu</string>
+
+    <!-- Api texts -->
+    <string name="apiError">Error in the API</string>
+    <string name="apiDatabaseError">Error in the database</string>
+    <string name="apiInitialLoad">Loading…</string>
+    <string name="apiRegister">Creating account…</string>
+    <string name="apiLogin">Logging in…</string>
+    <string name="apiCreateOrder">Creating order…</string>
+    <string name="apiLogout">Logging out…</string>
+    <string name="apiRestaurantError">Error when loading restaurants</string>
+    <string name="apiProductsError">Error when loading products</string>
+    <string name="apiRegisterDuplicateUser">Username is already in use</string>
+    <string name="apiRegisterDuplicateEmail">Email address is already in use</string>
+    <string name="apiRegisterDuplicatePhone">Phone number is already in use</string>
+    <string name="apiLoginWrongInfo">Wrong username or password</string>
+    <string name="apiLoginHello">Hello, %1$s!</string>
+
+    <!-- Register -->
+    <string name="registerTitle">Register</string>
+    <string name="registerFirstName">First name</string>
+    <string name="registerLastName">Last name</string>
+    <string name="registerEmail">Email address</string>
+    <string name="registerNumber">Phone number</string>
+    <string name="registerPassConfirm">Confirm password</string>
+    <string name="registerPassShow">Show passwords</string>
+    <string name="registerFieldsEmpty">All fields are required</string>
+    <string name="registerEmailError">Email address is invalid</string>
+    <string name="registerNumberError">Phone number is invalid</string>
+    <string name="registerPasswordError">Passwords do not match</string>
+    <string name="registerSuccess">Account has been registered!</string>
+
+    <!-- Login -->
+    <string name="loginLayoutTitle">Login</string>
+    <string name="loginLayoutUser">Username</string>
+    <string name="loginLayoutPass">Password</string>
+    <string name="loginLayoutRegister">No account?\nRegister!</string>
+    <string name="loginMissingUsername">Enter username</string>
+    <string name="loginMissingPassword">Enter password</string>
+
+    <!-- User -->
+    <string name="userAccount">Your account</string>
+    <string name="userLogin">Login</string>
+    <string name="userLogout">Logout</string>
+    <string name="userPageHello">Hello, %1$s %2$s!</string>
+    <string name="userPassChange">Change your password</string>
+    <string name="userPassNew">Your new password</string>
+    <string name="userPassConfirm">Confirm your password</string>
+    <string name="userPassButton">Change password</string>
+    <string name="userPassChangeSuccess">Password updated</string>
+
+    <!-- Products -->
+    <string name="productsChoose">Choose category</string>
+    <string name="productsMeals">Meals</string>
+    <string name="productsHamburgers">Hamburgers</string>
+    <string name="productsLarge">Large</string>
+    <string name="productsLargeDrinkPrice">%1$s (+0.50 €)</string>
+    <string name="productsLargeExtraPrice">%1$s (+0.40 €)</string>
+    <string name="productsMissingDrink">You must choose a drink</string>
+    <string name="productsMissingExtra">You must choose an extra</string>
+    <string name="productsQuantity">%1$dx</string>
+    <string name="productsQuantityIncrease">Increase amount</string>
+    <string name="productsQuantityDecrease">Decrease amount</string>
+    <string name="productsComposition">Composition:</string>
+    <string name="productsNutritionalContent">Nutritional content:</string>
+    <string name="productsAddCart">Add to cart</string>
+    <string name="productImageDescription">Product image</string>
+
+    <!-- Order -->
+    <string name="orderCurrent">Your current order</string>
+    <string name="orderCurrentButton">Take a look at your order</string>
+    <string name="orderEuroAmount">%1$.2f €</string>
+    <string name="orderPriceSubtotal">Subtotal %1$.2f €</string>
+    <string name="orderPriceDiscount">Discount coupon -%1$.2f €</string>
+    <string name="orderPaymentPaid">Order has been paid</string>
+    <string name="orderPaymentRestaurant">Order will be paid at the restaurant</string>
+    <string name="orderTimer">%1$d min</string>
+    <string name="orderEstimatedTime">Estimated time:</string>
+    <string name="orderItem">- %1$s</string>
+    <string name="orderLarge"> (Large)</string>
+    <string name="orderRestaurantAddress">Restaurant address: %1$s</string>
+    <string name="orderRestaurantPhone">Restaurant phone number: %1$s</string>
+    <string name="orderCreationDate">Order created: %1$s</string>
+    <string name="orderNotificationTitle">Your order is ready for pick up!</string>
+    <string name="orderNotificationDescription">Take a look at your order…</string>
+    <string name="orderRestaurantInfo">Check out restaurant info</string>
+
+    <!-- Payment -->
+    <string name="paymentTitle">Payment</string>
+    <string name="paymentButtonText">Make a payment</string>
+    <string name="paymentSuccess">Payment successful!</string>
+    <string name="paymentReturn">Return to home page</string>
+
+    <!-- History -->
+    <string name="historyTitle">Order History</string>
+    <string name="historyEmpty">You do not have previous orders!</string>
+    <string name="historyYourOrder">Your order</string>
+    <string name="historyOrder">Order:</string>
+
+    <!-- Shopping cart -->
+    <string name="cartLayoutTitle">Shopping Cart</string>
+    <string name="cartEmpty">Your shopping cart is empty!</string>
+    <string name="cartLayoutProducts">Products</string>
+    <string name="cartLayoutCoupon">Discount Coupon</string>
+    <string name="cartLayoutSum">Total</string>
+    <string name="cartLayoutSumTotal">Total amount</string>
+    <string name="cartLayoutRestaurant">Restaurant</string>
+    <string name="cartLayoutPayment">Payment</string>
+    <string name="cartLayoutPayCard">Pay with a credit card</string>
+    <string name="cartLayoutPayRestaurant">Pay at the restaurant</string>
+    <string name="cartLayoutCreate">Make order</string>
+    <string name="cartOrderExists">You already have an active order</string>
+    <string name="cartChoosePayment">Choose your payment method</string>
+    <string name="cartPaymentError">Error in the payment</string>
+    <string name="cartNoOpenRestaurants">No open restaurants</string>
+    <string name="cartOrderSuccess">Order created successfully!</string>
+
+    <!-- Coupons -->
+    <string name="couponLayoutTitle">Discount Coupons</string>
+    <string name="couponLayoutEmpty">You do not have discount coupons!</string>
+    <string name="couponExpiryDate">Valid until %1$s</string>
+    <string name="couponNameLargeDrink">Free large drink</string>
+    <string name="couponNameLargeExtra">Free large extras</string>
+    <string name="couponName50off">50% discount</string>
+    <string name="couponEmpty">No coupon</string>
+    <string name="couponUnk">Unknown coupon type</string>
+    <string name="couponDescLargeDrink">Large drink for free (meal only)</string>
+    <string name="couponDescLargeExtra">Large extras for free (meal only)</string>
+    <string name="couponDesc50off">50% discount of total price!</string>
+
+    <!-- Restaurants -->
+    <string name="restaurantTitle">Restaurants</string>
+    <string name="restaurantLocation">%1$s, %2$s</string>
+    <string name="restaurantStatusOpen">Open</string>
+    <string name="restaurantStatusClosed">Closed</string>
+    <string name="restaurantOpenToday">Open today:</string>
+    <string name="restaurantHours">%1$02d</string>
+    <string name="restaurantHoursMon">Mon %1$s</string>
+    <string name="restaurantHoursTue">Tue %1$s</string>
+    <string name="restaurantHoursWed">Wed %1$s</string>
+    <string name="restaurantHoursThu">Thu %1$s</string>
+    <string name="restaurantHoursFri">Fri %1$s</string>
+    <string name="restaurantHoursSat">Sat %1$s</string>
+    <string name="restaurantHoursSun">Sun %1$s</string>
+    <string name="restaurantDistanceOver10km">%1$d km</string>
+    <string name="restaurantDistanceOver1km">%1$.1f km</string>
+    <string name="restaurantDistanceLess1km">%1$d m</string>
+    <string name="restaurantMaps">Google Maps</string>
+
+    <!-- Home -->
+    <string name="homeMainImageDescription">Main Image</string>
+    <string name="homeJobGrid">Apply for a job!</string>
+    <string name="homeSocialMedia">InstaGram</string>
+
+    <!-- General layout strings -->
+    <string name="layoutReturnButtonDescription">Return</string>
 </resources>

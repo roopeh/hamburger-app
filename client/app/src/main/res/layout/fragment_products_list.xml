@@ -23,7 +23,7 @@
         android:maxHeight="40dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:contentDescription="Return" />
+        android:contentDescription="@string/layoutReturnButtonDescription" />
 
     <TextView
         android:id="@+id/productsListHeader"

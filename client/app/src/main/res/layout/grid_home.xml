@@ -33,7 +33,7 @@
             android:layout_centerHorizontal="true"
             android:textSize="17sp"
             android:textColor="@color/black"
-            android:text="Apply for a job!"
+            android:text="@string/homeJobGrid"
             android:visibility="gone" />
 
         <TextView
@@ -44,7 +44,7 @@
             android:layout_centerHorizontal="true"
             android:textSize="17sp"
             android:textColor="@color/black"
-            android:text="InstaGram"
+            android:text="@string/homeSocialMedia"
             android:visibility="gone" />
     </RelativeLayout>
 

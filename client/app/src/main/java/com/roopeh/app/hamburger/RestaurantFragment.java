@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
@@ -109,6 +108,7 @@ public class RestaurantFragment extends PermissionsFragment {
 class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAdapter.ViewHolder> {
     final private List<Restaurant> _list;
     final private RestaurantFragment _frag;
+    final private Context _context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         final private TextView restaurantName;
@@ -150,6 +150,7 @@ class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAdapter.V
     public RestaurantListAdapter(List<Restaurant> list, RestaurantFragment fragment) {
         _list = list;
         _frag = fragment;
+        _context = _frag.getContext();
     }
 
     @NonNull
@@ -173,22 +174,22 @@ class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAdapter.V
             if (distance > 0) {
                 if (distance >= 10000) {
                     final int intDistance = (int)Math.round(distance / 1000);
-                    holder.getRestaurantDistance().setText(intDistance + " km");
+                    holder.getRestaurantDistance().setText(_context.getString(R.string.restaurantDistanceOver10km, intDistance));
                 } else if (distance >= 1000) {
                     final double doubleDistance = distance / 1000;
-                    holder.getRestaurantDistance().setText(String.format(Locale.getDefault(), "%.1f", doubleDistance) + " km");
+                    holder.getRestaurantDistance().setText(_context.getString(R.string.restaurantDistanceOver1km, doubleDistance));
                 } else {
                     final int intDistance = (int)Math.round(distance);
-                    holder.getRestaurantDistance().setText(intDistance + " m");
+                    holder.getRestaurantDistance().setText(_context.getString(R.string.restaurantDistanceLess1km, intDistance));
                 }
             }
         }
 
         // Restaurant status
         if (res.isRestaurantOpen())
-            holder.getRestaurantStatus().setText("Open");
+            holder.getRestaurantStatus().setText(_context.getString(R.string.restaurantStatusOpen));
         else
-            holder.getRestaurantStatus().setText("Closed");
+            holder.getRestaurantStatus().setText(_context.getString(R.string.restaurantStatusClosed));
     }
 
     @Override

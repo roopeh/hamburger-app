@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="LabelFor"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginStart="@dimen/background_padding_side"
@@ -15,7 +17,7 @@
         android:id="@+id/loginHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:text="@string/loginLayoutTitle"
         android:theme="@style/DefaultHeaderStyle" />
 
     <RelativeLayout
@@ -35,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/background_padding_side"
             android:textColor="@color/black"
-            android:text="Käyttäjätunnus" />
+            android:text="@string/loginLayoutUser" />
 
         <EditText
             android:id="@+id/loginUsername"
@@ -43,6 +45,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/loginUsernameText"
             android:layout_marginTop="5dp"
+            android:inputType="text"
+            android:autofillHints="username"
             android:background="@color/white" />
 
         <TextView
@@ -53,7 +57,7 @@
             android:layout_marginTop="@dimen/content_padding_side"
             android:layout_marginStart="@dimen/background_padding_side"
             android:textColor="@color/black"
-            android:text="Salasana" />
+            android:text="@string/loginLayoutPass" />
 
         <EditText
             android:id="@+id/loginPassword"
@@ -62,6 +66,7 @@
             android:layout_below="@id/loginPasswordText"
             android:layout_marginTop="5dp"
             android:inputType="textPassword"
+            android:autofillHints="password"
             android:background="@color/white" />
 
         <TextView
@@ -72,7 +77,7 @@
             android:layout_marginStart="@dimen/background_padding_side"
             android:layout_below="@id/loginPassword"
             android:textColor="@color/black"
-            android:text="Ei tiliä?\nRekisteröidy!" />
+            android:text="@string/loginLayoutRegister" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -94,14 +99,14 @@
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
                 android:background="@android:color/transparent"
-                android:contentDescription="Login" />
+                android:contentDescription="@string/loginLayoutTitle" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:text="Kirjaudu" />
+                android:text="@string/loginLayoutTitle" />
         </LinearLayout>
     </RelativeLayout>
 </RelativeLayout>
