@@ -236,10 +236,11 @@ public class ApiJsonParser {
                 }
             } break;
             /*
-             * SAVE ORDER, LOGOUT
+             * SAVE ORDER, LOGOUT, CHANGE_PASS
              */
             case SAVE_ORDER:
-            case LOGOUT: {
+            case LOGOUT:
+            case CHANGE_PASS: {
                 if (hasErrorInPostResponse) {
                     // API error
                     Toast.makeText(context, R.string.apiError, Toast.LENGTH_SHORT).show();

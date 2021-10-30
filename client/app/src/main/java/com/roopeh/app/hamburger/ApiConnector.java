@@ -349,6 +349,47 @@ public class ApiConnector {
         ApplicationController.getInstance().addToRequestQueue(request);
     }
 
+    public void changePassword(Context context, String password) {
+        if (Helper.getInstance().getUser() == null)
+            return;
+
+        final String urlStr = Helper.Constants.API_LINK + "/new_pass.php";
+        final Bundle bundle = new Bundle();
+
+        final Map<String, String> params = new HashMap<>();
+        params.put("user_id", String.valueOf(Helper.getInstance().getUser().getUserId()));
+        params.put("password", password);
+
+        // Show alert dialog
+        final AlertDialog dialog = Helper.getInstance().createAlertDialog(context, context.getString(R.string.apiChangePass));
+
+        final ApiPostRequest request = new ApiPostRequest(urlStr, params,
+            response -> {
+                Log.d("DEBUG_TAG", "Successful response via StringRequest: " + response);
+                try {
+                    final JSONObject result = new JSONObject(response);
+
+                    final boolean success = Boolean.parseBoolean(result.getString("result"));
+                    if (!success) {
+                        bundle.putString("error_text", result.getString("query_status"));
+                    }
+
+                    bundle.putString("result", result.getString("result"));
+                } catch (JSONException e) {
+                    bundle.putString("result", "error");
+                    e.printStackTrace();
+                }
+
+                dialog.dismiss();
+                _apiResponse.onResponse(Helper.ApiResponseType.CHANGE_PASS, bundle);
+            }, error -> {
+                dialog.dismiss();
+                ApiRequest.handleErrorInRequest(_apiResponse, Helper.ApiResponseType.CHANGE_PASS, bundle, error);
+        });
+
+        ApplicationController.getInstance().addToRequestQueue(request);
+    }
+
     // Get method
     private static class ApiGetRequest extends ApiRequest {
         public ApiGetRequest(String url, Map<String, String> params, Response.Listener<String> listener, Response.ErrorListener error) {

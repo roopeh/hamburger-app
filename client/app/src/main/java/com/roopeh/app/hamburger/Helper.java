@@ -42,7 +42,8 @@ public class Helper {
         REGISTER,
         LOGIN,
         SAVE_ORDER,
-        LOGOUT
+        LOGOUT,
+        CHANGE_PASS
     }
 
     private static Helper mInstance = null;

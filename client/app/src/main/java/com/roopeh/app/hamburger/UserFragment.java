@@ -17,6 +17,9 @@ import java.util.Objects;
 import androidx.fragment.app.Fragment;
 
 public class UserFragment extends Fragment implements ApiResponseInterface {
+    private EditText firstPass;
+    private EditText secondPass;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_user, container, false);
@@ -29,8 +32,8 @@ public class UserFragment extends Fragment implements ApiResponseInterface {
 
         final TextView userName = rootView.findViewById(R.id.userHelloText);
         final Button logoutButton = rootView.findViewById(R.id.userLogoutButton);
-        final EditText firstPass = rootView.findViewById(R.id.userPasswordFirst);
-        final EditText secondPass = rootView.findViewById(R.id.userPasswordSecond);
+        firstPass = rootView.findViewById(R.id.userPasswordFirst);
+        secondPass = rootView.findViewById(R.id.userPasswordSecond);
         final CheckBox checkBox = rootView.findViewById(R.id.userPasswordShow);
         final Button passButton = rootView.findViewById(R.id.userPasswordButton);
 
@@ -65,14 +68,25 @@ public class UserFragment extends Fragment implements ApiResponseInterface {
             return;
         }
 
-        // todo: api call
-        Toast.makeText(getContext(), getString(R.string.userPassChangeSuccess), Toast.LENGTH_LONG).show();
+        final String password = Helper.getInstance().encryptPasswordReturnInHex(pass1);
+        new ApiConnector(this).changePassword(getContext(), password);
     }
 
     @Override
     public void onResponse(Helper.ApiResponseType apiResponse, Bundle bundle) {
         ApiJsonParser.parseDatabaseData(getContext(), apiResponse, bundle);
-        Helper.getInstance().logoutUser();
-        Objects.requireNonNull((MainActivity)getActivity()).loadFragment(new HomeFragment(), false);
+
+        if (!bundle.getString("result").equals("true"))
+            return;
+
+        if (apiResponse == Helper.ApiResponseType.LOGOUT) {
+            Helper.getInstance().logoutUser();
+            Objects.requireNonNull((MainActivity)getActivity()).loadFragment(new HomeFragment(), false);
+        } else if (apiResponse == Helper.ApiResponseType.CHANGE_PASS) {
+            // Clear passwords
+            firstPass.setText("");
+            secondPass.setText("");
+            Toast.makeText(getContext(), getString(R.string.userPassChangeSuccess), Toast.LENGTH_LONG).show();
+        }
     }
 }

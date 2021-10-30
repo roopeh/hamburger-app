@@ -41,6 +41,7 @@
     <string name="apiLogin">Logging in…</string>
     <string name="apiCreateOrder">Creating order…</string>
     <string name="apiLogout">Logging out…</string>
+    <string name="apiChangePass">Changing password…</string>
     <string name="apiRestaurantError">Error when loading restaurants</string>
     <string name="apiProductsError">Error when loading products</string>
     <string name="apiRegisterDuplicateUser">Username is already in use</string>
