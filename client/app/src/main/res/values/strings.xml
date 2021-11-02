@@ -185,6 +185,7 @@
 
     <!-- Home -->
     <string name="homeMainImageDescription">Main Image</string>
+    <string name="homeCommercial">Ads or news here</string>
     <string name="homeJobGrid">Apply for a job!</string>
     <string name="homeSocialMedia">InstaGram</string>
 

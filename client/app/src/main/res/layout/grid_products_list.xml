@@ -10,7 +10,11 @@
         android:id="@+id/productsListGridImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:maxHeight="100dp"
+        android:maxWidth="100dp"
         android:layout_centerHorizontal="true"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
         android:src="@drawable/ic_launcher_background"
         android:contentDescription="@string/productImageDescription" />
 

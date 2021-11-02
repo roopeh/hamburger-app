@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,7 +42,7 @@ public class HomeFragment extends Fragment implements ApiResponseInterface {
             orderButton.setVisibility(View.GONE);
             // Adjust grid's layout params
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)grid.getLayoutParams();
-            params.addRule(RelativeLayout.BELOW, R.id.homeMainImage);
+            params.addRule(RelativeLayout.BELOW, R.id.homeMainImageLayout);
             grid.setLayoutParams(params);
         } else {
             orderButton.setOnClickListener(v -> Objects.requireNonNull((MainActivity)getActivity()).loadFragment(new CurrentOrderFragment(), false));
@@ -146,7 +147,6 @@ class HomeGridAdapter extends RecyclerView.Adapter<HomeGridAdapter.ViewHolder> {
         switch (_list.get(position)) {
             case HomeFragment.TYPE_DEFAULT: {
                 holder.getDefaultText().setVisibility(View.VISIBLE);
-                holder.getDefaultText().setText("");
             } break;
             case HomeFragment.TYPE_JOB:
             case HomeFragment.TYPE_SOME: {
@@ -154,8 +154,10 @@ class HomeGridAdapter extends RecyclerView.Adapter<HomeGridAdapter.ViewHolder> {
 
                 if (_list.get(position) == HomeFragment.TYPE_JOB) {
                     holder.getJobText().setVisibility(View.VISIBLE);
+                    holder.getExtraLayout().setBackground(ContextCompat.getDrawable(_context, R.drawable.job));
                 } else {
                     holder.getSocialText().setVisibility(View.VISIBLE);
+                    holder.getExtraLayout().setBackground(ContextCompat.getDrawable(_context, R.drawable.some));
                 }
             } break;
             case HomeFragment.TYPE_LOGIN:

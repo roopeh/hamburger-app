@@ -6,7 +6,7 @@
         android:id="@+id/shopping_cart_button"
         android:checkable="false"
         android:enabled="true"
-        android:icon="@android:drawable/sym_def_app_icon"
+        android:icon="@drawable/shopping_cart"
         android:title="@string/cartLayoutTitle"
         app:showAsAction="always" />
 </menu>

@@ -21,37 +21,46 @@
         android:paddingBottom="@dimen/content_padding_bottom"
         android:background="@drawable/rounded_inner_main">
 
-        <ImageButton
-            android:id="@+id/restaurantInfoBackButton"
-            android:background="@android:color/transparent"
-            android:src="@drawable/back_button"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/restaurantInfoNameLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:maxWidth="40dp"
-            android:maxHeight="40dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:contentDescription="@string/layoutReturnButtonDescription" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/restaurantInfoName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            app:autoSizeTextType="uniform"
-            app:autoSizeMinTextSize="14sp"
-            app:autoSizeMaxTextSize="20sp"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            <ImageButton
+                android:id="@+id/restaurantInfoBackButton"
+                android:background="@android:color/transparent"
+                android:src="@drawable/back_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:maxWidth="40dp"
+                android:maxHeight="40dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:contentDescription="@string/layoutReturnButtonDescription" />
+
+            <TextView
+                android:id="@+id/restaurantInfoName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/content_padding_side"
+                android:layout_weight="1"
+                app:autoSizeTextType="uniform"
+                app:autoSizeMinTextSize="14sp"
+                app:autoSizeMaxTextSize="20sp"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/restaurantInfoStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_below="@id/restaurantInfoName"
+            android:layout_below="@id/restaurantInfoNameLayout"
             android:textSize="15sp"
             android:textColor="@color/black" />
 

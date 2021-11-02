@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -14,22 +15,31 @@
         android:paddingBottom="@dimen/content_padding_bottom"
         android:background="@drawable/rounded_main">
 
-        <ImageView
-            android:id="@+id/homeMainImage"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/homeMainImageLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_launcher_background"
-            android:contentDescription="@string/homeMainImageDescription" />
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/homeMainImage"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintDimensionRatio="1.1:1"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/homeMainImageDescription"
+                android:scaleType="fitXY"
+                android:src="@drawable/main_ad" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
             android:id="@+id/homeOrderButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/content_padding_top"
-            android:layout_below="@id/homeMainImage"
+            android:layout_below="@id/homeMainImageLayout"
             android:backgroundTint="@color/defaultButtonFont"
             android:textColor="@color/black"
             android:text="@string/orderCurrentButton" />

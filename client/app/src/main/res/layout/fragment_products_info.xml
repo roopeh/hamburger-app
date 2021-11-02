@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginStart="@dimen/background_padding_side"
@@ -21,6 +22,7 @@
             android:id="@+id/productsInfoNameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:orientation="horizontal">
 
             <ImageButton
@@ -41,8 +43,11 @@
                 android:id="@+id/productsInfoName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/content_padding_side"
                 android:layout_weight="1"
-                android:textAlignment="center"
+                app:autoSizeTextType="uniform"
+                app:autoSizeMinTextSize="14sp"
+                app:autoSizeMaxTextSize="23sp"
                 android:theme="@style/DefaultHeaderStyle" />
         </LinearLayout>
 
@@ -138,7 +143,7 @@
             <ImageButton
                 android:id="@+id/productsInfoAmountIncrease"
                 android:background="@android:color/transparent"
-                android:src="@drawable/menu_close_button"
+                android:src="@drawable/amount_increase"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxWidth="40dp"
@@ -150,7 +155,7 @@
             <ImageButton
                 android:id="@+id/productsInfoAmountDecrease"
                 android:background="@android:color/transparent"
-                android:src="@drawable/menu_close_button"
+                android:src="@drawable/amount_decrease"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"

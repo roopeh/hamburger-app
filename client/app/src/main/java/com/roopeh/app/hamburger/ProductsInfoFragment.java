@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -36,6 +37,9 @@ public class ProductsInfoFragment extends Fragment {
 
         final TextView name = rootView.findViewById(R.id.productsInfoName);
         name.setText(_product.getName());
+
+        final ImageView image = rootView.findViewById(R.id.productsInfoImage);
+        image.setImageResource(R.drawable.hamburger_icon);
 
         final TextView price = rootView.findViewById(R.id.productsInfoPrice);
         price.setText(getString(R.string.orderEuroAmount, _product.getPrice()));

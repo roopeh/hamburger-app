@@ -103,7 +103,7 @@ class ProductsListGridAdapter extends RecyclerView.Adapter<ProductsListGridAdapt
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Product product = _list.get(position);
-        //holder.getProductImage() TODO
+        holder.getProductImage().setImageResource(R.drawable.hamburger_icon);
         holder.getProductName().setText(product.getName());
     }
 
