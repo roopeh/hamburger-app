@@ -79,6 +79,11 @@ public class ProductsInfoFragment extends Fragment {
         amountIncrease.setOnClickListener(v -> updateQuantity(rootView, 1));
         amountDecrease.setOnClickListener(v -> updateQuantity(rootView, -1));
 
+        final TextView composition = rootView.findViewById(R.id.productsInfoKoostumus);
+        composition.setText(_product.getKoostumus());
+        final TextView nutritional = rootView.findViewById(R.id.productsInfoSisalto);
+        nutritional.setText(_product.getRavinto());
+
         final Button addToCart = rootView.findViewById(R.id.productsInfoBuyButton);
         addToCart.setOnClickListener(v -> {
             final User user = Helper.getInstance().getUser();

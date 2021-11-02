@@ -17,32 +17,40 @@
         android:padding="@dimen/background_padding_side"
         android:background="@drawable/rounded_inner_main">
 
-        <ImageButton
-            android:id="@+id/productsInfoBackButton"
-            android:background="@android:color/transparent"
-            android:src="@drawable/back_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="-4dp"
-            android:maxWidth="40dp"
-            android:maxHeight="40dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:contentDescription="@string/layoutReturnButtonDescription" />
-
-        <TextView
-            android:id="@+id/productsInfoName"
+        <LinearLayout
+            android:id="@+id/productsInfoNameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:theme="@style/DefaultHeaderStyle" />
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/productsInfoBackButton"
+                android:background="@android:color/transparent"
+                android:src="@drawable/back_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-4dp"
+                android:layout_weight="0"
+                android:maxWidth="40dp"
+                android:maxHeight="40dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:contentDescription="@string/layoutReturnButtonDescription" />
+
+            <TextView
+                android:id="@+id/productsInfoName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:theme="@style/DefaultHeaderStyle" />
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/productsInfoImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/productsInfoName"
+            android:layout_below="@id/productsInfoNameLayout"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="10dp"
