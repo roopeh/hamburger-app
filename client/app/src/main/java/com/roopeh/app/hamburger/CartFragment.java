@@ -129,7 +129,13 @@ public class CartFragment extends Fragment implements ApiResponseInterface {
         coupons.add(new Coupon(Helper.Constants.COUPON_TYPE_EMPTY_COUPON, 0));
 
         // Check for available coupons
+        final long dateNow = System.currentTimeMillis() / 1000;
         for (final Coupon coupon : Helper.getInstance().getUser().getCoupons()) {
+            // Ignore expired coupons
+            // They will be cleaned on logout
+            if (!coupon.isValidAnymore(dateNow))
+                continue;
+
             // Check if the coupon can be used for any item in the shopping cart
             if (Coupon.isCouponAvailableForCart(coupon.getType()))
                 coupons.add(coupon);

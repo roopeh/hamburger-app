@@ -29,6 +29,7 @@ public class Helper {
         final public static int COUPON_TYPE_FREE_LARGE_DRINK = 1;
         final public static int COUPON_TYPE_FREE_LARGE_EXTRAS = 2;
         final public static int COUPON_TYPE_50_OFF = 3;
+        final public static int COUPON_TYPE_20_OFF = 4;
         final public static int COUPON_TYPE_EMPTY_COUPON = 10;
 
         // 0 = disabled, 1 = enabled

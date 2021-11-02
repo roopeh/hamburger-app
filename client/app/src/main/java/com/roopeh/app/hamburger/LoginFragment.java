@@ -78,7 +78,7 @@ public class LoginFragment extends Fragment implements ApiResponseInterface {
                 final long expiryDate = calendar.getTimeInMillis() / 1000;
 
                 int type = Helper.Constants.COUPON_TYPE_FREE_LARGE_DRINK;
-                while (type <= Helper.Constants.COUPON_TYPE_50_OFF) {
+                while (type <= Helper.Constants.COUPON_TYPE_20_OFF) {
                     // Add two of each coupon
                     for (int i = 0; i < 2; ++i) {
                         long date = expiryDate;

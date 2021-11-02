@@ -156,11 +156,13 @@
     <string name="couponNameLargeDrink">Free large drink</string>
     <string name="couponNameLargeExtra">Free large extras</string>
     <string name="couponName50off">50% discount</string>
+    <string name="couponName20off">20% discount</string>
     <string name="couponEmpty">No coupon</string>
     <string name="couponUnk">Unknown coupon type</string>
     <string name="couponDescLargeDrink">Large drink for free (meal only)</string>
     <string name="couponDescLargeExtra">Large extras for free (meal only)</string>
     <string name="couponDesc50off">50% discount of total price!</string>
+    <string name="couponDesc20off">20% discount of total price!</string>
 
     <!-- Restaurants -->
     <string name="restaurantTitle">Restaurants</string>

@@ -48,6 +48,8 @@ public class Coupon {
                 return context.getString(R.string.couponNameLargeExtra);
             case Helper.Constants.COUPON_TYPE_50_OFF:
                 return context.getString(R.string.couponName50off);
+            case Helper.Constants.COUPON_TYPE_20_OFF:
+                return context.getString(R.string.couponName20off);
             case Helper.Constants.COUPON_TYPE_EMPTY_COUPON:
                 return context.getString(R.string.couponEmpty);
             default:
@@ -63,6 +65,8 @@ public class Coupon {
                 return context.getString(R.string.couponDescLargeExtra);
             case Helper.Constants.COUPON_TYPE_50_OFF:
                 return context.getString(R.string.couponDesc50off);
+            case Helper.Constants.COUPON_TYPE_20_OFF:
+                return context.getString(R.string.couponDesc20off);
             case Helper.Constants.COUPON_TYPE_EMPTY_COUPON:
                 return context.getString(R.string.couponEmpty);
             default:
@@ -87,6 +91,8 @@ public class Coupon {
                 return 0.4;
             case Helper.Constants.COUPON_TYPE_50_OFF:
                 return sum / 2;
+            case Helper.Constants.COUPON_TYPE_20_OFF:
+                return sum * 0.2;
             default:
                 return 0.0;
         }
@@ -120,7 +126,8 @@ public class Coupon {
                     }
                 }
             } break;
-            case Helper.Constants.COUPON_TYPE_50_OFF: {
+            case Helper.Constants.COUPON_TYPE_50_OFF:
+            case Helper.Constants.COUPON_TYPE_20_OFF: {
                 return true;
             }
             default: break;
