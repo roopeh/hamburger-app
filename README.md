@@ -1,0 +1,3 @@
+Supports Android SDK 30 to 22
+
+Will be updated soon with more info...
