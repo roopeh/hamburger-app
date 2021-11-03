@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Hamburger</string>
+
+    <!-- Products -->
+    <!-- Meal drinks -->
+    <string-array name="stringMealDrinks">
+        <item>@string/extraNotChosen</item>
+        <item>@string/drinkCola</item>
+        <item>@string/drinkJaffa</item>
+        <item>@string/drinkWater</item>
+    </string-array>
+    <string name="extraNotChosen">Ei valittu</string>
+    <string name="drinkCola">Coca cola</string>
+    <string name="drinkJaffa">Jaffa</string>
+    <string name="drinkWater">Vesi</string>
+    <!-- Meal extras -->
+    <string-array name="stringMealExtras">
+        <item>@string/extraNotChosen</item>
+        <item>@string/extraFrench</item>
+        <item>@string/extraSweet</item>
+    </string-array>
+    <string name="extraFrench">Ranskalaiset perunat</string>
+    <string name="extraSweet">Bataattiranskalaiset</string>
+
+    <string name="appRequireLogin">Sinun täytyy kirjautua sisälle</string>
+
+    <!-- Menu content -->
+    <string name="menuHome">Koti</string>
+    <string name="menuProducts">Tuotteet</string>
+    <string name="menuRestaurants">Ravintolat</string>
+    <string name="menuCoupons">Alennuskupongit</string>
+    <string name="menuHistory">Tilaushistoria</string>
+    <string name="menuAccount">Käyttäjätili</string>
+    <string name="menuClose">Sulje valikko</string>
+
+    <!-- Api texts -->
+    <string name="apiError">Virhe API:ssa</string>
+    <string name="apiDatabaseError">Tietokantavirhe</string>
+    <string name="apiInitialLoad">Ladataan…</string>
+    <string name="apiRegister">Luodaan tiliä…</string>
+    <string name="apiLogin">Kirjaudutaan sisälle…</string>
+    <string name="apiCreateOrder">Luodaan tilausta…</string>
+    <string name="apiLogout">Kirjaudutaan ulos…</string>
+    <string name="apiChangePass">Vaihdetaan salasanaa…</string>
+    <string name="apiRestaurantError">Virhe ladattaessa ravintoloita</string>
+    <string name="apiProductsError">Virhe ladattaessa tuotteita</string>
+    <string name="apiRegisterDuplicateUser">Käyttäjätili on jo käytössä</string>
+    <string name="apiRegisterDuplicateEmail">Sähköpostiosoite on jo käytössä</string>
+    <string name="apiRegisterDuplicatePhone">Puhelinnumero on jo käytössä</string>
+    <string name="apiLoginWrongInfo">Väärä käyttäjätili tai salasana</string>
+    <string name="apiLoginHello">Hei, %1$s!</string>
+
+    <!-- Register -->
+    <string name="registerTitle">Rekisteröidy</string>
+    <string name="registerFirstName">Etunimi</string>
+    <string name="registerLastName">Sukunimi</string>
+    <string name="registerEmail">Sähköpostiosoite</string>
+    <string name="registerNumber">Puhelinnumero</string>
+    <string name="registerPassConfirm">Vahvista salasana</string>
+    <string name="registerPassShow">Näytä salasanat</string>
+    <string name="registerFieldsEmpty">Kaikki kentät tulee täyttää</string>
+    <string name="registerEmailError">Sähköpostiosoite on virheellinen</string>
+    <string name="registerNumberError">Puhelinnumero on virheellinen</string>
+    <string name="registerPasswordError">Salasanat eivät täsmää</string>
+    <string name="registerSuccess">Käyttäjätili on rekisteröity!</string>
+
+    <!-- Login -->
+    <string name="loginLayoutTitle">Kirjaudu</string>
+    <string name="loginLayoutUser">Käyttäjänimi</string>
+    <string name="loginLayoutPass">Salasana</string>
+    <string name="loginLayoutRegister">Ei käyttäjätiliä?\nRekisteröidy!</string>
+    <string name="loginMissingUsername">Syötä käyttäjänimi</string>
+    <string name="loginMissingPassword">Syötä salasana</string>
+
+    <!-- User -->
+    <string name="userAccount">Käyttäjätilisi</string>
+    <string name="userLogin">Kirjaudu sisään</string>
+    <string name="userLogout">Kirjaudu ulos</string>
+    <string name="userPageHello">Hei, %1$s %2$s!</string>
+    <string name="userPassChange">Vaihda salasanasi</string>
+    <string name="userPassNew">Uusi salasana</string>
+    <string name="userPassConfirm">Vahvista salasana</string>
+    <string name="userPassButton">Vaihda salasana</string>
+    <string name="userPassChangeSuccess">Salasana vaihdettu</string>
+
+    <!-- Products -->
+    <string name="productsChoose">Valitse kategoria</string>
+    <string name="productsMeals">Ateriat</string>
+    <string name="productsHamburgers">Hampurilaiset</string>
+    <string name="productsLarge">Iso</string>
+    <string name="productsLargeDrinkPrice">%1$s (+0.50 €)</string>
+    <string name="productsLargeExtraPrice">%1$s (+0.40 €)</string>
+    <string name="productsMissingDrink">Sinun täytyy valita juoma</string>
+    <string name="productsMissingExtra">Sinun täytyy valita lisuke</string>
+    <string name="productsQuantity">%1$dx</string>
+    <string name="productsQuantityIncrease">Lisää kappale</string>
+    <string name="productsQuantityDecrease">Vähennä kappale</string>
+    <string name="productsComposition">Koostumus:</string>
+    <string name="productsNutritionalContent">Ravintosisältö:</string>
+    <string name="productsAddCart">Lisää ostoskoriin</string>
+    <string name="productImageDescription">Tuotekuva</string>
+
+    <!-- Order -->
+    <string name="orderCurrent">Sinun tilauksesi</string>
+    <string name="orderCurrentButton">Tarkastele tilaustasi</string>
+    <string name="orderEuroAmount">%1$.2f €</string>
+    <string name="orderPriceSubtotal">Välisumma %1$.2f €</string>
+    <string name="orderPriceDiscount">Alennuskuponki -%1$.2f €</string>
+    <string name="orderPaymentPaid">Tilaus on maksettu</string>
+    <string name="orderPaymentRestaurant">Tilaus maksetaan ravintolassa</string>
+    <string name="orderTimer">%1$d min</string>
+    <string name="orderEstimatedTime">Arvioitu aika:</string>
+    <string name="orderItem">- %1$s</string>
+    <string name="orderLarge"> (Iso)</string>
+    <string name="orderRestaurantAddress">Ravintolan osoite: %1$s</string>
+    <string name="orderRestaurantPhone">Ravintolan puhelinnumero: %1$s</string>
+    <string name="orderCreationDate">Tilaus luotu: %1$s</string>
+    <string name="orderNotificationTitle">Tilauksesi on noudettavissa!</string>
+    <string name="orderNotificationDescription">Tarkastele tilaustasi…</string>
+    <string name="orderRestaurantInfo">Katso ravintolan tiedot</string>
+
+    <!-- Payment -->
+    <string name="paymentTitle">Maksu</string>
+    <string name="paymentButtonText">Suorita maksu</string>
+    <string name="paymentSuccess">Maksu onnistunut!</string>
+    <string name="paymentReturn">Palaa aloitussivulle</string>
+
+    <!-- History -->
+    <string name="historyTitle">Tilaushistoria</string>
+    <string name="historyEmpty">Sinulla ei ole aikasempia tilauksia!</string>
+    <string name="historyYourOrder">Tilauksesi</string>
+    <string name="historyOrder">Tilaus:</string>
+
+    <!-- Shopping cart -->
+    <string name="cartLayoutTitle">Ostoskori</string>
+    <string name="cartEmpty">Ostoskorisi on tyhjä!</string>
+    <string name="cartLayoutProducts">Tuotteet</string>
+    <string name="cartLayoutCoupon">Alennuskuponki</string>
+    <string name="cartLayoutSum">Summa</string>
+    <string name="cartLayoutSumTotal">Summa yhteensä</string>
+    <string name="cartLayoutRestaurant">Ravintola</string>
+    <string name="cartLayoutPayment">Maksu</string>
+    <string name="cartLayoutPayCard">Maksa luottokortilla</string>
+    <string name="cartLayoutPayRestaurant">Maksa ravintolassa</string>
+    <string name="cartLayoutCreate">Tee tilaus</string>
+    <string name="cartOrderExists">Sinulla on jo aktiivinen tilaus</string>
+    <string name="cartChoosePayment">Valitse maksutapasi</string>
+    <string name="cartPaymentError">Virhe maksussa</string>
+    <string name="cartNoOpenRestaurants">Ei avoinna olevia ravintoloita</string>
+    <string name="cartOrderSuccess">Tilaus luotu onnistuneesti!</string>
+
+    <!-- Coupons -->
+    <string name="couponLayoutTitle">Alennuskupongit</string>
+    <string name="couponLayoutEmpty">Sinulla ei ole alennuskuponkeja!</string>
+    <string name="couponExpiryDate">Voimassa %1$s asti</string>
+    <string name="couponNameLargeDrink">Ilmainen iso juoma</string>
+    <string name="couponNameLargeExtra">Ilmainen iso lisuke</string>
+    <string name="couponName50off">50% alennus</string>
+    <string name="couponName20off">20% alennus</string>
+    <string name="couponEmpty">Ei kuponkia</string>
+    <string name="couponUnk">Tuntematon kuponki</string>
+    <string name="couponDescLargeDrink">Iso juoma ilmaiseksi (vain ateriat)</string>
+    <string name="couponDescLargeExtra">Iso lisuke ilmaiseksi (vain ateriat)</string>
+    <string name="couponDesc50off">50% alennus koko summasta!</string>
+    <string name="couponDesc20off">20% alennus koko summasta!</string>
+
+    <!-- Restaurants -->
+    <string name="restaurantTitle">Ravintolat</string>
+    <string name="restaurantLocation">%1$s, %2$s</string>
+    <string name="restaurantStatusOpen">Avoinna</string>
+    <string name="restaurantStatusClosed">Kiinni</string>
+    <string name="restaurantOpenToday">Avoinna tänään:</string>
+    <string name="restaurantHours">%1$02d</string>
+    <string name="restaurantHoursMon">Ma %1$s</string>
+    <string name="restaurantHoursTue">Ti %1$s</string>
+    <string name="restaurantHoursWed">Ke %1$s</string>
+    <string name="restaurantHoursThu">To %1$s</string>
+    <string name="restaurantHoursFri">Pe %1$s</string>
+    <string name="restaurantHoursSat">La %1$s</string>
+    <string name="restaurantHoursSun">Su %1$s</string>
+    <string name="restaurantDistanceOver10km">%1$d km</string>
+    <string name="restaurantDistanceOver1km">%1$.1f km</string>
+    <string name="restaurantDistanceLess1km">%1$d m</string>
+    <string name="restaurantMaps">Google Maps</string>
+
+    <!-- Home -->
+    <string name="homeMainImageDescription">Aloituskuva</string>
+    <string name="homeCommercial">Ajankohtaista tai tuotemainoksia</string>
+    <string name="homeJobGrid">Hae töihin!</string>
+    <string name="homeSocialMedia">InstaGram</string>
+
+    <!-- General layout strings -->
+    <string name="layoutReturnButtonDescription">Palaa takaisin</string>
+</resources>
