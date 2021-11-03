@@ -1,9 +1,11 @@
 package com.roopeh.app.hamburger;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Build;
 import android.view.Gravity;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import java.nio.charset.StandardCharsets;
@@ -16,6 +18,20 @@ import java.util.Random;
 
 // Singleton helper class
 public class Helper {
+    public static class Development {
+        // 0 = disabled, 1 = enabled
+        // On first login, generates some coupons with old date
+        final public static int TEST_COUPON_EXPIRY = 1;
+
+        // 0 = disabled, 1 = enabled
+        // Enables fast login and logout buttons in home screen with an hardcoded account
+        final public static int DEV_FAST_LOGIN = 0;
+
+        // 0 = disabled, 1 = enabled
+        // If enabled, order will be done in 20 seconds
+        final public static int TEST_FAST_ORDER = 0;
+    }
+
     public static class Constants {
         final public static String API_LINK = "http://192.168.200.53";
         final public static String VOLLEY_TAG = "VolleyTag";
@@ -32,9 +48,7 @@ public class Helper {
         final public static int COUPON_TYPE_20_OFF = 4;
         final public static int COUPON_TYPE_EMPTY_COUPON = 10;
 
-        // 0 = disabled, 1 = enabled
-        // On first login, generates some coupons with old date
-        final public static int TEST_COUPON_EXPIRY = 1;
+        final public static String STRING_TIMEZONE = "GMT+2";
     }
 
     public enum ApiResponseType {
@@ -192,5 +206,16 @@ public class Helper {
         }
 
         return null;
+    }
+
+    /*
+     * Misc
+     */
+    public void hideKeyboard(Activity activity) {
+        if (activity == null)
+            return;
+
+        final InputMethodManager manager = (InputMethodManager)activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        manager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
     }
 }

@@ -13,6 +13,7 @@
         android:paddingStart="@dimen/content_padding_side"
         android:paddingEnd="@dimen/content_padding_side"
         android:paddingBottom="@dimen/content_padding_bottom"
+        android:focusableInTouchMode="true"
         android:background="@drawable/rounded_main">
 
         <androidx.constraintlayout.widget.ConstraintLayout

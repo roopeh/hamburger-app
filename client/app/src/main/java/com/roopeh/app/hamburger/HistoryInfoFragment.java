@@ -55,7 +55,7 @@ public class HistoryInfoFragment extends Fragment {
 
         // Order date
         final SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault());
-        format.setTimeZone(TimeZone.getTimeZone("GMT+3"));
+        format.setTimeZone(TimeZone.getTimeZone(Helper.Constants.STRING_TIMEZONE));
         orderDate.setText(getString(R.string.orderCreationDate, format.format(_order.getOrderDate() * 1000)));
 
         // Products

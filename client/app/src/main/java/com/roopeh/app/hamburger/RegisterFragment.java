@@ -97,6 +97,9 @@ public class RegisterFragment extends Fragment implements ApiResponseInterface {
         userData.put("phone", phone.getText().toString());
 
         new ApiConnector(this).register(getContext(), userData);
+
+        // Close keyboard
+        Helper.getInstance().hideKeyboard(getActivity());
     }
 
     @Override

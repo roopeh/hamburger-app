@@ -81,6 +81,7 @@ public class UserFragment extends Fragment implements ApiResponseInterface {
 
         if (apiResponse == Helper.ApiResponseType.LOGOUT) {
             Helper.getInstance().logoutUser();
+            Objects.requireNonNull((MainActivity)getActivity()).cancelOrderTimer();
             Objects.requireNonNull((MainActivity)getActivity()).loadFragment(new HomeFragment(), false);
         } else if (apiResponse == Helper.ApiResponseType.CHANGE_PASS) {
             // Clear passwords

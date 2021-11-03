@@ -253,6 +253,14 @@ public class MainActivity extends AppCompatActivity
         }.start();
     }
 
+    public void cancelOrderTimer() {
+        if (_orderTimer == null)
+            return;
+
+        _orderTimer.cancel();
+        _orderTimer = null;
+    }
+
     @SuppressLint("UnspecifiedImmutableFlag")
     private void createNotification() {
         final Intent intent = getPackageManager().getLaunchIntentForPackage(getPackageName());

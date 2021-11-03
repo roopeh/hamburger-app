@@ -109,7 +109,7 @@ class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.ViewHol
         holder.getName().setText(order.getRestaurant().getName());
 
         final SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-        format.setTimeZone(TimeZone.getTimeZone("GMT+3"));
+        format.setTimeZone(TimeZone.getTimeZone(Helper.Constants.STRING_TIMEZONE));
         holder.getDate().setText(format.format(order.getOrderDate() * 1000));
 
         final StringBuilder productsString = new StringBuilder();

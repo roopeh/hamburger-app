@@ -47,6 +47,9 @@ public class LoginFragment extends Fragment implements ApiResponseInterface {
             // Encrypt password with SHA-256
             final String encryptedPass = Helper.getInstance().encryptPasswordReturnInHex(pass);
             new ApiConnector(this).login(getContext(), user.toUpperCase(), encryptedPass);
+
+            // Close keyboard
+            Helper.getInstance().hideKeyboard(getActivity());
         });
 
         return rootView;
@@ -83,7 +86,7 @@ public class LoginFragment extends Fragment implements ApiResponseInterface {
                     for (int i = 0; i < 2; ++i) {
                         long date = expiryDate;
 
-                        if (Helper.Constants.TEST_COUPON_EXPIRY == 1) {
+                        if (Helper.Development.TEST_COUPON_EXPIRY == 1) {
                             // For testing purposes, set some coupons with old expiry date
                             if (i == 1) {
                                 final Calendar c = Calendar.getInstance();

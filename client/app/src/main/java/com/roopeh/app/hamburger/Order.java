@@ -2,6 +2,7 @@ package com.roopeh.app.hamburger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Order implements Comparable<Order> {
     private int _id;
@@ -42,10 +43,15 @@ public class Order implements Comparable<Order> {
     }
 
     public void setPickupDate() {
-        // Calculates random pickup date (10-25min)
-        //final int randomMinute = new Random().nextInt(16) + 10;
-        // TODO: temporary 20 sec test timer
-        final double randomMinute = 20 / 60f;
+        final double randomMinute;
+        if (Helper.Development.TEST_FAST_ORDER == 0) {
+            // Calculates random pickup date (5-15min)
+            randomMinute = new Random().nextInt(11) + 5;
+        } else {
+            // Forced 20 seconds for fast testing
+            randomMinute = 20 / 60f;
+        }
+
         _pickupDate = (System.currentTimeMillis() / 1000) + (long)(randomMinute * 60);
     }
 

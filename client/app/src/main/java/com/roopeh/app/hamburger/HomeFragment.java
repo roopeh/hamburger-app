@@ -53,9 +53,11 @@ public class HomeFragment extends Fragment implements ApiResponseInterface {
         for (int i = 0; i < 4; ++i)
             content.add(TYPE_DEFAULT);
 
-        // Login and logout buttons for quick access (only in beta version)
-        content.add(TYPE_LOGIN);
-        content.add(TYPE_LOGOUT);
+        if (Helper.Development.DEV_FAST_LOGIN == 1) {
+            // Login and logout buttons for quick access
+            content.add(TYPE_LOGIN);
+            content.add(TYPE_LOGOUT);
+        }
 
         // Next job application grid
         content.add(TYPE_JOB);
@@ -81,6 +83,7 @@ public class HomeFragment extends Fragment implements ApiResponseInterface {
             LoginFragment.onPostLogin(Objects.requireNonNull((MainActivity)getActivity()));
         } else if (apiResponse == Helper.ApiResponseType.LOGOUT) {
             Helper.getInstance().logoutUser();
+            Objects.requireNonNull((MainActivity)getActivity()).cancelOrderTimer();
         }
     }
 }

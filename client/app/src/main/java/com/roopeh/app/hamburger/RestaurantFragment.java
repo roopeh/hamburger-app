@@ -86,7 +86,7 @@ public class RestaurantFragment extends PermissionsFragment {
        if (restaurantLocation == null)
            return -1;
 
-        return ownLocation.distanceTo(restaurantLocation);
+       return ownLocation.distanceTo(restaurantLocation);
     }
 
     private class SingleLocationListener implements LocationListener {
@@ -102,6 +102,15 @@ public class RestaurantFragment extends PermissionsFragment {
             locationManager.removeUpdates(this);
             _frag.adapter.notifyItemRangeChanged(0, _frag.adapter.getItemCount());
         }
+
+        @Override
+        public void onProviderEnabled(@NonNull String provider) { }
+
+        @Override
+        public void onProviderDisabled(@NonNull String provider) { }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) { }
     }
 }
 

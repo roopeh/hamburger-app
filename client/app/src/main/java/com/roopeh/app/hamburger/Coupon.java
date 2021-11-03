@@ -27,11 +27,11 @@ public class Coupon {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // API 26+
             final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-            return Instant.ofEpochSecond(_expiryDate).atZone(ZoneId.of("GMT+3")).format(formatter);
+            return Instant.ofEpochSecond(_expiryDate).atZone(ZoneId.of(Helper.Constants.STRING_TIMEZONE)).format(formatter);
         } else {
             // For older APIs
             final SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-            format.setTimeZone(TimeZone.getTimeZone("GMT+3"));
+            format.setTimeZone(TimeZone.getTimeZone(Helper.Constants.STRING_TIMEZONE));
             return format.format(_expiryDate * 1000);
         }
     }
@@ -76,7 +76,7 @@ public class Coupon {
 
     final public boolean isValidAnymore(final long dateNow) {
         final SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
-        formatter.setTimeZone(TimeZone.getTimeZone("GMT+3"));
+        formatter.setTimeZone(TimeZone.getTimeZone(Helper.Constants.STRING_TIMEZONE));
         return dateNow > _expiryDate && !formatter.format(dateNow * 1000).equals(formatter.format(_expiryDate * 1000));
     }
 
